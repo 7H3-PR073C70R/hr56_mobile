@@ -1,85 +1,85 @@
-name: build
+# name: build
 
-on:
-  push:
-    branches: [staging]
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: [staging]
+#   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
 
-      - name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_MESSAGE: "APK Build for `oxygen-mobile` :hammer_and_pick: started."
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#       - name: Slack Notify
+#         uses: rtCamp/action-slack-notify@v2.2.0
+#         env:
+#           SLACK_MESSAGE: "APK Build for `oxygen-mobile` :hammer_and_pick: started."
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
+#       - name: Setup Java
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: "12.x"
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-          flutter-version: "3.3.3"
+#       - name: Setup Flutter
+#         uses: subosito/flutter-action@v1
+#         with:
+#           channel: "stable"
+#           flutter-version: "3.3.3"
 
-      - name: Install Dependencies
-        run: flutter pub get
+#       - name: Install Dependencies
+#         run: flutter pub get
 
-      - name: Run Code Generators
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+#       - name: Run Code Generators
+#         run: flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Decode Signing Keys
-        run: echo "${{ secrets.KEYSTORE_JKS_PROD }}" | base64 --decode > android/app/keystore.jks
+#       - name: Decode Signing Keys
+#         run: echo "${{ secrets.KEYSTORE_JKS_PROD }}" | base64 --decode > android/app/keystore.jks
 
-      - name: Decode android/key.properties
-        run: echo "${{ secrets.KEY_PROPERTIES_PROD }}" | base64 --decode > android/key.properties
+#       - name: Decode android/key.properties
+#         run: echo "${{ secrets.KEY_PROPERTIES_PROD }}" | base64 --decode > android/key.properties
 
-      - name: flutter-version-number
-        uses: NiklasLehnfeld/flutter-version-number-action@v1
-        id: read-version
+#       - name: flutter-version-number
+#         uses: NiklasLehnfeld/flutter-version-number-action@v1
+#         id: read-version
 
-      - name: Prepare ENV File
-        run: echo "${{ secrets.APP_ENV }}" | base64 --decode > .env
+#       - name: Prepare ENV File
+#         run: echo "${{ secrets.APP_ENV }}" | base64 --decode > .env
       
-      - name: Prepare Google Services JSON
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
+#       - name: Prepare Google Services JSON
+#         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
 
-      - name: Build APK
-        run: flutter build apk --release
+#       - name: Build APK
+#         run: flutter build apk --release
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.read-version.outputs.version-number }}
-          release_name: "Release v${{ steps.read-version.outputs.version-number }}"
-          draft: false
-          prerelease: false
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: v${{ steps.read-version.outputs.version-number }}
+#           release_name: "Release v${{ steps.read-version.outputs.version-number }}"
+#           draft: false
+#           prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/app/outputs/apk/release/app-release.apk
-          asset_name: oxygen-v${{ steps.read-version.outputs.version-number }}.apk
-          asset_content_type: application/vnd.android.package-archive
+#       - name: Upload Release Asset
+#         id: upload-release-asset
+#         uses: actions/upload-release-asset@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           upload_url: ${{ steps.create_release.outputs.upload_url }}
+#           asset_path: ./build/app/outputs/apk/release/app-release.apk
+#           asset_name: oxygen-v${{ steps.read-version.outputs.version-number }}.apk
+#           asset_content_type: application/vnd.android.package-archive
       
-      - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          file: ./build/app/outputs/apk/release/app-release.apk
-          groups: oxygen
+#       - name: Firebase App Distribution
+#         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+#         with:
+#           appId: ${{ secrets.FIREBASE_APP_ID }}
+#           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+#           file: ./build/app/outputs/apk/release/app-release.apk
+#           groups: oxygen
 
