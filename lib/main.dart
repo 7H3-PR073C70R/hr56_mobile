@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr56_staff/src/app/bootstrap.dart';
 import 'package:hr56_staff/src/app/router/app_router.dart';
+import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/themes/app_theme.dart';
 
 void main() async {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       builder: (context, _) {
         return MaterialApp.router(
-          title: 'App Name',
+          title: AppStrings.appName,
           themeMode: ThemeMode.light,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
