@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/shared/main_page.dart';
 
-
 extension ResponsiveExtension on num {
   double get width => w;
   double get height => h;

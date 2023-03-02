@@ -14,5 +14,4 @@ class AppAssetPath {
   static const _iconPath = 'assets/icons';
   static const _imagePath = 'assets/images';
   static const _svgPath = 'assets/svgs';
- 
 }

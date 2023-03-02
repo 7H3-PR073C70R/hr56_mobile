@@ -197,7 +197,7 @@ class ApiServiceImpl implements ApiService {
           headers: header,
         ),
       );
-     _log.i('Response from $url \n${response.data}');
+      _log.i('Response from $url \n${response.data}');
       return response.data;
     } on DioError catch (error, trace) {
       _log.e('Error from $url', error.toString());
