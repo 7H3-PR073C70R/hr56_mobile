@@ -3,9 +3,10 @@
 ///
 /// Example
 ///
-/// static const appName = 'Oxygen'
+/// static const appName = 'HR56 Staff Mobile'
 ///
 class AppStrings {
   const AppStrings._();
-  
+
+  static const appName = 'HR56 Staff Mobile';
 }

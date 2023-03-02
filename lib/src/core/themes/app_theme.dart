@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 
 class AppTheme {
   const AppTheme._();
 
-  static ThemeData get darkTheme => ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: 'Mont',
+  static ThemeData get lightTheme => ThemeData(
+        brightness: Brightness.light,
+        fontFamily: 'ClashDisplay',
         shadowColor: const Color(0xFF110C2E).withOpacity(0.15),
         inputDecorationTheme: InputDecorationTheme(
           helperStyle: TextStyle(
@@ -18,37 +19,40 @@ class AppTheme {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.radius),
-            borderSide: const BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.radius),
-            borderSide: const BorderSide(color: Colors.white),
           ),
         ),
         textTheme: TextTheme(
-          bodySmall: const TextStyle(color: Colors.white),
+          bodySmall: TextStyle(
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.w400,
+            fontSize: 12.fontSize,
+          ),
           bodyLarge: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.w400,
             fontSize: 16.fontSize,
           ),
           bodyMedium: TextStyle(
-            color: Colors.white,
+            color: AppColors.blackColor,
             fontSize: 14.fontSize,
+            fontWeight: FontWeight.w400,
           ),
           displayLarge: TextStyle(
-            color: Colors.white,
-            fontSize: 16.fontSize,
-            fontWeight: FontWeight.w700,
+            color: AppColors.blackColor,
+            fontSize: 24.fontSize,
+            fontWeight: FontWeight.w500,
           ),
           displayMedium: TextStyle(
-            color: Colors.white,
-            fontSize: 16.fontSize,
-            fontWeight: FontWeight.w700,
+            color: AppColors.blackColor,
+            fontSize: 20.fontSize,
+            fontWeight: FontWeight.w500,
           ),
           titleLarge: const TextStyle(color: Colors.white),
           labelLarge: TextStyle(
-            color: Colors.white,
+            color: AppColors.blackColor,
             fontSize: 15.fontSize,
             fontWeight: FontWeight.w500,
             letterSpacing: 0.46,
@@ -67,8 +71,9 @@ class AppTheme {
         ),
       );
 
-  static ThemeData get lightTheme => ThemeData(
-        fontFamily: 'Mont',
+  static ThemeData get darkTheme => ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: 'ClashDisplay',
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: const MaterialColor(
           0xFFFFFFFF,
