@@ -11,17 +11,23 @@ class AppTheme {
         shadowColor: const Color(0xFF110C2E).withOpacity(0.15),
         inputDecorationTheme: InputDecorationTheme(
           helperStyle: TextStyle(
-            fontSize: 16.fontSize,
+            fontSize: 14.fontSize,
           ),
           contentPadding: EdgeInsets.symmetric(
-            horizontal: 20.width,
-            vertical: 20.height,
+            horizontal: 16.width,
+            vertical: 14.height,
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.radius),
+            borderRadius: BorderRadius.circular(10.radius),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.radius),
+            borderSide: const BorderSide(
+              color: AppColors.errorColor,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.radius),
+            borderRadius: BorderRadius.circular(10.radius),
           ),
         ),
         textTheme: TextTheme(

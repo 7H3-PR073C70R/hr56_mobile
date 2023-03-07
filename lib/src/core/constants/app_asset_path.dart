@@ -19,4 +19,13 @@ class AppAssetPath {
   static const onboarding2 = '$_imagePath/onboarding2.png';
   static const onboarding31 = '$_imagePath/onboarding31.png';
   static const onboarding32 = '$_imagePath/onboarding32.png';
+
+  //! SVGs
+  static const authBackground = '$_svgPath/auth_background.svg';
+  static const emptyStar = '$_svgPath/empty_star.svg';
+  static const errorStar = '$_svgPath/error_star.svg';
+  static const verifyStar = '$_svgPath/verify_star.svg';
+  static const faceScan = '$_svgPath/face_scan.svg';
+  static const successAuth = '$_svgPath/success_auth.svg';
+  static const success = '$_svgPath/success.svg';
 }
