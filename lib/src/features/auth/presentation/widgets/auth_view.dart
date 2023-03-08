@@ -5,7 +5,10 @@ import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class AuthView extends StatelessWidget {
-  const AuthView({super.key, required this.body,});
+  const AuthView({
+    super.key,
+    required this.body,
+  });
 
   final Widget body;
 
