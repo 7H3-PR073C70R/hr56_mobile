@@ -19,6 +19,9 @@ class AppTheme {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.radius),
+            borderSide: const BorderSide(
+              color: Color(0xFFC1CDDA),
+            ),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.radius),
@@ -28,6 +31,9 @@ class AppTheme {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.radius),
+            borderSide: const BorderSide(
+              color: Color(0xFFC1CDDA),
+            ),
           ),
         ),
         textTheme: TextTheme(

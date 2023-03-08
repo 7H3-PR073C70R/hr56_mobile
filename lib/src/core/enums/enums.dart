@@ -4,3 +4,16 @@ enum ViewState {
   success,
   error,
 }
+
+enum LeaveStatus {
+  pending,
+  approved,
+  denied,
+}
+
+enum LoanStatus {
+  approved,
+  pending,
+  declined,
+  disbursed,
+}
