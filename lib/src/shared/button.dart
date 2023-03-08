@@ -10,6 +10,8 @@ class Button extends StatelessWidget {
     this.textStyle,
     this.height = 48,
     this.width,
+    this.radius = 20,
+    this.enable = true,
     this.border,
     required this.onPressed,
     required this.text,
@@ -23,16 +25,18 @@ class Button extends StatelessWidget {
   final double height;
   final double? width;
   final BoxBorder? border;
+  final double radius;
+  final bool enable;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: enable ? onPressed : () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor: enable ? backgroundColor : AppColors.greyColor,
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.radius),
+          borderRadius: BorderRadius.circular(radius.radius),
         ),
       ),
       child: Container(
@@ -47,7 +51,7 @@ class Button extends StatelessWidget {
           style: context.textTheme.displayLarge?.copyWith(
             fontSize: 16.fontSize,
             fontWeight: FontWeight.w600,
-            color: textColor,
+            color: enable ? textColor : AppColors.textColor,
           ),
         ),
       ),

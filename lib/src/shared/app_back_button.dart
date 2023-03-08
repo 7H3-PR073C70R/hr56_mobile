@@ -11,21 +11,21 @@ class AppBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: onPressed ?? () => Navigator.of(context).pop(),
-        child: Container(
-          height: 43.h,
-          width: 45.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.radius),
-            color: const Color(0xFFF5F5F5),
-          ),
-          child: const Icon(
-            Icons.arrow_back,
-            size: 26,
-            color: AppColors.textColor,
-          ),
+      onTap: onPressed ?? () => Navigator.of(context).pop(),
+      child: Container(
+        height: 43.h,
+        width: 45.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.radius),
+          color: const Color(0xFFF5F5F5),
         ),
-      );
+        child: const Icon(
+          Icons.arrow_back,
+          size: 26,
+          color: AppColors.textColor,
+        ),
+      ),
+    );
   }
 }
