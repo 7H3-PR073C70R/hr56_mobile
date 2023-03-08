@@ -6,10 +6,12 @@ class PageWithNestedRouteScaffold extends StatelessWidget {
     super.key,
     required this.body,
     this.appBar,
+    this.fab,
   });
 
   final Widget body;
   final PreferredSizeWidget? appBar;
+  final Widget? fab;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class PageWithNestedRouteScaffold extends StatelessWidget {
         placeholder: (context) => Scaffold(
           appBar: appBar,
           body: body,
+          floatingActionButton: fab,
         ),
       ),
     );
