@@ -8,6 +8,7 @@ class AppTheme {
   static ThemeData get lightTheme => ThemeData(
         brightness: Brightness.light,
         fontFamily: 'ClashDisplay',
+        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
         shadowColor: const Color(0xFF110C2E).withOpacity(0.15),
         inputDecorationTheme: InputDecorationTheme(
           helperStyle: TextStyle(

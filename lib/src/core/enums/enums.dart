@@ -11,6 +11,13 @@ enum LeaveStatus {
   denied,
 }
 
+enum NotificationType {
+  loan,
+  leave,
+  payroll,
+  wallet,
+}
+
 enum LoanStatus {
   approved,
   pending,

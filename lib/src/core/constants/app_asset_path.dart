@@ -46,4 +46,18 @@ class AppAssetPath {
   static const forward = '$_svgPath/forward.svg';
   static const pin = '$_svgPath/pin.svg';
   static const check = '$_svgPath/check.svg';
+  static const notification = '$_svgPath/notification.svg';
+  static const loanRequest = '$_svgPath/loan_request.svg';
+  static const homeCardBg1 = '$_svgPath/home_card_bg1.svg';
+  static const homeCardBg2 = '$_svgPath/home_card_bg2.svg';
+  static const receipt = '$_svgPath/receipt.svg';
+  static const editProfile = '$_svgPath/edit_profile.svg';
+  static const profile = '$_svgPath/profile.svg';
+  static const disciplinary = '$_svgPath/disciplinary.svg';
+  static const requestID = '$_svgPath/request_id.svg';
+  static const changePassword = '$_svgPath/change_password.svg';
+  static const helpAndSupport = '$_svgPath/help_and_support.svg';
+  static const edit = '$_svgPath/edit.svg';
+  static const appraisal = '$_svgPath/appraisal.svg';
+  static const logout = '$_svgPath/logout.svg';
 }

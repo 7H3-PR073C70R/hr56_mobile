@@ -12,6 +12,8 @@ class AppStrings {
 
   static const appName = 'HR56 Staff Mobile';
 
+  static const naira = '₦';
+
   static const onboardingImages = [
     AppAssetPath.onboarding1,
     AppAssetPath.onboarding2,
