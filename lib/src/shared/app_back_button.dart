@@ -20,8 +20,8 @@ class AppBackButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.radius),
           color: const Color(0xFFF5F5F5),
         ),
-        child: const Icon(
-          Icons.arrow_back,
+        child: Icon(
+          Icons.adaptive.arrow_back,
           size: 26,
           color: AppColors.textColor,
         ),
