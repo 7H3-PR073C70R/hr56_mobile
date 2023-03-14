@@ -17,29 +17,29 @@ class RequestLeavePage extends StatelessWidget {
   static const routeName = 'request-leave';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const EmptyAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            const CustomAppBarWithBackButton(
-              text: 'Request Leave',
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    AppSpacing.setVerticalSpace(13),
-                    const CustomDropDownButton(
-                      texts: [
-                        'Parental leave (max 10 days)',
-                      ],
-                      label: 'Company type of leave',
-                      hintText: '9',
-                    ),
-                    AppSpacing.setVerticalSpace(12),
-                    const CustomInputField(
+      return Scaffold(
+        appBar: const EmptyAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const CustomAppBarWithBackButton(
+                text: 'Request Leave',
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      AppSpacing.setVerticalSpace(13),
+                      const CustomDropDownButton(
+                        texts: [
+                          'Parental leave (max 10 days)',
+                        ],
+                        label: 'Company type of leave',
+                        hintText: '9',
+                      ),
+                      AppSpacing.setVerticalSpace(12),
+                      const CustomInputField(
                       label: 'How long are you going to take (days)',
                       hintText: '9',
                     ),
@@ -58,7 +58,7 @@ class RequestLeavePage extends StatelessWidget {
                       label: 'Purpose for leave request',
                       hintText: 'period leave i have my period and i am'
                           ' taking a mandatory, leave.',
-                      maxLines: 10,
+                        maxLines: 10,
                     ),
                     AppSpacing.setVerticalSpace(40),
                     Button(
