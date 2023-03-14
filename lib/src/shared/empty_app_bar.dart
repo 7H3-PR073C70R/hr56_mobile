@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hr56_staff/src/core/constants/app_colors.dart';
 
 class EmptyAppBar extends StatelessWidget with PreferredSizeWidget {
   const EmptyAppBar({
     super.key,
     this.isDark = true,
-    this.backgroundColor = AppColors.whiteColor,
+    this.backgroundColor = const Color(0xFFF5F5F5),
   });
 
   final Color backgroundColor;

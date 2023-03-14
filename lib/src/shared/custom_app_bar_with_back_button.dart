@@ -6,9 +6,11 @@ class CustomAppBarWithBackButton extends StatelessWidget {
   const CustomAppBarWithBackButton({
     super.key,
     required this.text,
+    this.leading,
   });
 
   final String text;
+  final List<Widget>? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class CustomAppBarWithBackButton extends StatelessWidget {
             ),
           ),
         ),
+        if (leading != null) ...leading!
       ],
     );
   }
