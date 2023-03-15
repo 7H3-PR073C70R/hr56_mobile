@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
+import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/utils/show_custom_modal.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
 import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class EmergencyContactPage extends StatelessWidget {
-  const EmergencyContactPage({super.key});
+  const EmergencyContactPage({super.key, this.isAfterLogin = false});
 
   static const routeName = 'emergency-contact';
+
+  final bool isAfterLogin;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +39,6 @@ class EmergencyContactPage extends StatelessWidget {
                       label: 'Last name',
                       hintText: 'Hassan',
                     ),
-                    
                     AppSpacing.setVerticalSpace(12),
                     const CustomInputField(
                       label: 'Phone number',
@@ -50,7 +53,16 @@ class EmergencyContactPage extends StatelessWidget {
                     ),
                     AppSpacing.setVerticalSpace(40),
                     Button(
-                      onPressed: () => context.navigator.pop(),
+                      onPressed: () {
+                        if (isAfterLogin) {
+                          showInfoCustomModel(
+                            context,
+                            UserInformation.emergency,
+                          );
+                        } else {
+                          context.navigator.pop();
+                        }
+                      },
                       text: 'Add Contact',
                     ),
                   ],

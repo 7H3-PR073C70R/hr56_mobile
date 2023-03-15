@@ -46,8 +46,7 @@ class NotificationPage extends StatelessWidget {
                     2,
                     (index) => const NotificationCard(
                       type: NotificationType.loan,
-                      title:
-                          'Loan request has been submitted, '
+                      title: 'Loan request has been submitted, '
                           'and would be processed.',
                       date: 'Monday, 12 : 12  PM',
                     ),
@@ -67,8 +66,7 @@ class NotificationPage extends StatelessWidget {
                     20,
                     (index) => const NotificationCard(
                       type: NotificationType.loan,
-                      title:
-                          'Loan request has been submitted, '
+                      title: 'Loan request has been submitted, '
                           'and would be processed.',
                       date: 'Monday, 12 : 12  PM',
                     ),

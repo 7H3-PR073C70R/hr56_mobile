@@ -28,11 +28,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       key: scaffoldKey,
+      key: scaffoldKey,
       appBar: const EmptyAppBar(),
       drawer: const CustomDrawer(),
       body: SafeArea(
-       
         child: Column(
           children: [
             Padding(
@@ -293,7 +292,8 @@ class HomeInfoCard extends StatelessWidget {
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
-    super.key, required this.openDrawer,
+    super.key,
+    required this.openDrawer,
   });
 
   final VoidCallback openDrawer;

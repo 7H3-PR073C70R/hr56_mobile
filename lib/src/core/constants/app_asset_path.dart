@@ -19,6 +19,9 @@ class AppAssetPath {
   static const onboarding2 = '$_imagePath/onboarding2.png';
   static const onboarding31 = '$_imagePath/onboarding31.png';
   static const onboarding32 = '$_imagePath/onboarding32.png';
+  static const guarantorSuccess = '$_imagePath/guarantor_success.png';
+  static const nextOfKinSuccess = '$_imagePath/next_of_kin_success.png';
+  static const personalInfoSuccess = '$_imagePath/personal_info_success.png';
 
   static const loan = '$_imagePath/loan.png';
 

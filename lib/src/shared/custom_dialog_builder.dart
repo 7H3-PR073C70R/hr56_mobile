@@ -10,11 +10,19 @@ class CustomDialogBuilder extends StatelessWidget {
     required this.child,
     this.buttonText,
     this.onPressed,
+    this.radius = 10,
+    this.showCloseIcon = true,
+    this.buttonPadding,
+    this.padding,
   });
 
   final Widget child;
   final String? buttonText;
   final VoidCallback? onPressed;
+  final double radius;
+  final EdgeInsets? buttonPadding;
+  final EdgeInsets? padding;
+  final bool showCloseIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -24,43 +32,48 @@ class CustomDialogBuilder extends StatelessWidget {
         horizontal: 24,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.radius),
+        borderRadius: BorderRadius.circular(radius.radius),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 16,
-        ),
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 16,
+            ),
         width: double.infinity,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: CircleAvatar(
-                  radius: 15.radius,
-                  backgroundColor: AppColors.backgroundColor,
-                  child: const Center(
-                    child: Icon(
-                      Icons.close,
-                      color: AppColors.whiteColor,
+            if (showCloseIcon)
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: CircleAvatar(
+                    radius: 15.radius,
+                    backgroundColor: AppColors.backgroundColor,
+                    child: const Center(
+                      child: Icon(
+                        Icons.close,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
             AppSpacing.setVerticalSpace(14),
             child,
             AppSpacing.setVerticalSpace(24),
             if (onPressed != null && buttonText != null)
-              Button(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onPressed!();
-                },
-                text: buttonText!,
+              Padding(
+                padding: buttonPadding ?? EdgeInsets.zero,
+                child: Button(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onPressed!();
+                  },
+                  text: buttonText!,
+                ),
               ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr56_staff/src/app/router/app_router.dart';
+import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
 
 extension ResponsiveExtension on num {
@@ -63,6 +64,91 @@ extension LoanStatusExtension on LoanStatus {
         return const Color(0xFFCC1D10);
       case LoanStatus.disbursed:
         return const Color(0xFF037EEF);
+    }
+  }
+}
+
+extension UserInfoExtension on UserInformation {
+  String get text1 {
+    switch (this) {
+      case UserInformation.personal:
+        return 'Cheers almost there fill in your';
+      case UserInformation.nextOfKin:
+        return 'Yes you are almost close, fill your';
+      case UserInformation.bank:
+        return 'Yes you are almost close, fill in';
+      case UserInformation.guarantor:
+        return 'We feel it  you are closer than ever, fill in';
+      case UserInformation.emergency:
+        return 'Cheers you got here finally, fill in';
+    }
+  }
+
+  String get text2 {
+    switch (this) {
+      case UserInformation.personal:
+        return 'next of kin details.';
+      case UserInformation.nextOfKin:
+        return 'Bank details.';
+      case UserInformation.bank:
+        return 'Guarantor details.';
+      case UserInformation.guarantor:
+        return 'Emergency contact';
+      case UserInformation.emergency:
+        return 'References';
+    }
+  }
+
+  String get buttonText {
+    switch (this) {
+      case UserInformation.personal:
+        return 'Fill next of kin details';
+      case UserInformation.nextOfKin:
+        return 'Fill bank details';
+      case UserInformation.bank:
+        return 'Fill guarantor details';
+      case UserInformation.guarantor:
+        return 'Fill emergency contact';
+      case UserInformation.emergency:
+        return 'Fill references';
+    }
+  }
+
+  String get imagePath {
+    switch (this) {
+      case UserInformation.personal:
+      case UserInformation.emergency:
+        return AppAssetPath.personalInfoSuccess;
+      case UserInformation.nextOfKin:
+        return AppAssetPath.nextOfKinSuccess;
+      case UserInformation.bank:
+      case UserInformation.guarantor:
+        return AppAssetPath.guarantorSuccess;
+    }
+  }
+
+  VoidCallback onPressed(BuildContext context) {
+    switch (this) {
+      case UserInformation.personal:
+        return () => context.navigator.replace(
+              NextOfKinRoute(isAfterLogin: true),
+            );
+      case UserInformation.nextOfKin:
+        return () => context.navigator.replace(
+              BankDetailsRoute(isAfterLogin: true),
+            );
+      case UserInformation.bank:
+        return () => context.navigator.replace(
+              GuarantorRoute(isAfterLogin: true),
+            );
+      case UserInformation.guarantor:
+        return () => context.navigator.replace(
+              EmergencyContactRoute(isAfterLogin: true),
+            );
+      case UserInformation.emergency:
+        return () => context.navigator.replace(
+              ReferenceRoute(isAfterLogin: true),
+            );
     }
   }
 }

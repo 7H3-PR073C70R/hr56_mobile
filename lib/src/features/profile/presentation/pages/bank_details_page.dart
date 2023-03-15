@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
+import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/utils/show_custom_modal.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
 import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class BankDetailsPage extends StatelessWidget {
-  const BankDetailsPage({super.key});
+  const BankDetailsPage({super.key, this.isAfterLogin = false});
+
+  final bool isAfterLogin;
 
   static const routeName = 'bank-details';
   @override
@@ -48,7 +52,13 @@ class BankDetailsPage extends StatelessWidget {
                     ),
                     AppSpacing.setVerticalSpace(40),
                     Button(
-                      onPressed: () => context.navigator.pop(),
+                      onPressed: () {
+                        if (isAfterLogin) {
+                          showInfoCustomModel(context, UserInformation.bank);
+                        } else {
+                          context.navigator.pop();
+                        }
+                      },
                       text: 'Save changes',
                     ),
                   ],

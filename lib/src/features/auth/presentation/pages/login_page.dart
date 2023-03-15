@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hr56_staff/src/app/router/app_router.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
@@ -10,7 +11,6 @@ import 'package:hr56_staff/src/features/auth/presentation/widgets/auth_input_fie
 import 'package:hr56_staff/src/features/auth/presentation/widgets/auth_view.dart';
 import 'package:hr56_staff/src/features/auth/presentation/widgets/password_validator_builder.dart';
 import 'package:hr56_staff/src/shared/button.dart';
-import 'package:hr56_staff/src/shared/main_page.dart';
 import 'package:hr56_staff/src/shared/password_suffix_icon.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 import 'package:hr56_staff/src/shared/widget_to_show.dart';
@@ -150,7 +150,11 @@ class LoginPage extends HookWidget {
                             isValidPassword.value = false;
                             passwordController.clear();
                           } else {
-                            context.navigator.pushNamed(MainPage.routeName);
+                            context.navigator.replace(
+                              PersonalInfoRoute(
+                                isAfterLogin: true,
+                              ),
+                            );
                           }
                         },
                         text: 'Sign in',

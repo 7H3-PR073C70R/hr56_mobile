@@ -24,3 +24,11 @@ enum LoanStatus {
   declined,
   disbursed,
 }
+
+enum UserInformation {
+  personal,
+  nextOfKin,
+  bank,
+  guarantor,
+  emergency,
+}
