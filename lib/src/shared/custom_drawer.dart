@@ -108,7 +108,9 @@ class CustomDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      ProfilePage.routeName,
+                    ),
                     text: 'Profile',
                     iconPath: AppAssetPath.profile,
                   ),
