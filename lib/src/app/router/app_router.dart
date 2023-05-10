@@ -1,25 +1,39 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hr56_staff/src/core/enums/enums.dart';
+import 'package:hr56_staff/src/features/auth/presentation/pages/auth_congratulations_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/login_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/onboarding_page.dart';
+import 'package:hr56_staff/src/features/auth/presentation/pages/onboarding_questionnaire_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/reset_password_page.dart';
+import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_list_page.dart';
+import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_page.dart';
+import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_summary_page.dart';
 import 'package:hr56_staff/src/features/home/presentation/pages/home_page.dart';
 import 'package:hr56_staff/src/features/home/presentation/pages/notification_page.dart';
+import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_history_page.dart';
 import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_page.dart';
+import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_type_page.dart';
 import 'package:hr56_staff/src/features/leaves/presentation/pages/request_leave_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/pages/loan_form_page.dart';
+import 'package:hr56_staff/src/features/loans/presentation/pages/loan_history_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/pages/loan_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/pages/request_loan_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/pages/verify_account_page.dart';
+import 'package:hr56_staff/src/features/payslip/presentation/pages/payslip_details_page.dart';
 import 'package:hr56_staff/src/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/emergency_contact_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/guarantor_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/help_and_support_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/id_photo_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/next_of_kin_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/personal_info_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/profile_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/spouse_details_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/update_password_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:hr56_staff/src/shared/main_page.dart';
 
@@ -78,6 +92,50 @@ part 'app_router.gr.dart';
       path: ReferencePage.routeName,
     ),
     AutoRoute(
+      page: SpouseDetailsPage,
+      path: SpouseDetailsPage.routeName,
+    ),
+    AutoRoute(
+      page: AuthCongratulationsPage,
+      path: AuthCongratulationsPage.routeName,
+    ),
+    AutoRoute(
+      page: IDPhotoPage,
+      path: IDPhotoPage.routeName,
+    ),
+    AutoRoute(
+      page: OnboardingQuestionnairePage,
+      path: OnboardingQuestionnairePage.routeName,
+    ),
+    AutoRoute(
+      page: LoanHistoryPage,
+      path: LoanHistoryPage.routeName,
+    ),
+    AutoRoute(
+      page: LeaveHistoryPage,
+      path: LeaveHistoryPage.routeName,
+    ),
+    AutoRoute(
+      page: DisciplinaryPage,
+      path: DisciplinaryPage.routeName,
+    ),
+    AutoRoute(
+      page: DisciplinaryListPage,
+      path: DisciplinaryListPage.routeName,
+    ),
+    AutoRoute(
+      page: DisciplinarySummaryPage,
+      path: DisciplinarySummaryPage.routeName,
+    ),
+    AutoRoute(
+      page: HelpAndSupportPage,
+      path: HelpAndSupportPage.routeName,
+    ),
+    AutoRoute(
+      page: UpdatePasswordPage,
+      path: UpdatePasswordPage.routeName,
+    ),
+    AutoRoute(
       page: MainPage,
       path: MainPage.routeName,
       children: [
@@ -92,6 +150,10 @@ part 'app_router.gr.dart';
             AutoRoute(
               page: RequestLeavePage,
               path: RequestLeavePage.routeName,
+            ),
+            AutoRoute(
+              page: LeaveTypePage,
+              path: LeaveTypePage.routeName,
             ),
           ],
         ),
@@ -116,6 +178,12 @@ part 'app_router.gr.dart';
         AutoRoute(
           page: PayslipPage,
           path: PayslipPage.routeName,
+          children: [
+             AutoRoute(
+              page: PayslipDetailsPage,
+              path: PayslipDetailsPage.routeName,
+            ),
+          ],
         ),
         AutoRoute(
           page: WalletPage,
