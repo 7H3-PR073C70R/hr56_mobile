@@ -72,6 +72,7 @@ extension UserInfoExtension on UserInformation {
   String get text1 {
     switch (this) {
       case UserInformation.personal:
+      case UserInformation.spouse:
         return 'Cheers almost there fill in your';
       case UserInformation.nextOfKin:
         return 'Yes you are almost close, fill your';
@@ -81,27 +82,33 @@ extension UserInfoExtension on UserInformation {
         return 'We feel it  you are closer than ever, fill in';
       case UserInformation.emergency:
         return 'Cheers you got here finally, fill in';
+      case UserInformation.reference:
+        return 'Pictures gives us memories, take';
     }
   }
 
   String get text2 {
     switch (this) {
       case UserInformation.personal:
+      case UserInformation.spouse:
         return 'next of kin details.';
       case UserInformation.nextOfKin:
         return 'Bank details.';
       case UserInformation.bank:
-        return 'Guarantor details.';
+        return 'Two(2) Guarantor  details';
       case UserInformation.guarantor:
         return 'Emergency contact';
       case UserInformation.emergency:
         return 'References';
+      case UserInformation.reference:
+        return 'ID Photo';
     }
   }
 
   String get buttonText {
     switch (this) {
       case UserInformation.personal:
+      case UserInformation.spouse:
         return 'Fill next of kin details';
       case UserInformation.nextOfKin:
         return 'Fill bank details';
@@ -111,12 +118,16 @@ extension UserInfoExtension on UserInformation {
         return 'Fill emergency contact';
       case UserInformation.emergency:
         return 'Fill references';
+      case UserInformation.reference:
+        return 'Take photo';
     }
   }
 
   String get imagePath {
     switch (this) {
+      case UserInformation.spouse:
       case UserInformation.personal:
+      case UserInformation.reference:
       case UserInformation.emergency:
         return AppAssetPath.personalInfoSuccess;
       case UserInformation.nextOfKin:
@@ -127,9 +138,19 @@ extension UserInfoExtension on UserInformation {
     }
   }
 
-  VoidCallback onPressed(BuildContext context) {
+  VoidCallback onPressed(BuildContext context, [bool isSpouse = false]) {
     switch (this) {
       case UserInformation.personal:
+        if (isSpouse) {
+          return () => context.navigator.replace(
+                SpouseDetailsRoute(isAfterLogin: true),
+              );
+        } else {
+          return () => context.navigator.replace(
+                NextOfKinRoute(isAfterLogin: true),
+              );
+        }
+      case UserInformation.spouse:
         return () => context.navigator.replace(
               NextOfKinRoute(isAfterLogin: true),
             );
@@ -149,6 +170,55 @@ extension UserInfoExtension on UserInformation {
         return () => context.navigator.replace(
               ReferenceRoute(isAfterLogin: true),
             );
+      case UserInformation.reference:
+        return () => context.navigator.replace(
+              IDPhotoRoute(isAfterLogin: true),
+            );
+    }
+  }
+}
+
+extension DisciplinaryTypeExtension on DisciplinaryType {
+  String get title {
+    switch (this) {
+      case DisciplinaryType.queries:
+        return 'Query';
+      case DisciplinaryType.warnings:
+        return 'Warning';
+      case DisciplinaryType.suspensions:
+        return 'Suspension';
+    }
+  }
+}
+
+extension LeaveTypeExtension on LeaveType {
+  bool get isParental => this == LeaveType.parental;
+  bool get isHospital => this == LeaveType.hospital;
+  bool get isMaternal => this == LeaveType.maternal;
+  bool get isSick => this == LeaveType.sick;
+
+  String get title {
+    switch (this) {
+      case LeaveType.parental:
+        return 'Parental Leave 5 days (s)';
+      case LeaveType.sick:
+        return 'Sick Leave 4 days (s)';
+      case LeaveType.hospital:
+        return 'Hospital Leave 10 days (s)';
+      case LeaveType.maternal:
+        return 'Maternal Leave 10 days (s)';
+    }
+  }
+
+  String get iconPath {
+    switch (this) {
+      case LeaveType.parental:
+        return AppAssetPath.parentalLeave;
+      case LeaveType.hospital:
+      case LeaveType.sick:
+        return AppAssetPath.sickLeave;
+      case LeaveType.maternal:
+        return AppAssetPath.maternalLeave;
     }
   }
 }

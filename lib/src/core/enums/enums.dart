@@ -27,8 +27,23 @@ enum LoanStatus {
 
 enum UserInformation {
   personal,
+  spouse,
   nextOfKin,
   bank,
   guarantor,
   emergency,
+  reference,
+}
+
+enum LeaveType {
+  parental,
+  sick,
+  hospital,
+  maternal,
+}
+
+enum DisciplinaryType {
+  queries,
+  warnings,
+  suspensions,
 }
