@@ -24,4 +24,7 @@ class AppStrings {
     'Track payslip and payslip history with ease.',
     'Track Your Transactions: Wallet History for Easy Payments.'
   ];
+
+  static const profileImage = 'https://encrypted-tbn0.gstatic.com/images?q='
+      'tbn:ANd9GcTmrssFdAIAer1QHQ40q2yGBcAYrjbw3hWiW-pUQDnb&s';
 }
