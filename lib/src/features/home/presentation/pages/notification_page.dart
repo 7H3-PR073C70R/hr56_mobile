@@ -19,7 +19,7 @@ class NotificationPage extends StatelessWidget {
         children: [
           CustomAppBarWithBackButton(
             text: 'Notification',
-            leading: [
+            actions: [
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.more_vert),

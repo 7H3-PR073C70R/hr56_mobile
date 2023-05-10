@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
-import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_page.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
 import 'package:hr56_staff/src/shared/custom_dialog.dart';
@@ -85,7 +84,6 @@ class RequestLeavePage extends StatelessWidget {
                                 actionText: 'Back home',
                                 onActionPressed: () {
                                   Navigator.of(ctx).pop();
-                                  isAdded.value = true;
                                   context.popUntilMain();
                                 },
                               ),

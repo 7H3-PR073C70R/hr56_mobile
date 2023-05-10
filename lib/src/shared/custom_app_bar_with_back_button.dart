@@ -6,16 +6,19 @@ class CustomAppBarWithBackButton extends StatelessWidget {
   const CustomAppBarWithBackButton({
     super.key,
     required this.text,
-    this.leading,
+    this.showLeading = true,
+    this.actions,
   });
 
   final String text;
-  final List<Widget>? leading;
+  final bool showLeading;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        if(showLeading)
         const AppBackButton(),
         Expanded(
           child: Center(
@@ -27,7 +30,7 @@ class CustomAppBarWithBackButton extends StatelessWidget {
             ),
           ),
         ),
-        if (leading != null) ...leading!
+        if (actions != null) ...actions!
       ],
     );
   }

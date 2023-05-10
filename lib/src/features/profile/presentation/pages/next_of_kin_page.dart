@@ -5,6 +5,7 @@ import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/core/utils/show_custom_modal.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
+import 'package:hr56_staff/src/shared/custom_drop_down_button.dart';
 import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
@@ -50,6 +51,24 @@ class NextOfKinPage extends StatelessWidget {
                       label: 'Address',
                       hintText: 'Somewhere on earth, Lagos.',
                       keyboardType: TextInputType.streetAddress,
+                    ),
+                    AppSpacing.setVerticalSpace(12),
+                    const CustomInputField(
+                      label: 'Email Address',
+                      hintText: 'example@example.com',
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    AppSpacing.setVerticalSpace(12),
+                    CustomDropDownButton(
+                      label: 'Relationship with next of kin',
+                      texts: const [
+                        'Mother',
+                        'Father',
+                        'Uncle',
+                        'Aunt',
+                        'Others',
+                      ],
+                      onChanged: (_) {},
                     ),
                     AppSpacing.setVerticalSpace(40),
                     Button(

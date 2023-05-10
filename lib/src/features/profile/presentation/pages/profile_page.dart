@@ -12,6 +12,7 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/next_of_kin_p
 import 'package:hr56_staff/src/features/profile/presentation/pages/personal_info_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
+import 'package:hr56_staff/src/shared/profile_info.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -40,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                       PersonalInfoPage.routeName,
                     ),
                     header: 'Personal Info',
-                    title: const [
+                    titles: const [
                       'Employee ID',
                       'Employment type',
                       'Job title',
@@ -55,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                       'Spouse phone number',
                       'Spouse address',
                     ],
-                    description: const [
+                    descriptions: const [
                       '2012ASG',
                       'Full time',
                       'Lead Designer',
@@ -72,13 +73,13 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   ProfileInfo(
-                    description: const [
+                    descriptions: const [
                       'Tobi',
                       'Hassan',
                       '0810467748448',
                       'Phase 2 VI, Lagos state',
                     ],
-                    title: const [
+                    titles: const [
                       'First Name',
                       'Last Name',
                       'Phone Number',
@@ -90,13 +91,13 @@ class ProfilePage extends StatelessWidget {
                     header: 'Next of Kin',
                   ),
                   ProfileInfo(
-                    description: const [
+                    descriptions: const [
                       'Access bank',
                       '026364738',
                       'Isaiah Nwankwo',
                       '414676766879990',
                     ],
-                    title: const [
+                    titles: const [
                       'Bank name',
                       'Bank account number',
                       'Bank account name',
@@ -108,12 +109,12 @@ class ProfilePage extends StatelessWidget {
                     header: 'Bank Details',
                   ),
                   ProfileInfo(
-                    description: const [
+                    descriptions: const [
                       'Tobi',
                       'Hassan',
                       'Tobihassan@gmail.com',
                     ],
-                    title: const [
+                    titles: const [
                       'First name',
                       'Last name',
                       'Email',
@@ -124,11 +125,11 @@ class ProfilePage extends StatelessWidget {
                     header: 'Guarantor Details',
                   ),
                   ProfileInfo(
-                    description: const [
+                    descriptions: const [
                       'Tobi',
                       '09056637373',
                     ],
-                    title: const [
+                    titles: const [
                       'Name',
                       'Phone number',
                     ],
@@ -138,7 +139,7 @@ class ProfilePage extends StatelessWidget {
                     header: 'Emergency Contact',
                   ),
                   ProfileInfo(
-                    description: const [
+                    descriptions: const [
                       'Tobi Hassan',
                       'Tobihassan@gmail.com',
                       'Somewhere on earth, Lagos',
@@ -150,7 +151,7 @@ class ProfilePage extends StatelessWidget {
                       'N/A',
                       'N/A',
                     ],
-                    title: const [
+                    titles: const [
                       'Name',
                       'Email',
                       'Address',
@@ -175,112 +176,6 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ProfileInfo extends StatelessWidget {
-  const ProfileInfo({
-    super.key,
-    required this.onEditTap,
-    required this.header,
-    required this.title,
-    required this.description,
-    this.add,
-    this.showLine = true,
-  });
-
-  final VoidCallback onEditTap;
-  final String header;
-  final List<String> title;
-  final List<String> description;
-  final bool showLine;
-  final Widget? add;
-
-  @override
-  Widget build(BuildContext context) {
-    assert(
-      title.length == description.length,
-      'Title and length needs to have the same length',
-    );
-    return Column(
-      children: [
-        AppSpacing.setVerticalSpace(12),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          header,
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 20.fontSize,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                        AppSpacing.setVerticalSpace(24),
-                        ...List.generate(
-                          title.length,
-                          (index) => Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    title[index],
-                                    style: context.textTheme.displayLarge
-                                        ?.copyWith(
-                                      fontSize: 15.fontSize,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    description[index],
-                                    style: context.textTheme.displayLarge
-                                        ?.copyWith(
-                                      fontSize: 15.fontSize,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: onEditTap,
-                    child: const SvgImageAsset(AppAssetPath.edit),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        if (showLine) ...[
-          AppSpacing.setVerticalSpace(10),
-          Container(
-            height: 8.height,
-            width: double.infinity,
-            color: AppColors.whiteColor,
-          ),
-        ]
-      ],
     );
   }
 }

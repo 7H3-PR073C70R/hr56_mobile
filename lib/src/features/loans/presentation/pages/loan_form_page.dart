@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
-import 'package:hr56_staff/src/features/loans/presentation/pages/loan_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/widgets/loan_header.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_check_box.dart';
@@ -84,7 +83,6 @@ class LoanFormPage extends HookWidget {
                                 description: 'your loan request has been '
                                     'successfully submitted.',
                                 onActionPressed: () {
-                                  loanRequested.value = true;
                                   Navigator.of(ctx).pop();
                                   context.popUntilMain();
                                 },

@@ -3,7 +3,13 @@ import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_page.dart';
+import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_history_page.dart';
+import 'package:hr56_staff/src/features/loans/presentation/pages/loan_history_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/help_and_support_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/id_photo_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/profile_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/update_password_page.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -116,25 +122,25 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
-                    text: 'Disciplinary',
-                    iconPath: AppAssetPath.disciplinary,
-                  ),
-                  AppSpacing.setVerticalSpace(32),
-                  DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      IDPhotoPage.routeName,
+                    ),
                     text: 'Request ID card',
                     iconPath: AppAssetPath.requestID,
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      LoanHistoryPage.routeName,
+                    ),
                     text: 'Loan History',
                     iconPath: AppAssetPath.loanSolid,
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      LeaveHistoryPage.routeName,
+                    ),
                     text: 'Leave History',
                     iconPath: AppAssetPath.leaveSolid,
                   ),
@@ -146,20 +152,33 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      UpdatePasswordPage.routeName,
+                    ),
                     text: 'Change password',
                     iconPath: AppAssetPath.changePassword,
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
-                    text: 'Help  & Support',
-                    iconPath: AppAssetPath.helpAndSupport,
+                    onTap: () => context.navigator.pushNamed(
+                      DisciplinaryPage.routeName,
+                    ),
+                    text: 'Disciplinary',
+                    iconPath: AppAssetPath.disciplinary,
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
+                    onTap: () => context.navigator.pushNamed(
+                      HelpAndSupportPage.routeName,
+                    ),
+                    text: 'Help & Support',
+                    iconPath: AppAssetPath.helpAndSupport,
+                  ),
+                  AppSpacing.setVerticalSpace(81),
+                  DrawerMenuItem(
                     onTap: () {},
                     text: 'Log Out',
+                    isLogout: true,
                     iconPath: AppAssetPath.logout,
                   ),
                   AppSpacing.setVerticalSpace(15),
@@ -179,17 +198,22 @@ class DrawerMenuItem extends StatelessWidget {
     required this.onTap,
     required this.text,
     required this.iconPath,
+    this.isLogout = false,
   });
 
   final VoidCallback onTap;
   final String text;
   final String iconPath;
+  final bool isLogout;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: onTap,
+      onTap: () {
+        Navigator.of(context).pop();
+        onTap();
+      },
       child: Row(
         children: [
           Container(
@@ -205,7 +229,7 @@ class DrawerMenuItem extends StatelessWidget {
             ),
             child: SvgImageAsset(
               iconPath,
-              color: AppColors.whiteColor,
+              color: isLogout ? AppColors.errorColor : AppColors.whiteColor,
             ),
           ),
           AppSpacing.horizontalSpaceSmall,
@@ -214,7 +238,7 @@ class DrawerMenuItem extends StatelessWidget {
             style: context.textTheme.displayLarge?.copyWith(
               fontSize: 14.fontSize,
               fontWeight: FontWeight.w500,
-              color: AppColors.whiteColor,
+              color: isLogout ? AppColors.errorColor : AppColors.whiteColor,
             ),
           ),
         ],

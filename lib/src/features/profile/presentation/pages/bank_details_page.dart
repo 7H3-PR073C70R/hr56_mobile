@@ -45,11 +45,6 @@ class BankDetailsPage extends StatelessWidget {
                       label: 'Bank account name',
                       hintText: 'Tobi Hassan',
                     ),
-                    AppSpacing.setVerticalSpace(12),
-                    const CustomInputField(
-                      label: 'National identity number',
-                      hintText: '224127707070708012',
-                    ),
                     AppSpacing.setVerticalSpace(40),
                     Button(
                       onPressed: () {

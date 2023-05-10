@@ -3,7 +3,11 @@ import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/shared/success_modal.dart';
 
-Future<void> showInfoCustomModel(BuildContext context, UserInformation info) =>
+Future<void> showInfoCustomModel(BuildContext context, UserInformation info,
+        [bool isSpouse = false,
+        String? text1,
+        String? text2,
+        String? buttonText,]) =>
     showModalBottomSheet<Widget>(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -13,10 +17,10 @@ Future<void> showInfoCustomModel(BuildContext context, UserInformation info) =>
       ),
       context: context,
       builder: (_) => SuccessModal(
-        buttonText: info.buttonText,
-        onPressed: info.onPressed(context),
-        text1: info.text1,
-        text2: info.text2,
+        buttonText: buttonText ?? info.buttonText,
+        onPressed: info.onPressed(context, isSpouse),
+        text1: text1 ?? info.text1,
+        text2: text2 ?? info.text2,
         imagePath: info.imagePath,
       ),
     );

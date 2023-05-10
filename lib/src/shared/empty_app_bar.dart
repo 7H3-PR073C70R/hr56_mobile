@@ -5,23 +5,28 @@ class EmptyAppBar extends StatelessWidget with PreferredSizeWidget {
   const EmptyAppBar({
     super.key,
     this.isDark = true,
+    this.leading,
+    this.height = 1,
     this.backgroundColor = const Color(0xFFF5F5F5),
   });
 
   final Color backgroundColor;
 
   final bool isDark;
+  final Widget? leading;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 1,
+      toolbarHeight: height,
       backgroundColor: backgroundColor,
+      leading: leading,
       systemOverlayStyle:
           isDark ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
     );
   }
 
   @override
-  Size get preferredSize => const Size(1, 1);
+  Size get preferredSize =>  Size(height, height);
 }

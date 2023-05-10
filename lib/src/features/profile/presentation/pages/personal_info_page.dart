@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
@@ -10,7 +11,7 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/date_picker_form_card.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
-class PersonalInfoPage extends StatelessWidget {
+class PersonalInfoPage extends HookWidget {
   const PersonalInfoPage({
     super.key,
     this.isAfterLogin = false,
@@ -21,6 +22,7 @@ class PersonalInfoPage extends StatelessWidget {
   static const routeName = 'personal-info';
   @override
   Widget build(BuildContext context) {
+    final isMarried = useState(false);
     return Scaffold(
       appBar: const EmptyAppBar(),
       body: Padding(
@@ -71,27 +73,28 @@ class PersonalInfoPage extends StatelessWidget {
                         'Married',
                         'Divorced',
                       ],
+                      onChanged: (value) {
+                        if (value == 'Married') {
+                          isMarried.value = true;
+                        }
+                      },
+                    ),
+                    AppSpacing.setVerticalSpace(12),
+                    CustomDropDownButton(
+                      label: 'Identification',
+                      texts: const [
+                        'Passport',
+                        'Voters Card',
+                        'I.D Card',
+                        'Drivers License',
+                        'National I.D'
+                      ],
                       onChanged: (_) {},
                     ),
                     AppSpacing.setVerticalSpace(12),
                     const CustomInputField(
-                      label: 'State of residence',
-                      hintText: 'Cyprus',
-                    ),
-                    AppSpacing.setVerticalSpace(12),
-                    const CustomInputField(
-                      label: 'Spouse name',
-                      hintText: 'N/A',
-                    ),
-                    AppSpacing.setVerticalSpace(12),
-                    const CustomInputField(
-                      label: 'Spouse phone number',
-                      hintText: 'N/A',
-                    ),
-                    AppSpacing.setVerticalSpace(12),
-                    const CustomInputField(
-                      label: 'Spouse address',
-                      hintText: 'N/A',
+                      label: 'Identity number',
+                      hintText: '12345678909876543',
                     ),
                     AppSpacing.setVerticalSpace(40),
                     Button(
@@ -100,6 +103,12 @@ class PersonalInfoPage extends StatelessWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.personal,
+                            isMarried.value,
+                            isMarried.value
+                                ? 'Cheers almost there fill in your'
+                                : null,
+                            isMarried.value ? 'spouse details.' : null,
+                            isMarried.value ? 'Fill spouse details' : null,
                           );
                         } else {
                           context.navigator.pop();
