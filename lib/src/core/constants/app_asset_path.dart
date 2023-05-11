@@ -72,8 +72,19 @@ class AppAssetPath {
   static const maternalLeave = '$_svgPath/maternal_leave.svg';
   static const lock = '$_svgPath/alarm.svg';
   static const alarm = '$_svgPath/lock.svg';
+  static const cardBG = '$_imagePath/card_bg.png';
   static const danger = '$_svgPath/danger.svg';
   static const emptyPayslip = '$_svgPath/empty_payslip.svg';
   static const download = '$_svgPath/download.svg';
+  static const withdraw = '$_svgPath/withdraw.svg';
+  static const send = '$_svgPath/send.svg';
+  static const wallet = '$_svgPath/wallet.svg';
   static const pdf = '$_svgPath/pdf.svg';
+  static const copy = '$_svgPath/copy.svg';
+  static const cardLogo = '$_imagePath/card_logo.png';
+  static const airtime = '$_svgPath/airtime.svg';
+  static const data = '$_svgPath/data.svg';
+  static const education = '$_svgPath/education.svg';
+  static const electricity = '$_svgPath/electricity.svg';
+  static const tv = '$_svgPath/tv.svg';
 }
