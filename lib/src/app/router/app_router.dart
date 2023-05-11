@@ -141,10 +141,6 @@ part 'app_router.gr.dart';
       path: UpdatePasswordPage.routeName,
     ),
     AutoRoute(
-      page: WalletPage,
-      path: WalletPage.routeName,
-    ),
-    AutoRoute(
       page: BeneficiaryPage,
       path: BeneficiaryPage.routeName,
     ),
@@ -213,6 +209,10 @@ part 'app_router.gr.dart';
               path: PayslipDetailsPage.routeName,
             ),
           ],
+        ),
+        AutoRoute(
+          page: WalletPage,
+          path: WalletPage.routeName,
         ),
       ],
     ),
