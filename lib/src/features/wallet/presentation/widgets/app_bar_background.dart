@@ -142,38 +142,42 @@ class AppBarBackground extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: WalletAction.values
                   .map(
-                    (action) => Column(
-                      children: [
-                        Container(
-                          height: 60.radius,
-                          width: 60.radius,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.whiteColor.withOpacity(
-                              .3,
+                    (action) => GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => context.navigator.pushNamed(action.route),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 60.radius,
+                            width: 60.radius,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.whiteColor.withOpacity(
+                                .3,
+                              ),
+                              border: Border.all(
+                                color: AppColors.whiteColor,
+                              ),
                             ),
-                            border: Border.all(
+                            child: SvgImageAsset(
+                              action.asset,
+                              height: 34.radius,
+                              width: 34.radius,
+                            ),
+                          ),
+                          AppSpacing.verticalSpaceSmall,
+                          Text(
+                            action.title,
+                            style: context.textTheme.displayLarge
+                                ?.copyWith(
+                              fontSize: 16.fontSize,
+                              fontWeight: FontWeight.w500,
                               color: AppColors.whiteColor,
                             ),
                           ),
-                          child: SvgImageAsset(
-                            action.asset,
-                            height: 34.radius,
-                            width: 34.radius,
-                          ),
-                        ),
-                        AppSpacing.verticalSpaceSmall,
-                        Text(
-                          action.title,
-                          style: context.textTheme.displayLarge
-                              ?.copyWith(
-                            fontSize: 16.fontSize,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   )
                   .toList(),
