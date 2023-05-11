@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr56_staff/src/app/router/app_router.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/transfer_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/withdraw_page.dart';
 
 extension ResponsiveExtension on num {
   double get width => w;
@@ -247,6 +250,16 @@ extension WithdrawActionExtension on WalletAction {
         return 'Send';
       case WalletAction.fund:
         return 'Fund Wallet';
+    }
+  }
+  String get route {
+    switch (this) {
+      case WalletAction.withdraw:
+        return WithdrawPage.routeName;
+      case WalletAction.send:
+        return TransferPage.routeName;
+      case WalletAction.fund:
+        return FundWalletPage.routeName;
     }
   }
 }
