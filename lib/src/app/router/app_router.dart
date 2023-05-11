@@ -34,7 +34,12 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/profile_page.
 import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/spouse_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/update_password_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/beneficiary_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/review_transfer_details_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/transfer_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/wallet_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/withdraw_page.dart';
 import 'package:hr56_staff/src/shared/main_page.dart';
 
 part 'app_router.gr.dart';
@@ -136,6 +141,30 @@ part 'app_router.gr.dart';
       path: UpdatePasswordPage.routeName,
     ),
     AutoRoute(
+      page: WalletPage,
+      path: WalletPage.routeName,
+    ),
+    AutoRoute(
+      page: BeneficiaryPage,
+      path: BeneficiaryPage.routeName,
+    ),
+    AutoRoute(
+      page: ReviewTransferDetailsPage,
+      path: ReviewTransferDetailsPage.routeName,
+    ),
+    AutoRoute(
+      page: TransferPage,
+      path: TransferPage.routeName,
+    ),
+    AutoRoute(
+      page: FundWalletPage,
+      path: FundWalletPage.routeName,
+    ),
+    AutoRoute(
+      page: WithdrawPage,
+      path: WithdrawPage.routeName,
+    ),
+    AutoRoute(
       page: MainPage,
       path: MainPage.routeName,
       children: [
@@ -179,18 +208,14 @@ part 'app_router.gr.dart';
           page: PayslipPage,
           path: PayslipPage.routeName,
           children: [
-             AutoRoute(
+            AutoRoute(
               page: PayslipDetailsPage,
               path: PayslipDetailsPage.routeName,
             ),
           ],
         ),
-        AutoRoute(
-          page: WalletPage,
-          path: WalletPage.routeName,
-        ),
       ],
-    )
+    ),
   ],
 )
 // extend the generated private router
