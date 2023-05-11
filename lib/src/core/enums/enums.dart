@@ -47,3 +47,17 @@ enum DisciplinaryType {
   warnings,
   suspensions,
 }
+
+enum WalletAction {
+  withdraw,
+  send,
+  fund,
+}
+
+enum Services {
+  data,
+  airtime,
+  cable,
+  electricity,
+  education
+}

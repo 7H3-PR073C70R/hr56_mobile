@@ -226,3 +226,59 @@ extension LeaveTypeExtension on LeaveType {
 extension StringExtension on String {
   String get capitalizeFirst => this[0].toUpperCase() + substring(1);
 }
+
+extension WithdrawActionExtension on WalletAction {
+  String get asset {
+    switch (this) {
+      case WalletAction.withdraw:
+        return AppAssetPath.withdraw;
+      case WalletAction.send:
+        return AppAssetPath.send;
+      case WalletAction.fund:
+        return AppAssetPath.wallet;
+    }
+  }
+
+  String get title {
+    switch (this) {
+      case WalletAction.withdraw:
+        return 'Withdraw';
+      case WalletAction.send:
+        return 'Send';
+      case WalletAction.fund:
+        return 'Fund Wallet';
+    }
+  }
+}
+
+extension ServicesExtension on Services {
+  String get title {
+    switch (this) {
+      case Services.data:
+        return 'Data';
+      case Services.airtime:
+        return 'Airtime';
+      case Services.cable:
+        return 'Tv/Cable';
+      case Services.electricity:
+        return 'Electricity';
+      case Services.education:
+        return 'Education';
+    }
+  }
+
+  String get asset {
+    switch (this) {
+      case Services.data:
+        return AppAssetPath.data;
+      case Services.airtime:
+        return AppAssetPath.airtime;
+      case Services.cable:
+        return AppAssetPath.tv;
+      case Services.electricity:
+        return AppAssetPath.electricity;
+      case Services.education:
+        return AppAssetPath.education;
+    }
+  }
+}
