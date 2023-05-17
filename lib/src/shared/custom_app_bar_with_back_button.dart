@@ -22,10 +22,13 @@ class CustomAppBarWithBackButton extends StatelessWidget {
         const AppBackButton(),
         Expanded(
           child: Center(
-            child: Text(
-              text,
-              style: context.textTheme.displayLarge?.copyWith(
-                fontSize: 20.fontSize,
+            child: Padding(
+              padding: EdgeInsets.only(right: 45.radius),
+              child: Text(
+                text,
+                style: context.textTheme.displayLarge?.copyWith(
+                  fontSize: 20.fontSize,
+                ),
               ),
             ),
           ),
