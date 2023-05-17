@@ -252,6 +252,7 @@ extension WithdrawActionExtension on WalletAction {
         return 'Fund Wallet';
     }
   }
+
   String get route {
     switch (this) {
       case WalletAction.withdraw:
@@ -292,6 +293,92 @@ extension ServicesExtension on Services {
         return AppAssetPath.electricity;
       case Services.education:
         return AppAssetPath.education;
+    }
+  }
+}
+
+extension FundWalletExtension on FundWallet {
+  bool get isTransfer => this == FundWallet.transfer;
+  bool get isUSSD => this == FundWallet.ussd;
+
+  String get title {
+    switch (this) {
+      case FundWallet.transfer:
+        return 'Bank Transfer';
+      case FundWallet.ussd:
+        return 'USSD';
+    }
+  }
+
+  String get asset {
+    switch (this) {
+      case FundWallet.transfer:
+        return AppAssetPath.bank;
+      case FundWallet.ussd:
+        return AppAssetPath.ussd;
+    }
+  }
+
+  String get description {
+    switch (this) {
+      case FundWallet.transfer:
+        return 'Add money via mobile or internet banking';
+      case FundWallet.ussd:
+        return 'Add money via mobile or internet banking';
+    }
+  }
+}
+
+extension BankExtension on Bank {
+  
+  bool get isGt => this == Bank.gt;
+  bool get isZenith => this == Bank.zenith;
+  bool get isAccess => this == Bank.access;
+  bool get isPolaris => this == Bank.polaris;
+  bool get isWema => this == Bank.wema;
+
+  String get asset {
+    switch (this) {
+      case Bank.access:
+        return AppAssetPath.access;
+      case Bank.gt:
+        return AppAssetPath.gt;
+      case Bank.polaris:
+        return AppAssetPath.polaris;
+      case Bank.wema:
+        return AppAssetPath.wema;
+      case Bank.zenith:
+        return AppAssetPath.zenith;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case Bank.access:
+        return 'Access Bank';
+      case Bank.gt:
+        return 'GTBank';
+      case Bank.polaris:
+        return 'Polaris Bank';
+      case Bank.wema:
+        return 'Wema Bank';
+      case Bank.zenith:
+        return 'Zenith Bank';
+    }
+  }
+
+  String get pin {
+    switch (this) {
+      case Bank.access:
+        return '901';
+      case Bank.gt:
+        return '737';
+      case Bank.polaris:
+        return '833';
+      case Bank.wema:
+        return '945';
+      case Bank.zenith:
+        return '966';
     }
   }
 }
