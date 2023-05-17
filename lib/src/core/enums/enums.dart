@@ -61,3 +61,16 @@ enum Services {
   electricity,
   education
 }
+
+enum FundWallet {
+  transfer,
+  ussd,
+}
+
+enum Bank {
+  access,
+  gt,
+  polaris,
+  wema,
+  zenith,
+}
