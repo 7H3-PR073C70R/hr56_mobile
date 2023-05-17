@@ -87,4 +87,19 @@ class AppAssetPath {
   static const education = '$_svgPath/education.svg';
   static const electricity = '$_svgPath/electricity.svg';
   static const tv = '$_svgPath/tv.svg';
+  static const bank = '$_svgPath/bank.svg';
+  static const ussd = '$_svgPath/ussd.svg';
+  static const verify = '$_svgPath/verify.svg';
+  static const transferSuccessful = '$_svgPath/transfer.svg';
+  static const transferUnsuccessful = '$_svgPath/close.svg';
+
+
+  //! images
+  static const transfer = '$_imagePath/transfer.png';
+  static const ngn = '$_imagePath/ngn.png';
+  static const access = '$_imagePath/access.png';
+  static const gt = '$_imagePath/gt.png';
+  static const polaris = '$_imagePath/polaris.png';
+  static const wema = '$_imagePath/wema.png';
+  static const zenith = '$_imagePath/zenith.png';
 }
