@@ -141,7 +141,25 @@ extension UserInfoExtension on UserInformation {
     }
   }
 
-  VoidCallback onPressed(BuildContext context, [bool isSpouse = false]) {
+  Future<void> navigateBack(PageController controller) {
+    debugPrint((this == UserInformation.nextOfKin).toString());
+    if (this == UserInformation.nextOfKin) {
+      return controller.animateToPage(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
+    }
+    return controller.previousPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.linear,
+    );
+  }
+
+  VoidCallback onPressed(
+    BuildContext context, [
+    bool isSpouse = false,
+  ]) {
     switch (this) {
       case UserInformation.personal:
         if (isSpouse) {
@@ -330,7 +348,6 @@ extension FundWalletExtension on FundWallet {
 }
 
 extension BankExtension on Bank {
-  
   bool get isGt => this == Bank.gt;
   bool get isZenith => this == Bank.zenith;
   bool get isAccess => this == Bank.access;
