@@ -6,6 +6,8 @@ import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
+import 'package:hr56_staff/src/shared/empty_app_bar.dart';
+import 'package:hr56_staff/src/shared/summary_text.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class FundWalletPage extends StatelessWidget {
@@ -16,134 +18,132 @@ class FundWalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const EmptyAppBar(),
       backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.horizontalSpacing,
-          ),
-          child: Column(
-            children: [
-              const CustomAppBarWithBackButton(text: 'Fund wallet'),
-              AppSpacing.setVerticalSpace(37),
-              Column(
-                children: FundWallet.values
-                    .map(
-                      (fund) => Padding(
-                        padding: EdgeInsets.only(bottom: 16.radius),
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => showModalBottomSheet<Widget>(
-                            context: context,
-                            barrierColor: const Color(0xFF070707).withOpacity(
-                              .3,
-                            ),
-                            isScrollControlled: true,
-                            constraints: BoxConstraints(
-                              minHeight: 460.height,
-                              maxHeight: AppSpacing.screenHeight(context),
-                            ),
-                            backgroundColor: AppColors.whiteColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25.radius),
-                                topRight: Radius.circular(25.radius),
-                              ),
-                            ),
-                            builder: (ctx) {
-                              if (fund.isTransfer) {
-                                return const BankTransferModal();
-                              }
-                              return const USSDModal();
-                            },
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSpacing.horizontalSpacing,
+        ),
+        child: Column(
+          children: [
+            const CustomAppBarWithBackButton(text: 'Fund wallet'),
+            AppSpacing.setVerticalSpace(37),
+            Column(
+              children: FundWallet.values
+                  .map(
+                    (fund) => Padding(
+                      padding: EdgeInsets.only(bottom: 16.radius),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => showModalBottomSheet<Widget>(
+                          context: context,
+                          barrierColor: const Color(0xFF070707).withOpacity(
+                            .3,
                           ),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.radius),
+                          isScrollControlled: true,
+                          constraints: BoxConstraints(
+                            minHeight: 460.height,
+                            maxHeight: AppSpacing.screenHeight(context),
+                          ),
+                          backgroundColor: AppColors.whiteColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25.radius),
+                              topRight: Radius.circular(25.radius),
                             ),
-                            margin: EdgeInsets.zero,
-                            elevation: 1,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 16,
+                          ),
+                          builder: (ctx) {
+                            if (fund.isTransfer) {
+                              return const BankTransferModal();
+                            }
+                            return const USSDModal();
+                          },
+                        ),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.radius),
+                          ),
+                          margin: EdgeInsets.zero,
+                          elevation: 1,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 16,
+                            ),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(10.radius),
+                              border: Border.all(
+                                color: const Color(0xFFE6EEF8),
                               ),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(10.radius),
-                                border: Border.all(
-                                  color: const Color(0xFFE6EEF8),
-                                ),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 50.radius,
-                                          width: 50.radius,
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFBBF2BB)
-                                                .withOpacity(.3),
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: const Color(0xFF009A46),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 50.radius,
+                                        width: 50.radius,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFBBF2BB)
+                                              .withOpacity(.3),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: const Color(0xFF009A46),
+                                          ),
+                                        ),
+                                        child: SvgImageAsset(fund.asset),
+                                      ),
+                                      AppSpacing.horizontalSpaceSmall,
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              fund.title,
+                                              style: context
+                                                  .textTheme.displayLarge
+                                                  ?.copyWith(
+                                                fontSize: 16.fontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                          child: SvgImageAsset(fund.asset),
-                                        ),
-                                        AppSpacing.horizontalSpaceSmall,
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                fund.title,
-                                                style: context
-                                                    .textTheme.displayLarge
-                                                    ?.copyWith(
-                                                  fontSize: 16.fontSize,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            AppSpacing.verticalSpaceTiny,
+                                            Text(
+                                              fund.description,
+                                              style: context
+                                                  .textTheme.displayLarge
+                                                  ?.copyWith(
+                                                fontSize: 14.fontSize,
+                                                fontWeight: FontWeight.w400,
+                                                color: const Color(0xFF808285),
                                               ),
-                                              AppSpacing.verticalSpaceTiny,
-                                              Text(
-                                                fund.description,
-                                                style: context
-                                                    .textTheme.displayLarge
-                                                    ?.copyWith(
-                                                  fontSize: 14.fontSize,
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      const Color(0xFF808285),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  const Icon(
-                                    Icons.chevron_right,
-                                    color: AppColors.blackColor,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                const Icon(
+                                  Icons.chevron_right,
+                                  color: AppColors.blackColor,
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    )
-                    .toList(),
-              ),
-            ],
-          ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
         ),
       ),
     );
@@ -357,17 +357,17 @@ class BankTransferModal extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const _TransferDetails(
+                const SummaryText(
                   name: 'Bank name',
                   title: 'Wema Bank',
                 ),
                 AppSpacing.setVerticalSpace(22),
-                const _TransferDetails(
+                const SummaryText(
                   name: 'Account number',
                   title: '01911029292',
                 ),
                 AppSpacing.setVerticalSpace(22),
-                const _TransferDetails(
+                const SummaryText(
                   name: 'Account name',
                   title: 'Isaiah Nwankwo',
                 ),
@@ -384,41 +384,6 @@ class BankTransferModal extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _TransferDetails extends StatelessWidget {
-  const _TransferDetails({
-    required this.name,
-    required this.title,
-  });
-
-  final String name;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          name,
-          style: context.textTheme.displayLarge?.copyWith(
-            fontWeight: FontWeight.w400,
-            fontSize: 14.fontSize,
-            color: const Color(0xFF616263),
-          ),
-        ),
-        const Spacer(),
-        Text(
-          title,
-          style: context.textTheme.displayLarge?.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 16.fontSize,
-            color: const Color(0xFF1E222B),
-          ),
-        ),
-      ],
     );
   }
 }
