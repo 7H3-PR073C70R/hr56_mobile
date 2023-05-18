@@ -15,9 +15,11 @@ class PersonalInfoPage extends HookWidget {
   const PersonalInfoPage({
     super.key,
     this.isAfterLogin = false,
+    this.controller,
   });
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   static const routeName = 'personal-info';
   @override
@@ -103,7 +105,8 @@ class PersonalInfoPage extends HookWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.personal,
-                            isMarried.value,
+                            controller,
+                            !isMarried.value,
                             isMarried.value
                                 ? 'Cheers almost there fill in your'
                                 : null,

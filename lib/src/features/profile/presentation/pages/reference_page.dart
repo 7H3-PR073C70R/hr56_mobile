@@ -9,9 +9,14 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class ReferencePage extends StatelessWidget {
-  const ReferencePage({super.key, this.isAfterLogin = false});
+  const ReferencePage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   static const routeName = 'reference';
   @override
@@ -22,8 +27,11 @@ class ReferencePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
               text: 'Reference',
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.reference.navigateBack(controller!),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -71,6 +79,7 @@ class ReferencePage extends StatelessWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.reference,
+                            controller,
                           );
                           // showDialog<Widget>(
                           //   context: context,

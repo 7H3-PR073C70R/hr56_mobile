@@ -4,7 +4,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/emergency_contact_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/guarantor_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/id_photo_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/next_of_kin_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/personal_info_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
+import 'package:hr56_staff/src/features/profile/presentation/pages/spouse_details_page.dart';
 
 class OnboardingQuestionnairePage extends HookWidget {
   const OnboardingQuestionnairePage({super.key});
@@ -13,6 +20,8 @@ class OnboardingQuestionnairePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = usePageController();
+    final pageIndex = useState(0);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 1,
@@ -25,9 +34,45 @@ class OnboardingQuestionnairePage extends HookWidget {
             key: UniqueKey(),
           ),
           AppSpacing.setVerticalSpace(28),
-          const Expanded(
-            child: PersonalInfoPage(
-              isAfterLogin: true,
+          Expanded(
+            child: PageView.builder(
+              controller: controller,
+              onPageChanged: (value) => pageIndex.value = value,
+              itemCount: 8,
+              itemBuilder: (context, index) => [
+                PersonalInfoPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                SpouseDetailsPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                NextOfKinPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                BankDetailsPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                GuarantorPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                EmergencyContactPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                ReferencePage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+                IDPhotoPage(
+                  isAfterLogin: true,
+                  controller: controller,
+                ),
+              ].elementAt(pageIndex.value),
             ),
           ),
           AppSpacing.setVerticalSpace(15),

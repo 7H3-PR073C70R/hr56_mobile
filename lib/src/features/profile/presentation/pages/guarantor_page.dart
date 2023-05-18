@@ -10,11 +10,17 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class GuarantorPage extends StatelessWidget {
-  const GuarantorPage({super.key, this.isAfterLogin = false});
+  const GuarantorPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   static const routeName = 'guarantor';
 
   final bool isAfterLogin;
+  final PageController? controller;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +29,11 @@ class GuarantorPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
               text: 'Guarantor',
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.guarantor.navigateBack(controller!),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -58,6 +67,7 @@ class GuarantorPage extends StatelessWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.guarantor,
+                            controller,
                           );
                         } else {
                           context.navigator.pop();

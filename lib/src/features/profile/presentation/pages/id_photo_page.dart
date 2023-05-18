@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
+import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
@@ -13,9 +14,14 @@ import 'package:hr56_staff/src/shared/main_page.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class IDPhotoPage extends HookWidget {
-  const IDPhotoPage({super.key, this.isAfterLogin = false});
+  const IDPhotoPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   static const routeName = 'id-photo';
 
@@ -37,8 +43,11 @@ class IDPhotoPage extends HookWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              const CustomAppBarWithBackButton(
+              CustomAppBarWithBackButton(
                 text: 'ID card application',
+                onNavigateBack: controller == null
+                    ? null
+                    : () => UserInformation.personal.navigateBack(controller!),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -108,7 +117,9 @@ class IDPhotoPage extends HookWidget {
                           isTaken.value = true;
                         },
                         text: isReview.value
-                            ? isAfterLogin ? 'Complete onboarding' : 'Complete'
+                            ? isAfterLogin
+                                ? 'Complete onboarding'
+                                : 'Complete'
                             : isTaken.value
                                 ? 'Preview ID card'
                                 : 'Take photo',
@@ -159,7 +170,8 @@ class IDCardBack extends StatelessWidget {
               ),
               AppSpacing.setVerticalSpace(21),
               ...[
-                'Lorem ipsum dolor sit amet, consectetur adipicing elit,'' sad diam noumea nibh euismod.',
+                'Lorem ipsum dolor sit amet, consectetur adipicing elit,'
+                    ' sad diam noumea nibh euismod.',
                 'Lorem ipsum dolor sit amet, consectetur adipicing elit, sad diam noumea nibh euismod.',
               ]
                   .map(

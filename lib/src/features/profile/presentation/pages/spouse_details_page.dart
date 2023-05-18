@@ -10,11 +10,16 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class SpouseDetailsPage extends HookWidget {
-  const SpouseDetailsPage({super.key, this.isAfterLogin = false});
+  const SpouseDetailsPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   static const routeName = 'spouse-details';
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +29,11 @@ class SpouseDetailsPage extends HookWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
               text: 'Spouse details',
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.spouse.navigateBack(controller!),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -53,7 +61,6 @@ class SpouseDetailsPage extends HookWidget {
                       hintText: 'N/A',
                       keyboardType: TextInputType.streetAddress,
                     ),
-                    
                     AppSpacing.setVerticalSpace(40),
                     Button(
                       onPressed: () {
@@ -61,6 +68,7 @@ class SpouseDetailsPage extends HookWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.spouse,
+                            controller,
                           );
                         } else {
                           context.navigator.pop();

@@ -9,9 +9,14 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class BankDetailsPage extends StatelessWidget {
-  const BankDetailsPage({super.key, this.isAfterLogin = false});
+  const BankDetailsPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   static const routeName = 'bank-details';
   @override
@@ -22,8 +27,11 @@ class BankDetailsPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
               text: 'Bank details',
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.bank.navigateBack(controller!),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -49,7 +57,11 @@ class BankDetailsPage extends StatelessWidget {
                     Button(
                       onPressed: () {
                         if (isAfterLogin) {
-                          showInfoCustomModel(context, UserInformation.bank);
+                          showInfoCustomModel(
+                            context,
+                            UserInformation.bank,
+                            controller,
+                          );
                         } else {
                           context.navigator.pop();
                         }

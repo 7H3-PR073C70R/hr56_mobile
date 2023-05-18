@@ -10,9 +10,14 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class NextOfKinPage extends StatelessWidget {
-  const NextOfKinPage({super.key, this.isAfterLogin = false});
+  const NextOfKinPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   final bool isAfterLogin;
+  final PageController? controller;
 
   static const routeName = 'next-of-kin';
   @override
@@ -23,8 +28,11 @@ class NextOfKinPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
               text: 'Next of kin',
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.nextOfKin.navigateBack(controller!),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -77,6 +85,7 @@ class NextOfKinPage extends StatelessWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.nextOfKin,
+                            controller,
                           );
                         } else {
                           context.navigator.pop();

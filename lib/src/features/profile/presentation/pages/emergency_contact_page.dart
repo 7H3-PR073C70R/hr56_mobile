@@ -10,11 +10,17 @@ import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
 
 class EmergencyContactPage extends StatelessWidget {
-  const EmergencyContactPage({super.key, this.isAfterLogin = false});
+  const EmergencyContactPage({
+    super.key,
+    this.isAfterLogin = false,
+    this.controller,
+  });
 
   static const routeName = 'emergency-contact';
 
   final bool isAfterLogin;
+  final PageController? controller;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +29,10 @@ class EmergencyContactPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            const CustomAppBarWithBackButton(
+            CustomAppBarWithBackButton(
+              onNavigateBack: controller == null
+                  ? null
+                  : () => UserInformation.emergency.navigateBack(controller!),
               text: 'Emergency contact',
             ),
             Expanded(
@@ -58,6 +67,7 @@ class EmergencyContactPage extends StatelessWidget {
                           showInfoCustomModel(
                             context,
                             UserInformation.emergency,
+                            controller,
                           );
                         } else {
                           context.navigator.pop();
