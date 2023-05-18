@@ -6,7 +6,9 @@ import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
-import 'package:hr56_staff/src/shared/custom_pin_field.dart';
+import 'package:hr56_staff/src/shared/empty_app_bar.dart';
+import 'package:hr56_staff/src/shared/enter_pin_modal.dart';
+import 'package:hr56_staff/src/shared/state_modal.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class WithdrawPage extends StatelessWidget {
@@ -17,37 +19,158 @@ class WithdrawPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const EmptyAppBar(
+        backgroundColor: AppColors.whiteColor,
+      ),
       backgroundColor: AppColors.whiteColor,
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.horizontalSpacing,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CustomAppBarWithBackButton(text: 'Withdraw'),
-              AppSpacing.setVerticalSpace(29.5),
-              Text(
-                'Withdrawal amount',
-                style: context.textTheme.displayLarge?.copyWith(
-                  fontSize: 18.fontSize,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.greenColor,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSpacing.horizontalSpacing,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CustomAppBarWithBackButton(text: 'Withdraw'),
+            AppSpacing.setVerticalSpace(29.5),
+            Text(
+              'Withdrawal amount',
+              style: context.textTheme.displayLarge?.copyWith(
+                fontSize: 18.fontSize,
+                fontWeight: FontWeight.w600,
+                color: AppColors.greenColor,
+              ),
+            ),
+            AppSpacing.verticalSpaceTiny,
+            Text(
+              'Enter the amount you would like to withdraw below.',
+              style: context.textTheme.displayLarge?.copyWith(
+                fontSize: 14.fontSize,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF505050),
+              ),
+            ),
+            AppSpacing.setVerticalSpace(15),
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => showModalBottomSheet<Widget>(
+                context: context,
+                barrierColor: const Color(0xFF070707).withOpacity(
+                  .3,
+                ),
+                isScrollControlled: true,
+                backgroundColor: AppColors.whiteColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.radius),
+                    topRight: Radius.circular(25.radius),
+                  ),
+                ),
+                builder: (ctx) => Container(
+                  height: 440.height,
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppSpacing.setVerticalSpace(25),
+                      Center(
+                        child: Container(
+                          height: 7.9.height,
+                          width: 80.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.radius),
+                            color: const Color(0xFFE6E5E4),
+                          ),
+                        ),
+                      ),
+                      AppSpacing.setVerticalSpace(41.1),
+                      Text(
+                        'Select bank account',
+                        style: context.textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF1E222B),
+                          fontSize: 16.fontSize,
+                        ),
+                      ),
+                      AppSpacing.setVerticalSpace(32),
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) => Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Zenith Bank PLC.',
+                                      style: context.textTheme.displayLarge
+                                          ?.copyWith(
+                                        fontSize: 14.fontSize,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF1E222B),
+                                      ),
+                                    ),
+                                    Text(
+                                      'Segun Ojo',
+                                      style: context.textTheme.displayLarge
+                                          ?.copyWith(
+                                        fontSize: 14.fontSize,
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF1E222B),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                '01911029292',
+                                style: context.textTheme.displayLarge?.copyWith(
+                                  fontSize: 14.fontSize,
+                                  color: const Color(0xFF1E222B),
+                                ),
+                              ),
+                              AppSpacing.setHorizontalSpace(14),
+                              const Icon(
+                                Icons.chevron_right,
+                                color: Color(0xFF1E222B),
+                              ),
+                            ],
+                          ),
+                          itemCount: 2,
+                          separatorBuilder: (__, _) => Column(
+                            children: [
+                              AppSpacing.verticalSpaceMedium,
+                              Container(
+                                height: 1.height,
+                                width: double.infinity,
+                                color: const Color(0xFFE6E6E7),
+                              ),
+                              AppSpacing.verticalSpaceLarge,
+                            ],
+                          ),
+                        ),
+                      ),
+                      AppSpacing.verticalSpaceLarge,
+                      SizedBox(
+                        width: 182.width,
+                        child: Button(
+                          onPressed: () {},
+                          text: 'Add  new bank',
+                          textColor: const Color(0xFF00BC67),
+                          backgroundColor: const Color(0xFFEAFFF4),
+                          suffixIcon: const Icon(
+                            Icons.add,
+                            color: Color(0xFF00BC67),
+                          ),
+                        ),
+                      ),
+                      AppSpacing.setVerticalSpace(77),
+                    ],
+                  ),
                 ),
               ),
-              AppSpacing.verticalSpaceTiny,
-              Text(
-                'Enter the amount you would like to withdraw below.',
-                style: context.textTheme.displayLarge?.copyWith(
-                  fontSize: 14.fontSize,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFF505050),
-                ),
-              ),
-              AppSpacing.setVerticalSpace(15),
-              Container(
+              child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -111,256 +234,92 @@ class WithdrawPage extends StatelessWidget {
                   ],
                 ),
               ),
-              AppSpacing.verticalSpaceLarge,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Amount',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 12.fontSize,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF039847),
-                    ),
+            ),
+            AppSpacing.verticalSpaceLarge,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Amount',
+                  style: context.textTheme.displayLarge?.copyWith(
+                    fontSize: 12.fontSize,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF039847),
                   ),
-                  Text(
-                    'Balance: ${AppStrings.naira}270,000.00',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 12.fontSize,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF96999B),
-                    ),
+                ),
+                Text(
+                  'Balance: ${AppStrings.naira}270,000.00',
+                  style: context.textTheme.displayLarge?.copyWith(
+                    fontSize: 12.fontSize,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF96999B),
                   ),
-                ],
-              ),
-              AppSpacing.setVerticalSpace(6),
-              SizedBox(
-                height: 50.height,
-                width: double.infinity,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: Image.asset(
-                      AppAssetPath.ngn,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 25,
-                      horizontal: 2,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
+                ),
+              ],
+            ),
+            AppSpacing.setVerticalSpace(6),
+            SizedBox(
+              height: 50.height,
+              width: double.infinity,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: Image.asset(
+                    AppAssetPath.ngn,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 25,
+                    horizontal: 2,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
-              AppSpacing.setVerticalSpace(54),
-              Button(
-                onPressed: () {
-                  showModalBottomSheet<Widget>(
-                    context: context,
-                    barrierColor: const Color(0xFF070707).withOpacity(
-                      .3,
+            ),
+            AppSpacing.setVerticalSpace(54),
+            Button(
+              onPressed: () {
+                showModalBottomSheet<Widget>(
+                  context: context,
+                  barrierColor: const Color(0xFF070707).withOpacity(
+                    .3,
+                  ),
+                  isScrollControlled: true,
+                  backgroundColor: AppColors.whiteColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.radius),
+                      topRight: Radius.circular(25.radius),
                     ),
-                    isScrollControlled: true,
-                    backgroundColor: AppColors.whiteColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.radius),
-                        topRight: Radius.circular(25.radius),
-                      ),
-                    ),
-                    builder: (ctx) => EnterPinWithdrawModal(
-                      onContinue: () {
-                        Navigator.of(ctx).pop();
-                        showModalBottomSheet<Widget>(
-                          context: context,
-                          barrierColor: const Color(0xFF070707).withOpacity(
-                            .3,
+                  ),
+                  builder: (ctx) => EnterPinWithdrawModal(
+                    onContinue: (_) {
+                      Navigator.of(ctx).pop();
+                      showModalBottomSheet<Widget>(
+                        context: context,
+                        barrierColor: const Color(0xFF070707).withOpacity(
+                          .3,
+                        ),
+                        isScrollControlled: true,
+                        backgroundColor: AppColors.whiteColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.radius),
+                            topRight: Radius.circular(25.radius),
                           ),
-                          isScrollControlled: true,
-                          backgroundColor: AppColors.whiteColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25.radius),
-                              topRight: Radius.circular(25.radius),
-                            ),
-                          ),
-                          builder: (ctx) => const TransferResponse(
-                            isSuccessful: true,
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-                text: 'Next',
-              ),
-            ],
-          ),
+                        ),
+                        builder: (ctx) => const StateModal(
+                          isSuccessful: true,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              text: 'Next',
+            ),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class TransferResponse extends StatelessWidget {
-  const TransferResponse({
-    super.key,
-    required this.isSuccessful,
-  });
-
-  final bool isSuccessful;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 482.height,
-      width: double.maxFinite,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          AppSpacing.setVerticalSpace(10),
-          Center(
-            child: Container(
-              height: 7.9.height,
-              width: 80.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.radius),
-                color: const Color(0xFFE6E5E4),
-              ),
-            ),
-          ),
-          AppSpacing.setVerticalSpace(48),
-          if (isSuccessful)
-            const Center(
-              child: SvgImageAsset(
-                AppAssetPath.transferSuccessful,
-              ),
-            )
-          else
-            Container(
-              height: 99.17.radius,
-              width: 99.17.radius,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFFBB1AB),
-              ),
-              child: const SvgImageAsset(AppAssetPath.transferUnsuccessful),
-            ),
-          AppSpacing.setVerticalSpace(34.45),
-          Text(
-            isSuccessful ? 'Withdrawal successful' : 'Withdrawal unsuccessful',
-            style: context.textTheme.displayLarge?.copyWith(
-              fontSize: 18.fontSize,
-              fontWeight: FontWeight.w500,
-              color: const Color(0xFF1E222B),
-            ),
-          ),
-          AppSpacing.setVerticalSpace(8),
-          if (isSuccessful)
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: 'You have withdrawn',
-                style: context.textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.fontSize,
-                  color: const Color(0xFF808285),
-                ),
-                children: [
-                  TextSpan(
-                    text: ' NGN 10,000 ',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.fontSize,
-                      color: const Color(0xFF808285),
-                    ),
-                  ),
-                  const TextSpan(
-                    text: 'to your bank account',
-                  ),
-                ],
-              ),
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-              ),
-              child: Text(
-                'Your withdrawal cannot be processed at'
-                ' this time die to insufficient balance, fund your'
-                ' account and try again',
-                textAlign: TextAlign.center,
-                style: context.textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14.fontSize,
-                  color: const Color(0xFF505050),
-                ),
-              ),
-            ),
-          AppSpacing.setVerticalSpace(40),
-          Button(
-            onPressed: () => Navigator.of(context).pop(),
-            text: isSuccessful ? 'Done' : 'Back to wallet',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class EnterPinWithdrawModal extends StatelessWidget {
-  const EnterPinWithdrawModal({
-    super.key,
-    required this.onContinue,
-  });
-
-  final VoidCallback onContinue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 637.height,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppSpacing.setVerticalSpace(10),
-          Center(
-            child: Container(
-              height: 7.9.height,
-              width: 80.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.radius),
-                color: const Color(0xFFE6E5E4),
-              ),
-            ),
-          ),
-          AppSpacing.setVerticalSpace(32.1),
-          Text(
-            'Enter your PIN',
-            style: context.textTheme.displayLarge?.copyWith(
-              fontSize: 16.fontSize,
-              fontWeight: FontWeight.w500,
-              color: const Color(0xFF1E222B),
-            ),
-          ),
-          Text(
-            'Enter your 4-Digit PIN to confirm transaction',
-            style: context.textTheme.displayLarge?.copyWith(
-              fontSize: 14.fontSize,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xFF808285),
-            ),
-          ),
-          AppSpacing.verticalSpaceLarge,
-          CustomPinField(
-            onChanged: (_) {},
-          ),
-          AppSpacing.setVerticalSpace(40),
-          Button(onPressed: onContinue, text: 'Confirm')
-        ],
       ),
     );
   }
