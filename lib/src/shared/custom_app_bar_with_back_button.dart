@@ -8,18 +8,22 @@ class CustomAppBarWithBackButton extends StatelessWidget {
     required this.text,
     this.showLeading = true,
     this.actions,
+    this.onNavigateBack,
   });
 
   final String text;
   final bool showLeading;
   final List<Widget>? actions;
+  final VoidCallback? onNavigateBack;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         if(showLeading)
-        const AppBackButton(),
+         AppBackButton(
+          onPressed: onNavigateBack,
+        ),
         Expanded(
           child: Center(
             child: Padding(
