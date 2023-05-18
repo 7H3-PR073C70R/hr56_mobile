@@ -27,4 +27,13 @@ class AppStrings {
 
   static const profileImage = 'https://encrypted-tbn0.gstatic.com/images?q='
       'tbn:ANd9GcTmrssFdAIAer1QHQ40q2yGBcAYrjbw3hWiW-pUQDnb&s';
+
+  static const nameList = [
+    'Allen Walker',
+    'Victoria Abiala',
+    'Joseph Ceaser',
+    'Tobi Jamiu',
+    'Mosun Badri',
+    'Tobi Jamiu'
+  ];
 }
