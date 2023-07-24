@@ -457,8 +457,8 @@ class IDCardBG extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Column(
-            children: const [
+          const Column(
+            children: [
               SvgImageAsset(AppAssetPath.idTop),
               Spacer(),
               SvgImageAsset(AppAssetPath.idBottom),
