@@ -134,7 +134,7 @@ class ReviewTransferDetailsPage extends StatelessWidget {
                 ),
               ),
               text: 'Confirm',
-            )
+            ),
           ],
         ),
       ),

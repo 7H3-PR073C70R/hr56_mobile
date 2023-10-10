@@ -53,7 +53,7 @@ class NavBarItem extends StatelessWidget {
                     color: AppColors.primaryColor,
                   ),
                 ),
-              ]
+              ],
             ],
           ),
         ),

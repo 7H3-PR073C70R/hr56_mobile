@@ -71,7 +71,7 @@ class PasswordValidator extends StatelessWidget {
           style: context.textTheme.bodySmall?.copyWith(
             color: AppColors.whiteColor,
           ),
-        )
+        ),
       ],
     );
   }

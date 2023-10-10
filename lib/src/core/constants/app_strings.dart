@@ -22,7 +22,7 @@ class AppStrings {
   static const onboardingTitle = [
     'Need money fast?  Our quick loan application process can help.',
     'Track payslip and payslip history with ease.',
-    'Track Your Transactions: Wallet History for Easy Payments.'
+    'Track Your Transactions: Wallet History for Easy Payments.',
   ];
 
   static const profileImage = 'https://encrypted-tbn0.gstatic.com/images?q='
@@ -34,6 +34,6 @@ class AppStrings {
     'Joseph Ceaser',
     'Tobi Jamiu',
     'Mosun Badri',
-    'Tobi Jamiu'
+    'Tobi Jamiu',
   ];
 }

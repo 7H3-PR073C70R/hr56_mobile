@@ -163,7 +163,7 @@ class OnboardingQuestionnaireHeader extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

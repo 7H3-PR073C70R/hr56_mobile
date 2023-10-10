@@ -95,7 +95,7 @@ class ProfileInfo extends StatelessWidget {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -117,7 +117,7 @@ class ProfileInfo extends StatelessWidget {
             width: double.infinity,
             color: dividerColor,
           ),
-        ]
+        ],
       ],
     );
   }

@@ -142,7 +142,7 @@ class HelpCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF6B717C),
                   ),
-                )
+                ),
               ],
             ),
           ),

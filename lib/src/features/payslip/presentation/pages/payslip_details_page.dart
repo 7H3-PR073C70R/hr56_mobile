@@ -304,7 +304,7 @@ class _DownloadPDF extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -324,7 +324,7 @@ class _DownloadPDF extends StatelessWidget {
                 color: AppColors.whiteColor,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

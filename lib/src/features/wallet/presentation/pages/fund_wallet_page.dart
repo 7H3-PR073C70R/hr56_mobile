@@ -286,7 +286,7 @@ class USSDModal extends StatelessWidget {
                   ),
                 ),
               )
-              .toList()
+              .toList(),
         ],
       ),
     );

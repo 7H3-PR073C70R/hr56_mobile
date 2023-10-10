@@ -89,7 +89,7 @@ class PersonalInfoPage extends HookWidget {
                         'Voters Card',
                         'I.D Card',
                         'Drivers License',
-                        'National I.D'
+                        'National I.D',
                       ],
                       onChanged: (_) {},
                     ),

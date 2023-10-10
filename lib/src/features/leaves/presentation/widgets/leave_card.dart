@@ -116,7 +116,7 @@ class LeaveCard extends StatelessWidget {
           width: double.infinity,
           height: 1.height,
           color: const Color(0xFFD3A2DF),
-        )
+        ),
       ],
     );
   }

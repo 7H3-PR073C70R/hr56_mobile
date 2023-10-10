@@ -69,8 +69,8 @@ class Button extends StatelessWidget {
             ),
             if (suffixIcon != null) ...[
               AppSpacing.setHorizontalSpace(10),
-              suffixIcon!
-            ]
+              suffixIcon!,
+            ],
           ],
         ),
       ),

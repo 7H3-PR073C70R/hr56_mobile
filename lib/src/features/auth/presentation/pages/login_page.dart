@@ -196,7 +196,7 @@ class LoginPage extends HookWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -53,7 +53,7 @@ class BeneficiaryPage extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF1B1C1E),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 separatorBuilder: (_, __) => AppSpacing.verticalSpaceLarge,

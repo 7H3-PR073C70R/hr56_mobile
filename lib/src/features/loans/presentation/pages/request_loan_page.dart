@@ -76,7 +76,7 @@ class RequestLoanPage extends StatelessWidget {
                       );
                     },
                     text: 'Submit form',
-                  )
+                  ),
                 ],
               ),
             ),

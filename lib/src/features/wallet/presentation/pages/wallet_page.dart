@@ -95,7 +95,7 @@ class WalletPage extends StatelessWidget {
                                       ),
                                     )
                                     .toList(),
-                              )
+                              ),
                             ],
                           ),
                         ),

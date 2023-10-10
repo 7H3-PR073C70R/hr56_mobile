@@ -29,7 +29,7 @@ class InfoText extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-        )
+        ),
       ],
     );
   }

@@ -60,7 +60,7 @@ class EnterPinWithdrawModal extends HookWidget {
           Button(
             onPressed: () => onContinue('controller.text'),
             text: 'Confirm',
-          )
+          ),
         ],
       ),
     );

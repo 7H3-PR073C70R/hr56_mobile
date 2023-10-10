@@ -84,7 +84,7 @@ class AppBarBackground extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                         Row(
@@ -102,7 +102,7 @@ class AppBarBackground extends StatelessWidget {
                             const Icon(
                               Icons.visibility,
                               color: AppColors.whiteColor,
-                            )
+                            ),
                           ],
                         ),
                        const Spacer(),
@@ -128,12 +128,12 @@ class AppBarBackground extends StatelessWidget {
                               ),
                             ),
                             AppSpacing.setHorizontalSpace(9.6),
-                            const SvgImageAsset(AppAssetPath.copy)
+                            const SvgImageAsset(AppAssetPath.copy),
                           ],
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

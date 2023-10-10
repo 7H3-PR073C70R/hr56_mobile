@@ -37,7 +37,7 @@ class CustomAppBarWithBackButton extends StatelessWidget {
             ),
           ),
         ),
-        if (actions != null) ...actions!
+        if (actions != null) ...actions!,
       ],
     );
   }

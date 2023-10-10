@@ -64,9 +64,9 @@ class WalletAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

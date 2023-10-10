@@ -67,7 +67,7 @@ class TransactionCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: const Color(0xFF7A8189),
                   ),
-                )
+                ),
               ],
             ),
           ),

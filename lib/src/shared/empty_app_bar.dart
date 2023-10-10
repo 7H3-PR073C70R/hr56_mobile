@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EmptyAppBar extends StatelessWidget with PreferredSizeWidget {
+class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EmptyAppBar({
     super.key,
     this.isDark = true,

@@ -58,7 +58,7 @@ class LoanInfoCard extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: AppColors.textSecondaryColor,
             ),
-          )
+          ),
         ],
       ),
     );

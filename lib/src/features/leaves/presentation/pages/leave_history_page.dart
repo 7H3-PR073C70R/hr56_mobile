@@ -77,7 +77,7 @@ class _Header extends StatelessWidget {
                       'Hospital Leave',
                       'Sick Leave',
                       'Maternal Leave',
-                      'Parental Leave'
+                      'Parental Leave',
                     ].elementAt(index),
                     style: context.textTheme.displayLarge?.copyWith(
                       fontSize: 13.fontSize,
