@@ -175,7 +175,7 @@ class _Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:  EdgeInsets.only(left: 35.radius),
+            padding: EdgeInsets.only(left: 35.radius),
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Icon(

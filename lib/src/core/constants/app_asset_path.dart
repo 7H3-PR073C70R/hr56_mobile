@@ -93,7 +93,6 @@ class AppAssetPath {
   static const transferSuccessful = '$_svgPath/transfer.svg';
   static const transferUnsuccessful = '$_svgPath/close.svg';
 
-
   //! images
   static const transfer = '$_imagePath/transfer.png';
   static const ngn = '$_imagePath/ngn.png';

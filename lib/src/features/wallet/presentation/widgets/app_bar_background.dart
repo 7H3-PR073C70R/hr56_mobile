@@ -51,15 +51,12 @@ class AppBarBackground extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Isaiah Nwankwo',
-                              style: context.textTheme.displayLarge
-                                  ?.copyWith(
+                              style: context.textTheme.displayLarge?.copyWith(
                                 fontSize: 14.fontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.whiteColor,
@@ -74,8 +71,7 @@ class AppBarBackground extends StatelessWidget {
                                   Text(
                                     'Premium Trust Bank',
                                     textAlign: TextAlign.center,
-                                    style: context
-                                        .textTheme.displayLarge
+                                    style: context.textTheme.displayLarge
                                         ?.copyWith(
                                       fontSize: 10.fontSize,
                                       fontWeight: FontWeight.w400,
@@ -91,8 +87,7 @@ class AppBarBackground extends StatelessWidget {
                           children: [
                             Text(
                               '${AppStrings.naira}300,000',
-                              style: context.textTheme.displayLarge
-                                  ?.copyWith(
+                              style: context.textTheme.displayLarge?.copyWith(
                                 fontSize: 30.fontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.whiteColor,
@@ -105,11 +100,10 @@ class AppBarBackground extends StatelessWidget {
                             ),
                           ],
                         ),
-                       const Spacer(),
+                        const Spacer(),
                         Text(
                           'Account number',
-                          style: context.textTheme.displayLarge
-                              ?.copyWith(
+                          style: context.textTheme.displayLarge?.copyWith(
                             fontSize: 12.fontSize,
                             fontWeight: FontWeight.w400,
                             color: AppColors.whiteColor,
@@ -120,8 +114,7 @@ class AppBarBackground extends StatelessWidget {
                           children: [
                             Text(
                               '35-070-0003-3256-2022',
-                              style: context.textTheme.displayLarge
-                                  ?.copyWith(
+                              style: context.textTheme.displayLarge?.copyWith(
                                 fontSize: 12.fontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.whiteColor,
@@ -169,8 +162,7 @@ class AppBarBackground extends StatelessWidget {
                           AppSpacing.verticalSpaceSmall,
                           Text(
                             action.title,
-                            style: context.textTheme.displayLarge
-                                ?.copyWith(
+                            style: context.textTheme.displayLarge?.copyWith(
                               fontSize: 16.fontSize,
                               fontWeight: FontWeight.w500,
                               color: AppColors.whiteColor,

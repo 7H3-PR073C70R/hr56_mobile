@@ -54,13 +54,7 @@ enum WalletAction {
   fund,
 }
 
-enum Services {
-  data,
-  airtime,
-  cable,
-  electricity,
-  education
-}
+enum Services { data, airtime, cable, electricity, education }
 
 enum FundWallet {
   transfer,
