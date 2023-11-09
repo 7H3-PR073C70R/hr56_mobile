@@ -16,18 +16,22 @@ class CustomInputField extends StatelessWidget {
     this.label,
     this.isAuth = false,
     this.maxLines = 1,
+    this.maxLength,
+    this.onTap,
   });
 
   final String? hintText;
   final TextEditingController? controller;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final VoidCallback? onTap;
   final Widget? suffixIcon;
   final AutovalidateMode? autovalidateMode;
   final TextInputType? keyboardType;
   final String? label;
   final bool isAuth;
   final int maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +53,10 @@ class CustomInputField extends StatelessWidget {
           validator: validator,
           keyboardType: keyboardType,
           obscureText: obscureText,
+          onTap: onTap,
           obscuringCharacter: '*',
           maxLines: maxLines,
+          maxLength: maxLength,
           autovalidateMode: autovalidateMode,
           style: context.textTheme.displayLarge?.copyWith(
             fontSize: 14.fontSize,
@@ -59,6 +65,7 @@ class CustomInputField extends StatelessWidget {
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
             hintText: hintText,
+            counter: const SizedBox.shrink(),
             helperStyle: context.textTheme.bodyLarge?.copyWith(
               fontSize: 14.fontSize,
             ),

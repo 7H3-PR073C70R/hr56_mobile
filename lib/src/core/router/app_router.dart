@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
+import 'package:hr56_staff/src/features/auth/data/models/personal_details/update_personal_details_param.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/auth_congratulations_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/login_page.dart';

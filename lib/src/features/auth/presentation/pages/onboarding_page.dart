@@ -143,8 +143,9 @@ class OnboardingPage extends HookWidget {
                                     Button(
                                       onPressed: () {
                                         if (pageIndex.value == 2) {
-                                          context.navigator
-                                              .pushNamed(LoginPage.routeName);
+                                          context.navigator.replaceNamed(
+                                            LoginPage.routeName,
+                                          );
                                         } else {
                                           pageController.nextPage(
                                             duration: const Duration(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hr56_staff/src/app/router/app_router.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/router/app_router.dart';
 import 'package:hr56_staff/src/core/utils/validator.dart';
 import 'package:hr56_staff/src/features/auth/presentation/widgets/auth_input_field.dart';
 import 'package:hr56_staff/src/features/auth/presentation/widgets/auth_view.dart';

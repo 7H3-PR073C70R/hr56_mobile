@@ -7,12 +7,21 @@ extension ValidationExtension on BuildContext {
   String? validateFieldNotNull<T>(T? value) =>
       value == null ? 'Field cannot be empty' : null;
 
-  String? validateFullName<T>(String? value) {
+  String? validateFullName(String? value) {
     if (value == null) return 'Field cannot be empty';
 
     if (value.isEmpty) return 'Field cannot be empty';
 
     if (value.split(' ').length < 2) return 'Please enter your FULL NAME';
+    return null;
+  }
+
+  String? validatePhoneNumber(String? value) {
+    if (value == null) return 'Field cannot be empty';
+
+    if (value.isEmpty) return 'Field cannot be empty';
+
+    if (value.length != 11) return 'Please enter a valid phone number';
     return null;
   }
 

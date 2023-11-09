@@ -46,11 +46,13 @@ class CustomDropDownButton extends HookWidget {
               color: const Color(0XFFC1CDDA),
               width: 2,
             ),
+            color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(10.radius),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: valueState.value,
+              isExpanded: true,
               hint: hintText != null ? Text(hintText!) : null,
               onChanged: (value) {
                 if (value == null) return;

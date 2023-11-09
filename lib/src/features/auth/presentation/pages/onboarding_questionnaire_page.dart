@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/features/auth/data/models/personal_details/update_personal_details_param.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/emergency_contact_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/guarantor_page.dart';
@@ -22,6 +23,7 @@ class OnboardingQuestionnairePage extends HookWidget {
   Widget build(BuildContext context) {
     final controller = usePageController();
     final pageIndex = useState(0);
+    final personalDetails = useState<UpdatePersonalDetailsParam?>(null);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 1,
@@ -43,10 +45,12 @@ class OnboardingQuestionnairePage extends HookWidget {
                 PersonalInfoPage(
                   isAfterLogin: true,
                   controller: controller,
+                  personalDetails: personalDetails,
                 ),
                 SpouseDetailsPage(
                   isAfterLogin: true,
                   controller: controller,
+                  personalDetails: personalDetails,
                 ),
                 NextOfKinPage(
                   isAfterLogin: true,

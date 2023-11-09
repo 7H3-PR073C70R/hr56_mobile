@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hr56_staff/src/app/router/app_router.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/router/app_router.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/emergency_contact_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/guarantor_page.dart';

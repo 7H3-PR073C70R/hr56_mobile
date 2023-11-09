@@ -26,7 +26,7 @@ Future<void> showInfoCustomModel(
           if (controller != null) {
             Navigator.of(context).pop();
 
-            if (isSpouse) {
+            if (!isSpouse && info == UserInformation.personal) {
               final page = (controller.page ?? 0).toInt() + 2;
               controller.animateToPage(
                 page,

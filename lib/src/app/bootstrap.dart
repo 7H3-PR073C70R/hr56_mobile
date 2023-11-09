@@ -5,7 +5,10 @@ import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr56_staff/src/app/locator.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hr56_staff/src/di/locator.dart';
+import 'package:hr56_staff/src/services/local_storage.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -39,6 +42,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await init();
+  initLocator();
+  await dotenv.load();
+  await Hive.initFlutter();
+  await locator<LocalStorageService>().initDB();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }

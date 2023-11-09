@@ -6,7 +6,7 @@ class AuthInputField extends StatelessWidget {
     super.key,
     this.hintText,
     this.controller,
-    this.obscureText = true,
+    this.obscureText = false,
     this.validator,
     this.suffixIcon,
     this.autovalidateMode,

@@ -1,48 +1,74 @@
-import 'package:shared_preferences/shared_preferences.dart';
+// ignore_for_file: avoid_positional_boolean_parameters
+
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:logger/logger.dart';
 
 abstract class LocalStorageService {
   const LocalStorageService();
 
-  Future<void> saveToDisk<T>(String key, T content);
+  Future<void> initDB();
 
-  Object? getFromDisk(String key);
+  void saveToken(String token);
 
-  Future<bool> removeFromDisk(String key);
+  Future<void> savePreference({required String key, required String data});
+
+  String? getPreference({required String key});
+
+  Future<void> deletePreference({required String key});
+
+  String? getToken();
 }
 
 class LocalStorageServiceImpl implements LocalStorageService {
-  const LocalStorageServiceImpl(this._preferences);
+  LocalStorageServiceImpl();
 
-  final SharedPreferences _preferences;
+  late Box<String> _box;
+
+  final _tokenKey = '__token';
 
   @override
-  Future<void> saveToDisk<T>(String key, T content) async {
-    if (content is String) {
-      await _preferences.setString(key, content);
-    }
-    if (content is bool) {
-      await _preferences.setBool(key, content);
-    }
-    if (content is int) {
-      await _preferences.setInt(key, content);
-    }
-    if (content is double) {
-      await _preferences.setDouble(key, content);
-    }
-    if (content is List<String>) {
-      await _preferences.setStringList(key, content);
+  Future<void> initDB() async {
+    _box = await Hive.openBox('hr56_box_0');
+  }
+
+  @override
+  String? getPreference({required String key}) {
+    return _box.get(key);
+  }
+
+  @override
+  Future<void> savePreference({
+    required String key,
+    required String data,
+  }) async {
+    await _box.put(key, data);
+  }
+
+  @override
+  String? getToken() {
+    try {
+      return _box.get(_tokenKey);
+    } catch (e) {
+      Logger().e(e);
+      return null;
     }
   }
 
   @override
-  Object? getFromDisk(String key) {
-    final value = _preferences.get(key);
-    return value;
+  void saveToken(String token) {
+    try {
+      _box.put(_tokenKey, token);
+    } catch (e) {
+      Logger().e(e);
+    }
   }
 
   @override
-  Future<bool> removeFromDisk(String key) async {
-    final value = await _preferences.remove(key);
-    return value;
+  Future<void> deletePreference({required String key}) async {
+    try {
+      await _box.delete(key);
+    } catch (e) {
+      Logger().e(e);
+    }
   }
 }

@@ -28,6 +28,33 @@ class DatePickerFormCard extends HookWidget {
       label: label,
       hintText: hintText,
       keyboardType: TextInputType.datetime,
+      onTap: () {
+        final date = controller.text.split('/');
+        showDatePicker(
+          context: context,
+          initialDate: controller.text.isEmpty && date.length != 3
+              ? DateTime.now()
+              : DateTime.utc(
+                  (int.tryParse(date[2]) ?? 2022) > DateTime.now().year
+                      ? DateTime.now().year
+                      : int.tryParse(date[2]) ?? 2022,
+                  (int.tryParse(date[1]) ?? 1) > DateTime.now().month
+                      ? DateTime.now().month
+                      : int.tryParse(date[1]) ?? 1,
+                  (int.tryParse(date[0]) ?? 1) > DateTime.now().day
+                      ? DateTime.now().day
+                      : int.tryParse(date[0]) ?? 1,
+                ),
+          firstDate: DateTime(1900),
+          lastDate: DateTime.now(),
+        ).then(
+          (value) {
+            if (value == null) return;
+            onChanged?.call(value);
+            controller.text = DateFormat('dd/MM/yyyy').format(value);
+          },
+        );
+      },
       suffixIcon: IconButton(
         onPressed: () {
           final date = controller.text.split('/');

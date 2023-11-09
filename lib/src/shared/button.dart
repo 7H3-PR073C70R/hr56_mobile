@@ -13,6 +13,7 @@ class Button extends StatelessWidget {
     this.width,
     this.radius = 20,
     this.enable = true,
+    this.isBusy = false,
     this.border,
     this.suffixIcon,
     this.prefixIcon,
@@ -30,6 +31,7 @@ class Button extends StatelessWidget {
   final BoxBorder? border;
   final double radius;
   final bool enable;
+  final bool isBusy;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
 
@@ -38,7 +40,8 @@ class Button extends StatelessWidget {
     return ElevatedButton(
       onPressed: enable ? onPressed : () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: enable ? backgroundColor : AppColors.greyColor,
+        backgroundColor:
+            enable ? backgroundColor : backgroundColor.withOpacity(.5),
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius.radius),
@@ -51,28 +54,34 @@ class Button extends StatelessWidget {
         decoration: BoxDecoration(
           border: border,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (prefixIcon != null) ...[
-              prefixIcon!,
-              AppSpacing.setHorizontalSpace(10),
-            ],
-            Text(
-              text,
-              style: context.textTheme.displayLarge?.copyWith(
-                fontSize: 16.fontSize,
-                fontWeight: FontWeight.w600,
-                color: enable ? textColor : AppColors.textColor,
+        child: isBusy
+            ? Center(
+                child: CircularProgressIndicator.adaptive(
+                  backgroundColor: textColor,
+                ),
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (prefixIcon != null) ...[
+                    prefixIcon!,
+                    AppSpacing.setHorizontalSpace(10),
+                  ],
+                  Text(
+                    text,
+                    style: context.textTheme.displayLarge?.copyWith(
+                      fontSize: 16.fontSize,
+                      fontWeight: FontWeight.w600,
+                      color: enable ? textColor : AppColors.whiteColor,
+                    ),
+                  ),
+                  if (suffixIcon != null) ...[
+                    AppSpacing.setHorizontalSpace(10),
+                    suffixIcon!,
+                  ],
+                ],
               ),
-            ),
-            if (suffixIcon != null) ...[
-              AppSpacing.setHorizontalSpace(10),
-              suffixIcon!,
-            ],
-          ],
-        ),
       ),
     );
   }

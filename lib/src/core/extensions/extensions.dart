@@ -1,12 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hr56_staff/src/app/router/app_router.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
+import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
+import 'package:hr56_staff/src/core/error/failure.dart';
+import 'package:hr56_staff/src/core/router/app_router.dart';
+import 'package:hr56_staff/src/core/utils/either.dart';
+import 'package:hr56_staff/src/core/utils/error_message_handler.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/transfer_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/withdraw_page.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 extension ResponsiveExtension on num {
   double get width => w;
@@ -48,6 +55,38 @@ extension LeaveStatusExtension on LeaveStatus {
       case LeaveStatus.denied:
         return const Color(0xFFEE2011);
     }
+  }
+}
+
+extension BuildContextExtension on BuildContext {
+  void showSnackBar({
+    required String message,
+    SnackBarType type = SnackBarType.success,
+  }) {
+    return showTopSnackBar(
+      Overlay.of(this),
+      type.isError
+          ? CustomSnackBar.error(
+              message: message,
+              backgroundColor: AppColors.errorColor,
+            )
+          : type.isSuccess
+              ? CustomSnackBar.success(
+                  message: message,
+                  backgroundColor: AppColors.successColor,
+                )
+              : CustomSnackBar.info(
+                  message: message,
+                  backgroundColor: AppColors.primaryColor,
+                ),
+    );
+  }
+
+  void showErrorSnackBar({required String message}) {
+    showSnackBar(
+      message: message,
+      type: SnackBarType.error,
+    );
   }
 }
 
@@ -396,6 +435,34 @@ extension BankExtension on Bank {
         return '945';
       case Bank.zenith:
         return '966';
+    }
+  }
+}
+
+extension RepositoryExtension<T> on Future<T> {
+  /// The makeRequest() method is an asynchronous function that
+  /// handles error handling and returns a Future that wraps either
+  /// a Right containing the successful result (T) or a Left
+  /// containing a Failure object.
+
+  Future<Either<Failure, T>> makeRequest() async {
+    try {
+      final data = await this;
+      return Right(data);
+    } on DioError catch (e, s) {
+      debugPrint(s.toString());
+      debugPrintStack();
+      return Left(
+        ServerFailure(
+          message: e.errorMessage,
+        ),
+      );
+    } catch (e, s) {
+      debugPrint(s.toString());
+      debugPrintStack();
+      return const Left(
+        ServerFailure(),
+      );
     }
   }
 }

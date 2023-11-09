@@ -33,21 +33,3 @@ class UiHelpers {
   static Widget get hspaceMd => horizontalSpacer(24);
   static Widget get hspaceLg => horizontalSpacer(64);
 }
-
-extension ShowSnackBar on BuildContext {
-  void showSnackBar({
-    required String message,
-    Color backgroundColor = Colors.white,
-  }) {
-    ScaffoldMessenger.of(this).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: backgroundColor,
-      ),
-    );
-  }
-
-  void showErrorSnackBar({required String message}) {
-    showSnackBar(message: message, backgroundColor: Colors.red);
-  }
-}
