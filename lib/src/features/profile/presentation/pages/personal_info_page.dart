@@ -188,13 +188,12 @@ class PersonalInfoPage extends HookWidget {
                                 AppSpacing.setVerticalSpace(40),
                                 Button(
                                   enable: !(selectedGender.value == null ||
-                                        dob.value == null ||
-                                        selectedMaritalStatus.value == null ||
-                                        selectedIdentification.value == null ||
-                                        selectedStates.value == null),
+                                      dob.value == null ||
+                                      selectedMaritalStatus.value == null ||
+                                      selectedIdentification.value == null ||
+                                      selectedStates.value == null),
                                   isBusy: state.viewState.isProcessing,
                                   onPressed: () {
-                                    
                                     if (formKey.currentState!.validate()) {
                                       final personalDetailsParam =
                                           UpdatePersonalDetailsParam(

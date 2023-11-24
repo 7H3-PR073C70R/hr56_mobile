@@ -93,7 +93,7 @@ class EmergencyContactPage extends HookWidget {
                   builder: (context, state) {
                     return SingleChildScrollView(
                       child: Form(
-                         key: formKey,
+                        key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -135,7 +135,7 @@ class EmergencyContactPage extends HookWidget {
                             Button(
                               isBusy: state.viewState.isProcessing,
                               onPressed: () {
-                                 if (formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   context.read<AuthenticationBloc>().add(
                                         AuthenticationEvent.addEmergencyContact(
                                           AddEmergencyContactParam(

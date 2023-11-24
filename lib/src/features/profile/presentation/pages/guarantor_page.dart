@@ -342,81 +342,91 @@ class GuarantorPage extends HookWidget {
                                               .add(
                                                 AuthenticationEvent
                                                     .addGuarantor(
-                                                  (AddGuarantorParam(
-                                                    address: addressControllers
-                                                        .first.text,
-                                                    emailAddress:
-                                                        emailControllers
-                                                            .first.text,
-                                                    middleName:
-                                                        middleNameControllers
-                                                            .first.text,
-                                                    phoneNumber:
-                                                        phoneNumberControllers
-                                                            .first.text,
-                                                    relationship: relationships
-                                                        .first.value
-                                                        ?.replaceAll('_', '-')
-                                                        .toLowerCase(),
-                                                    annualSalary:
-                                                        annualSalaryController
-                                                            .first.text,
-                                                    city: city.first.text,
-                                                    dateOFBirth: dateOFBirth
-                                                        .first.value
-                                                        ?.toIso8601String(),
-                                                    employeeAddress:
-                                                        employeeAddress
-                                                            .first.text,
-                                                    employeeName:
-                                                        employeeName.first.text,
-                                                    expireDate: expireDate
-                                                        .first.value
-                                                        ?.toIso8601String(),
-                                                    firstname:
-                                                        fistNameControllers
-                                                            .first.text,
-                                                    identificationNumber:
-                                                        identificationNumber
-                                                            .first.text,
-                                                    issueDate:
-                                                        issueDateController
-                                                            .first.value
-                                                            ?.toIso8601String(),
-                                                    lastname:
-                                                        lastNameControllers
-                                                            .first.text,
-                                                    maritalStatus: maritalStatus
-                                                        .first.value
-                                                        ?.toLowerCase(),
-                                                    meanOfIdentification:
-                                                        meanOfIdentification
-                                                            .first.value
-                                                            ?.replaceAll(
-                                                              ' ',
-                                                              '_',
-                                                            )
-                                                            .toLowerCase(),
-                                                    occupation:
-                                                        occupationController
-                                                            .first.text,
-                                                    positionHeld:
-                                                        positionHeldController
-                                                            .first.text,
-                                                    stateId: appState.states
-                                                        .firstWhere(
-                                                          (element) =>
-                                                              element.name ==
-                                                              selectedState
-                                                                  .first.value,
-                                                          orElse: () =>
-                                                              const StateResponse(
-                                                            id: 1,
-                                                          ),
-                                                        )
-                                                        .id
-                                                        .toString(),
-                                                  ), photo.first.value!),
+                                                  (
+                                                    AddGuarantorParam(
+                                                      address:
+                                                          addressControllers
+                                                              .first.text,
+                                                      emailAddress:
+                                                          emailControllers
+                                                              .first.text,
+                                                      middleName:
+                                                          middleNameControllers
+                                                              .first.text,
+                                                      phoneNumber:
+                                                          phoneNumberControllers
+                                                              .first.text,
+                                                      relationship:
+                                                          relationships
+                                                              .first.value
+                                                              ?.replaceAll(
+                                                                '_',
+                                                                '-',
+                                                              )
+                                                              .toLowerCase(),
+                                                      annualSalary:
+                                                          annualSalaryController
+                                                              .first.text,
+                                                      city: city.first.text,
+                                                      dateOFBirth: dateOFBirth
+                                                          .first.value
+                                                          ?.toIso8601String(),
+                                                      employeeAddress:
+                                                          employeeAddress
+                                                              .first.text,
+                                                      employeeName: employeeName
+                                                          .first.text,
+                                                      expireDate: expireDate
+                                                          .first.value
+                                                          ?.toIso8601String(),
+                                                      firstname:
+                                                          fistNameControllers
+                                                              .first.text,
+                                                      identificationNumber:
+                                                          identificationNumber
+                                                              .first.text,
+                                                      issueDate:
+                                                          issueDateController
+                                                              .first.value
+                                                              ?.toIso8601String(),
+                                                      lastname:
+                                                          lastNameControllers
+                                                              .first.text,
+                                                      maritalStatus:
+                                                          maritalStatus
+                                                              .first.value
+                                                              ?.toLowerCase(),
+                                                      meanOfIdentification:
+                                                          meanOfIdentification
+                                                              .first.value
+                                                              ?.replaceAll(
+                                                                ' ',
+                                                                '_',
+                                                              )
+                                                              .toLowerCase(),
+                                                      occupation:
+                                                          occupationController
+                                                              .first.text,
+                                                      positionHeld:
+                                                          positionHeldController
+                                                              .first.text,
+                                                      stateId: appState.states
+                                                          .firstWhere(
+                                                            (element) =>
+                                                                element.name ==
+                                                                selectedState
+                                                                    .first
+                                                                    .value,
+                                                            orElse: () =>
+                                                                const StateResponse(
+                                                              id: 1,
+                                                            ),
+                                                          )
+                                                          .id
+                                                          .toString(),
+                                                    ),
+                                                    photo.first.value!
+                                                  ),
                                                 ),
                                               );
                                         }

@@ -55,7 +55,8 @@ class BankDetailsPage extends HookWidget {
                     text: 'Bank details',
                     onNavigateBack: controller == null
                         ? null
-                        : () => enums.UserInformation.bank.navigateBack(controller!),
+                        : () => enums.UserInformation.bank
+                            .navigateBack(controller!),
                   ),
                   Expanded(
                     child: SingleChildScrollView(
@@ -169,7 +170,8 @@ class BankDetailsPage extends HookWidget {
                                 AppSpacing.setVerticalSpace(40),
                                 Button(
                                   isBusy: state.viewState.isProcessing,
-                                  enable: selectedBank.value != null && selectedPensionAdmin.value != null,
+                                  enable: selectedBank.value != null &&
+                                      selectedPensionAdmin.value != null,
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
                                       context.read<AuthenticationBloc>().add(
@@ -179,21 +181,20 @@ class BankDetailsPage extends HookWidget {
                                                 accountNumber:
                                                     accountNumber.text,
                                                 bankId: appState.banks
-                                                            .firstWhere(
-                                                              (element) =>
-                                                                  element
-                                                                      .bankName ==
-                                                                  selectedBank
-                                                                      .value,
-                                                              orElse: () =>
-                                                                  const Bank(
-                                                                bankId:
-                                                                    1,
-                                                              ),
-                                                            )
-                                                            .bankId
-                                                            ?.toInt() ??
-                                                        1,
+                                                        .firstWhere(
+                                                          (element) =>
+                                                              element
+                                                                  .bankName ==
+                                                              selectedBank
+                                                                  .value,
+                                                          orElse: () =>
+                                                              const Bank(
+                                                            bankId: 1,
+                                                          ),
+                                                        )
+                                                        .bankId
+                                                        ?.toInt() ??
+                                                    1,
                                                 groupLifeAmount: int.tryParse(
                                                       groupLifeAmount.text,
                                                     ) ??

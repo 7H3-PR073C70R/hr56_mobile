@@ -34,39 +34,47 @@ class CustomNavBar extends StatelessWidget {
             iconPath: AppAssetPath.homeOutline,
             selectedIconPath: AppAssetPath.homeSolid,
             label: 'Home',
-            onTap: () => tabsRouter.setActiveIndex(0),
+            onTap: () => route(context, 0),
             selected: tabsRouter.activeIndex == 0,
           ),
           NavBarItem(
             iconPath: AppAssetPath.leaveOutline,
             selectedIconPath: AppAssetPath.leaveSolid,
             label: 'Leaves',
-            onTap: () => tabsRouter.setActiveIndex(1),
+            onTap: () => route(context, 1),
             selected: tabsRouter.activeIndex == 1,
           ),
           NavBarItem(
             iconPath: AppAssetPath.loanOutline,
             selectedIconPath: AppAssetPath.loanSolid,
             label: 'Loans',
-            onTap: () => tabsRouter.setActiveIndex(2),
+            onTap: () => route(context, 2),
             selected: tabsRouter.activeIndex == 2,
           ),
           NavBarItem(
             iconPath: AppAssetPath.payslipOutline,
             selectedIconPath: AppAssetPath.payslipSolid,
             label: 'Payslip',
-            onTap: () => tabsRouter.setActiveIndex(3),
+            onTap: () => route(context, 3),
             selected: tabsRouter.activeIndex == 3,
           ),
           NavBarItem(
             iconPath: AppAssetPath.walletOutline,
             selectedIconPath: AppAssetPath.walletSolid,
             label: 'Wallet',
-            onTap: () => tabsRouter.setActiveIndex(4),
+            onTap: () => route(context, 4),
             selected: tabsRouter.activeIndex == 4,
           ),
         ],
       ),
     );
+  }
+
+  void route(BuildContext context, int index) {
+    if (tabsRouter.activeIndex == index) {
+      context.popUntilMain();
+    } else {
+      tabsRouter.setActiveIndex(index);
+    }
   }
 }
