@@ -6,7 +6,9 @@ import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/auth/presentation/pages/login_page.dart';
+import 'package:hr56_staff/src/services/user_storage_service.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 
 class OnboardingPage extends HookWidget {
@@ -143,6 +145,8 @@ class OnboardingPage extends HookWidget {
                                     Button(
                                       onPressed: () {
                                         if (pageIndex.value == 2) {
+                                          locator<UserStorageService>()
+                                              .saveCompletedOnboarding();
                                           context.navigator.replaceNamed(
                                             LoginPage.routeName,
                                           );

@@ -6,6 +6,8 @@ import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/router/app_router.dart';
 import 'package:hr56_staff/src/core/themes/app_theme.dart';
 import 'package:hr56_staff/src/di/locator.dart';
+import 'package:hr56_staff/src/features/leaves/presentation/blocs/leave_bloc.dart';
+import 'package:hr56_staff/src/services/user_storage_service.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -28,13 +30,28 @@ class App extends StatelessWidget {
               )..add(const AppEvent.started()),
               lazy: false,
             ),
+            BlocProvider(
+              create: (context) => LeaveBloc(
+                locator(),
+                locator(),
+                locator(),
+                locator(),
+              ),
+            ),
           ],
           child: MaterialApp.router(
             title: AppStrings.appName,
             themeMode: ThemeMode.light,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            routerDelegate: _appRouter.delegate(),
+            routerDelegate: _appRouter.delegate(
+              initialRoutes: [
+                if (locator<UserStorageService>().completedOnboarding)
+                  const LoginRoute()
+                else
+                  const OnboardingRoute(),
+              ],
+            ),
             routeInformationParser: _appRouter.defaultRouteParser(),
           ),
         );

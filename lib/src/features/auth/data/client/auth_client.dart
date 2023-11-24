@@ -18,52 +18,52 @@ part 'auth_client.g.dart';
 abstract class AuthClient {
   factory AuthClient(Dio dio, {String baseUrl}) = _AuthClient;
 
-  @POST('/login')
+  @POST('login')
   Future<LoginResponse> login(
     @Body() LoginParam param,
   );
 
-  @POST('/financial-details')
+  @POST('financial-details')
   Future<void> addBankDetails(
     @Body() AddBankDetailsParam param,
   );
 
-  @POST('/emergency-contacts')
+  @POST('emergency-contacts')
   Future<void> addEmergencyContact(
     @Body() AddEmergencyContactParam param,
   );
 
-  @POST('/guarantors')
+  @POST('guarantors')
   @MultiPart()
   Future<void> addGuarantor(
     @Path() Map<String, dynamic> param,
   );
 
-  @POST('/references')
+  @POST('references')
   Future<void> addReference(
     @Body() AddReferenceParam param,
   );
 
-  @POST('/next-of-kin')
+  @POST('next-of-kin')
   Future<void> addNextOfKin(
     @Body() NextOfKinParam param,
   );
 
-  @PUT('/personal-information/{id}')
+  @PUT('personal-information/{id}')
   Future<void> updatePersonalInfo(
     @Path('id') String id,
     @Body() UpdatePersonalDetailsParam param,
   );
 
-  @GET('/banks')
+  @GET('banks')
   Future<List<Bank>> getBanks();
 
-  @GET('/hospitals')
+  @GET('hospitals')
   Future<List<Hospital>> getHospitals();
 
-  @GET('/pension-fund-admins')
+  @GET('pension-fund-admins')
   Future<List<PensionAdmin>> getPensionAdmins();
 
-  @GET('/states')
+  @GET('states')
   Future<List<StateResponse>> getStates();
 }

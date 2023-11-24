@@ -13,12 +13,16 @@ class DatePickerFormCard extends HookWidget {
     this.onChanged,
     this.initialValue,
     this.hintText,
+    this.firstDate,
+    this.lastDate,
   });
 
   final String? label;
   final String? initialValue;
   final String? hintText;
   final ValueChanged<DateTime?>? onChanged;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +49,8 @@ class DatePickerFormCard extends HookWidget {
                       ? DateTime.now().day
                       : int.tryParse(date[0]) ?? 1,
                 ),
-          firstDate: DateTime(1900),
-          lastDate: DateTime.now(),
+          firstDate: firstDate ?? DateTime(1900),
+          lastDate: lastDate ?? DateTime.now(),
         ).then(
           (value) {
             if (value == null) return;
@@ -73,8 +77,8 @@ class DatePickerFormCard extends HookWidget {
                         ? DateTime.now().day
                         : int.tryParse(date[0]) ?? 1,
                   ),
-            firstDate: DateTime(1900),
-            lastDate: DateTime.now(),
+            firstDate: firstDate ?? DateTime(1900),
+            lastDate: lastDate ?? DateTime.now(),
           ).then(
             (value) {
               if (value == null) return;

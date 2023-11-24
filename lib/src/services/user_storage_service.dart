@@ -11,6 +11,9 @@ abstract class UserStorageService {
   void saveUser(User? user);
   User? get user;
   void deleteUser();
+
+  void saveCompletedOnboarding();
+  bool get completedOnboarding;
 }
 
 class UserStorageServiceImpl implements UserStorageService {
@@ -45,5 +48,18 @@ class UserStorageServiceImpl implements UserStorageService {
     final userJson = _storageService.getPreference(key: '__user');
     if (userJson == null) return null;
     return User.fromJson(json.decode(userJson) as Map<String, dynamic>);
+  }
+
+  @override
+  bool get completedOnboarding {
+    return _storageService.getPreference(key: '__onboarding') != null;
+  }
+
+  @override
+  void saveCompletedOnboarding() {
+    _storageService.savePreference(
+      key: '__onboarding',
+      data: json.encode(true),
+    );
   }
 }

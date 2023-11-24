@@ -31,7 +31,6 @@ abstract class AuthenticationRepository {
   Future<Either<Failure, void>> addGuarantor(
     AddGuarantorParam param,
     File? photo,
-    
   );
 
   Future<Either<Failure, void>> addReference(

@@ -56,5 +56,96 @@ Future<void> _initUseCaseLocator() async {
       () => UpdatePersonalInfoUseCase(
         locator(),
       ),
+    )
+    ..registerLazySingleton<CreateLeaveUseCase>(
+      () => CreateLeaveUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetLeaveTypeUseCase>(
+      () => GetLeaveTypeUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetLeaveUseCase>(
+      () => GetLeaveUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<UpdateLeaveUseCase>(
+      () => UpdateLeaveUseCase(
+        locator(),
+      ),
+    )
+    //! Wallet
+    ..registerLazySingleton<AccountLookupUseCase>(
+      () => AccountLookupUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<BuyElectricityUseCase>(
+      () => BuyElectricityUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<CreateWalletUseCase>(
+      () => CreateWalletUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetBanksUseCase>(
+      () => GetBanksUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetBillersUseCase>(
+      () => GetBillersUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetCablePlansUseCase>(
+      () => GetCablePlansUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetProviderDataPlansUseCase>(
+      () => GetProviderDataPlansUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetTransactionDetailsUseCase>(
+      () => GetTransactionDetailsUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetTransactionsUseCase>(
+      () => GetTransactionsUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetWalletInfoUseCase>(
+      () => GetWalletInfoUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<PurchaseAirtimeUseCase>(
+      () => PurchaseAirtimeUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<PurchaseCableTVUseCase>(
+      () => PurchaseCableTVUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<SendMoneyUseCase>(
+      () => SendMoneyUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<ValidateBillPaymentUserUsecase>(
+      () => ValidateBillPaymentUserUsecase(
+        locator(),
+      ),
     );
 }
