@@ -12,6 +12,7 @@ class SendMoneyParam with _$SendMoneyParam {
     required String account,
     required String bankCode,
     required String accountName,
+    required String pin,
   }) = _SendMoneyParam;
 
   factory SendMoneyParam.fromJson(Map<String, dynamic> json) =>

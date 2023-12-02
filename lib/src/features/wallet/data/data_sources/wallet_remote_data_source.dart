@@ -1,13 +1,20 @@
 import 'package:hr56_staff/src/features/wallet/data/client/wallet_client.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/cable_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/get_biller_plan_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/buy_electricity/buy_electricity_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/create_wallet/create_wallet_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_model.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/get_provider_data_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/provider_data_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_airtime/purchase_airtime_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/bill_payment_user_info.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/validate_bill_payment_user_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet/wallet.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet_bank/wallet_bank.dart';
 
 abstract class WalletRemoteDataSource {
   Future<dynamic> getTransaction();
@@ -16,27 +23,27 @@ abstract class WalletRemoteDataSource {
     String reference,
   );
 
-  Future<dynamic> getWalletInfo();
+  Future<Wallet?> getWalletInfo();
 
   Future<void> sendMoney(
     SendMoneyParam param,
   );
 
-  Future<dynamic> getBanks();
+  Future<List<WalletBank>> getBanks();
 
-  Future<dynamic> accountLookup(
+  Future<LookupAccountModel?> accountLookup(
     LookupAccountParam param,
   );
 
-  Future<dynamic> getBillers(
+  Future<List<Biller>> getBillers(
     String type,
   );
 
-  Future<dynamic> getProviderDataPlans(
+  Future<List<ProviderDataPlan>> getProviderDataPlans(
     String billerId,
   );
 
-  Future<dynamic> getCablePlans(
+  Future<List<CablePlan>> getCablePlans(
     String serviceType,
   );
 
@@ -44,7 +51,7 @@ abstract class WalletRemoteDataSource {
     PurchaseAirtimeParam param,
   );
 
-  Future<dynamic> validateBillPaymentUSer(
+  Future<BillPaymentUserInfo?> validateBillPaymentUSer(
     ValidateBillPaymentUserParam param,
   );
 
@@ -64,7 +71,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   final WalletClient _client;
 
   @override
-  Future<dynamic> accountLookup(LookupAccountParam param) {
+  Future<LookupAccountModel?> accountLookup(LookupAccountParam param) {
     return _client.accountLookup(param);
   }
 
@@ -79,24 +86,24 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   }
 
   @override
-  Future<dynamic> getBanks() {
+  Future<List<WalletBank>> getBanks() {
     return _client.getBanks();
   }
 
   @override
-  Future<dynamic> getBillers(String type) {
+  Future<List<Biller>> getBillers(String type) {
     return _client.getBillers(type);
   }
 
   @override
-  Future<dynamic> getCablePlans(String serviceType) {
+  Future<List<CablePlan>> getCablePlans(String serviceType) {
     return _client.getCablePlans(
       GetBillerPlanParam(serviceType: serviceType),
     );
   }
 
   @override
-  Future<dynamic> getProviderDataPlans(String billerId) {
+  Future<List<ProviderDataPlan>> getProviderDataPlans(String billerId) {
     return _client.getProviderDataPlans(
       GetProviderDataParam(billerId: billerId),
     );
@@ -113,7 +120,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   }
 
   @override
-  Future<dynamic> getWalletInfo() {
+  Future<Wallet?> getWalletInfo() {
     return _client.getWalletInfo();
   }
 
@@ -133,7 +140,9 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   }
 
   @override
-  Future<dynamic> validateBillPaymentUSer(ValidateBillPaymentUserParam param) {
+  Future<BillPaymentUserInfo?> validateBillPaymentUSer(
+    ValidateBillPaymentUserParam param,
+  ) {
     return _client.validateBillPaymentUSer(param);
   }
 }

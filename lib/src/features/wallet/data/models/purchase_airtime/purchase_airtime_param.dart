@@ -12,6 +12,7 @@ class PurchaseAirtimeParam with _$PurchaseAirtimeParam {
     required String billerId,
     required String mobile,
     required String type,
+    required String pin,
   }) = _PurchaseAirtimeParam;
 
   factory PurchaseAirtimeParam.fromJson(Map<String, dynamic> json) =>

@@ -16,6 +16,7 @@ class BuyElectricityParam with _$BuyElectricityParam {
     required String customerAddress,
     required String notificationEmail,
     required String notificationPhone,
+    required String pin,
   }) = _BuyElectricityParam;
 
   factory BuyElectricityParam.fromJson(Map<String, dynamic> json) =>

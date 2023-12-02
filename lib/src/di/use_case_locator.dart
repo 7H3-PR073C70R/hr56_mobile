@@ -93,8 +93,8 @@ Future<void> _initUseCaseLocator() async {
         locator(),
       ),
     )
-    ..registerLazySingleton<GetBanksUseCase>(
-      () => GetBanksUseCase(
+    ..registerLazySingleton<GetWalletBanksUseCase>(
+      () => GetWalletBanksUseCase(
         locator(),
       ),
     )

@@ -4,16 +4,23 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/utils/use_case.dart';
-import 'package:hr56_staff/src/features/auth/domain/use_cases/get_banks_use_case.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/cable_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/buy_electricity/buy_electricity_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_model.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/provider_data_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_airtime/purchase_airtime_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/bill_payment_user_info.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/validate_bill_payment_user_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet/wallet.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet_bank/wallet_bank.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/account_lookup_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/buy_electricity_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/create_wallet_use_case.dart';
+import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_banks_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_billers_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_cable_plans_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_provider_data_plans_use_case.dart';
@@ -64,7 +71,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final AccountLookupUseCase _accountLookupUseCase;
   final BuyElectricityUseCase _buyElectricityUseCase;
   final CreateWalletUseCase _createWalletUseCase;
-  final GetBanksUseCase _getBanksUseCase;
+  final GetWalletBanksUseCase _getBanksUseCase;
   final GetBillersUseCase _getBillersUseCase;
   final GetCablePlansUseCase _getCablePlansUseCase;
   final GetProviderDataPlansUseCase _getProviderDataPlansUseCase;
@@ -86,7 +93,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(
       state.copyWith(
         banks: banks.fold(
-          (left) => left,
+          (_) => [],
           (right) => right,
         ),
       ),

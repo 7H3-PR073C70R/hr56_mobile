@@ -12,6 +12,7 @@ import 'package:hr56_staff/src/core/utils/error_message_handler.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/transfer_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/withdraw_page.dart';
+import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -32,6 +33,10 @@ extension RouterExtension on BuildContext {
 extension ThemeExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
   TextTheme get textTheme => theme.textTheme;
+}
+
+extension NumExtension on num {
+  String get toAmount => NumberFormat.currency(symbol: '').format(this);
 }
 
 extension ViewStateExtension on ViewState {

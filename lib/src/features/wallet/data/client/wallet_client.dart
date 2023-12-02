@@ -1,13 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/cable_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/get_biller_plan_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/buy_electricity/buy_electricity_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/create_wallet/create_wallet_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_model.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/get_provider_data_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/provider_data_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_airtime/purchase_airtime_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/bill_payment_user_info.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/validate_bill_payment_user_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet/wallet.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/wallet_bank/wallet_bank.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'wallet_client.g.dart';
@@ -25,7 +32,7 @@ abstract class WalletClient {
   );
 
   @GET('transaction/getWallet')
-  Future<dynamic> getWalletInfo();
+  Future<Wallet?> getWalletInfo();
 
   @POST('transaction/sendMoney')
   Future<void> sendMoney(
@@ -33,25 +40,25 @@ abstract class WalletClient {
   );
 
   @GET('transaction/getBanks')
-  Future<dynamic> getBanks();
+  Future<List<WalletBank>> getBanks();
 
   @POST('transaction/accountLookup')
-  Future<dynamic> accountLookup(
+  Future<LookupAccountModel?> accountLookup(
     @Body() LookupAccountParam param,
   );
 
   @GET('billpayment/getBillers?type={type}')
-  Future<dynamic> getBillers(
+  Future<List<Biller>> getBillers(
     @Path('type') String type,
   );
 
   @POST('billpayment/data/plans')
-  Future<dynamic> getProviderDataPlans(
+  Future<List<ProviderDataPlan>> getProviderDataPlans(
     @Body() GetProviderDataParam param,
   );
 
   @POST('billpayment/cable/plans')
-  Future<dynamic> getCablePlans(
+  Future<List<CablePlan>> getCablePlans(
     @Body() GetBillerPlanParam param,
   );
 
@@ -61,7 +68,7 @@ abstract class WalletClient {
   );
 
   @POST('billpayment/validateUser')
-  Future<dynamic> validateBillPaymentUSer(
+  Future<BillPaymentUserInfo?> validateBillPaymentUSer(
     @Body() ValidateBillPaymentUserParam param,
   );
 

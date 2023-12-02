@@ -4,15 +4,15 @@ part of 'wallet_bloc.dart';
 class WalletState with _$WalletState {
   const factory WalletState.initial({
     @Default(ViewState.idle) ViewState viewState,
-    dynamic accountLookup,
-    dynamic banks,
-    dynamic billers,
-    dynamic cablePlans,
-    dynamic providerDataPlans,
+    LookupAccountModel? accountLookup,
+    @Default([]) List<WalletBank> banks,
+    @Default([]) List<Biller> billers,
+    @Default([]) List<CablePlan> cablePlans,
+    @Default([]) List<ProviderDataPlan> providerDataPlans,
     dynamic transactionDetails,
     dynamic transactions,
-    dynamic walletInfo,
-    dynamic billPaymentUser,
+    Wallet? walletInfo,
+    BillPaymentUserInfo? billPaymentUser,
     String? errorMessage,
   }) = _Initial;
 }

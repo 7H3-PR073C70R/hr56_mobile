@@ -14,6 +14,7 @@ class PurchaseCableTvParam with _$PurchaseCableTvParam {
     required String paymentCode,
     required String customerName,
     required String billerCode,
+    required String pin,
   }) = _PurchaseCableTvParam;
 
   factory PurchaseCableTvParam.fromJson(Map<String, dynamic> json) =>
