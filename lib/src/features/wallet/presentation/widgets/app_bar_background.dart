@@ -11,8 +11,8 @@ import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/core/utils/helper_function.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/blocs/wallet_bloc.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/create_transaction_pin_page.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
-import 'package:intl/intl.dart';
 
 class AppBarBackground extends HookWidget {
   const AppBarBackground({
@@ -103,7 +103,7 @@ class AppBarBackground extends HookWidget {
                               children: [
                                 Text(
                                   '${AppStrings.naira}'
-                                  '${!showAccount.value ? '*' * 8 : NumberFormat.currency(symbol: '').format(amount)}',
+                                  '${!showAccount.value ? '*' * 8 : amount.toAmount}',
                                   style:
                                       context.textTheme.displayLarge?.copyWith(
                                     fontSize: 30.fontSize,
@@ -167,8 +167,15 @@ class AppBarBackground extends HookWidget {
                       .map(
                         (action) => GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          onTap: () =>
-                              context.navigator.pushNamed(action.route),
+                          onTap: () {
+                            if (state.transactionPINSet) {
+                              context.navigator.pushNamed(action.route);
+                            } else {
+                              context.navigator.pushNamed(
+                                CreateTransactionPinPage.routeName,
+                              );
+                            }
+                          },
                           child: Column(
                             children: [
                               Container(

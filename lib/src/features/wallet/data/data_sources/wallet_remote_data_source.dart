@@ -3,6 +3,7 @@ import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/cable_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/get_biller_plan_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/buy_electricity/buy_electricity_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/create_transaction_pin/create_transaction_pin_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/create_wallet/create_wallet_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_model.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_param.dart';
@@ -11,13 +12,14 @@ import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/pr
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_airtime/purchase_airtime_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/transaction/transaction.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/bill_payment_user_info.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/validate_bill_payment_user_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/wallet/wallet.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/wallet_bank/wallet_bank.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<dynamic> getTransaction();
+  Future<List<Transaction>> getTransaction();
 
   Future<dynamic> getTransactionDetails(
     String reference,
@@ -64,6 +66,10 @@ abstract class WalletRemoteDataSource {
   );
 
   Future<void> createWallet();
+
+  Future<void> createTransactionPIN(
+    CreateTransactionPinParam param,
+  );
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
@@ -110,7 +116,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   }
 
   @override
-  Future<dynamic> getTransaction() {
+  Future<List<Transaction>> getTransaction() {
     return _client.getTransaction();
   }
 
@@ -144,5 +150,10 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     ValidateBillPaymentUserParam param,
   ) {
     return _client.validateBillPaymentUSer(param);
+  }
+
+  @override
+  Future<void> createTransactionPIN(CreateTransactionPinParam param) {
+    return _client.createTransactionPIN(param);
   }
 }

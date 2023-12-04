@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/router/app_router.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
@@ -9,9 +10,11 @@ class StateModal extends StatelessWidget {
   const StateModal({
     super.key,
     required this.isSuccessful,
+    required this.message,
   });
 
   final bool isSuccessful;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class StateModal extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: ' NGN 10,000 ',
+                    text: ' NGN $message ',
                     style: context.textTheme.displayLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 14.fontSize,
@@ -91,8 +94,7 @@ class StateModal extends StatelessWidget {
               ),
               child: Text(
                 'Your withdrawal cannot be processed at'
-                ' this time die to insufficient balance, fund your'
-                ' account and try again',
+                ' this time. $message',
                 textAlign: TextAlign.center,
                 style: context.textTheme.displayLarge?.copyWith(
                   fontWeight: FontWeight.w400,
@@ -103,7 +105,17 @@ class StateModal extends StatelessWidget {
             ),
           AppSpacing.setVerticalSpace(40),
           Button(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => isSuccessful
+                ? context.navigator.replaceAll(
+                    const [
+                      MainRoute(
+                        children: [
+                          WalletRoute(),
+                        ],
+                      ),
+                    ],
+                  )
+                : Navigator.of(context).pop(),
             text: isSuccessful ? 'Done' : 'Back to wallet',
           ),
         ],

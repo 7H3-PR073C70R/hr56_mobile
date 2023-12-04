@@ -35,6 +35,8 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/profile_page.
 import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/spouse_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/update_password_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/confirm_transaction_pin_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/create_transaction_pin_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/beneficiary_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/review_transfer_details_page.dart';
@@ -160,6 +162,14 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: WithdrawPage,
       path: WithdrawPage.routeName,
+    ),
+    AutoRoute(
+      page: ConfirmTransactionPinPage,
+      path: ConfirmTransactionPinPage.routeName,
+    ),
+    AutoRoute(
+      page: CreateTransactionPinPage,
+      path: CreateTransactionPinPage.routeName,
     ),
     AutoRoute(
       page: MainPage,

@@ -6,7 +6,9 @@ import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/home/presentation/pages/notification_page.dart';
+import 'package:hr56_staff/src/services/user_storage_service.dart';
 import 'package:hr56_staff/src/shared/carousel_indicator.dart';
 import 'package:hr56_staff/src/shared/custom_drawer.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
@@ -58,62 +60,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             AppSpacing.setVerticalSpace(40),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.radius),
-                color: const Color(0xFFF1CFFA).withOpacity(.5),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 71.radius,
-                    backgroundImage:
-                        const NetworkImage(AppStrings.profileImage),
-                  ),
-                  AppSpacing.verticalSpaceMedium,
-                  Text(
-                    'Isaiah Nwankwo',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 20.fontSize,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF56006B),
-                    ),
-                  ),
-                  AppSpacing.verticalSpaceTiny,
-                  Text(
-                    'Isaiahnwankwo@gmail.com',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 13.fontSize,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF944DA6),
-                    ),
-                  ),
-                  AppSpacing.verticalSpaceTiny,
-                  Text(
-                    'Bridgegap Consults',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 13.fontSize,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF944DA6),
-                    ),
-                  ),
-                  AppSpacing.verticalSpaceTiny,
-                  Text(
-                    '+234 705 654 1234',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 13.fontSize,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF944DA6),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const UserCard(),
             // Expanded(
             //   child: ListView.builder(
             //     itemBuilder: (context, _) => const PayrollHistoryCard(
@@ -201,6 +148,73 @@ class _HomePageState extends State<HomePage> {
             // AppSpacing.setVerticalSpace(22),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class UserCard extends HookWidget {
+  const UserCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final user = useMemoized(() => locator<UserStorageService>().user);
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.radius),
+        color: const Color(0xFFF1CFFA).withOpacity(.5),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: 71.radius,
+            backgroundImage:
+                const NetworkImage(AppStrings.profileImage),
+          ),
+          AppSpacing.verticalSpaceMedium,
+          Text(
+            '${user?.firstName ?? ''} ${user?.lastName ?? ''}',
+            style: context.textTheme.displayLarge?.copyWith(
+              fontSize: 20.fontSize,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF56006B),
+            ),
+          ),
+          AppSpacing.verticalSpaceTiny,
+          Text(
+            user?.email ?? '',
+            style: context.textTheme.displayLarge?.copyWith(
+              fontSize: 13.fontSize,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFF944DA6),
+            ),
+          ),
+          AppSpacing.verticalSpaceTiny,
+          Text(
+            'Bridgegap Consults',
+            style: context.textTheme.displayLarge?.copyWith(
+              fontSize: 13.fontSize,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFF944DA6),
+            ),
+          ),
+          AppSpacing.verticalSpaceTiny,
+          Text(
+            '+234 705 654 1234',
+            style: context.textTheme.displayLarge?.copyWith(
+              fontSize: 13.fontSize,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFF944DA6),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -346,7 +360,7 @@ class HomeInfoCard extends StatelessWidget {
   }
 }
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends HookWidget {
   const HomeHeader({
     super.key,
     required this.openDrawer,
@@ -356,6 +370,7 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = useMemoized(() => locator<UserStorageService>().user);
     return Padding(
       padding: const EdgeInsets.only(right: 24),
       child: Row(
@@ -379,7 +394,7 @@ class HomeHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Isaiah Nwankwo',
+                  '${user?.firstName ?? ''} ${user?.lastName ?? ''}',
                   style: context.textTheme.displayLarge?.copyWith(
                     fontSize: 16.fontSize,
                   ),

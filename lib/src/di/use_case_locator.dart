@@ -143,6 +143,11 @@ Future<void> _initUseCaseLocator() async {
         locator(),
       ),
     )
+    ..registerLazySingleton<CreateTransactionPINUseCase>(
+      () => CreateTransactionPINUseCase(
+        locator(),
+      ),
+    )
     ..registerLazySingleton<ValidateBillPaymentUserUsecase>(
       () => ValidateBillPaymentUserUsecase(
         locator(),

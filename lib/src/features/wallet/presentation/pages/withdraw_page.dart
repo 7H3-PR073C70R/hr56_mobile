@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/utils/input_formatter.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/blocs/wallet_bloc.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
@@ -15,13 +18,15 @@ import 'package:hr56_staff/src/shared/enter_pin_modal.dart';
 import 'package:hr56_staff/src/shared/state_modal.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
-class WithdrawPage extends StatelessWidget {
+class WithdrawPage extends HookWidget {
   const WithdrawPage({super.key});
 
   static const routeName = 'withdraw';
 
   @override
   Widget build(BuildContext context) {
+    final formKey = useMemoized(GlobalKey<FormState>.new);
+    final amountController = useTextEditingController();
     return Scaffold(
       appBar: const EmptyAppBar(
         backgroundColor: AppColors.whiteColor,
@@ -169,42 +174,90 @@ class WithdrawPage extends StatelessWidget {
                 ),
                 AppSpacing.setVerticalSpace(6),
                 SizedBox(
-                  height: 50.height,
                   width: double.infinity,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: Image.asset(
-                        AppAssetPath.ngn,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 25,
-                        horizontal: 2,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                  child: Form(
+                    key: formKey,
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.always,
+                      controller: amountController,
+                      inputFormatters: [AmountTextInputFormatter()],
+                      validator: (value) {
+                        if (value == null) return 'Field cannot be empty';
+                        if (value.isEmpty) return 'Field cannot be empty';
+                        if ((double.tryParse(value.replaceAll(',', '')) ?? 0) >
+                            amount) {
+                          return 'Amount cannot be greater than ${amount.toAmount}';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Image.asset(
+                          AppAssetPath.ngn,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 AppSpacing.setVerticalSpace(54),
-                Button(
-                  onPressed: () {
-                    showModalBottomSheet<Widget>(
-                      context: context,
-                      barrierColor: const Color(0xFF070707).withOpacity(
-                        .3,
-                      ),
-                      isScrollControlled: true,
-                      backgroundColor: AppColors.whiteColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.radius),
-                          topRight: Radius.circular(25.radius),
+                BlocBuilder<WalletBloc, WalletState>(
+                  buildWhen: (previous, current) {
+                    if (previous.viewState.isProcessing &&
+                        current.viewState.isSuccess) {
+                      Navigator.of(context).pop();
+                      showModalBottomSheet<Widget>(
+                        context: context,
+                        barrierColor: const Color(0xFF070707).withOpacity(
+                          .3,
                         ),
-                      ),
-                      builder: (ctx) => EnterPinWithdrawModal(
-                        onContinue: (_) {
-                          Navigator.of(ctx).pop();
+                        isScrollControlled: true,
+                        backgroundColor: AppColors.whiteColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.radius),
+                            topRight: Radius.circular(25.radius),
+                          ),
+                        ),
+                        builder: (ctx) => StateModal(
+                          isSuccessful: true,
+                          message: (double.tryParse(
+                                    amountController.text.replaceAll(',', ''),
+                                  ) ??
+                                  0)
+                              .toAmount,
+                        ),
+                      );
+                    } else if (previous.viewState.isProcessing &&
+                        current.viewState.isError) {
+                      Navigator.of(context).pop();
+                      context.showErrorSnackBar(
+                        message: current.errorMessage ?? 'Something went wrong',
+                      );
+                      showModalBottomSheet<Widget>(
+                        context: context,
+                        barrierColor: const Color(0xFF070707).withOpacity(
+                          .3,
+                        ),
+                        isScrollControlled: true,
+                        backgroundColor: AppColors.whiteColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.radius),
+                            topRight: Radius.circular(25.radius),
+                          ),
+                        ),
+                        builder: (ctx) => StateModal(
+                          isSuccessful: false,
+                          message:
+                              current.errorMessage ?? 'Something went wrong ',
+                        ),
+                      );
+                    }
+                    return true;
+                  },
+                  builder: (context, state) {
+                    return Button(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
                           showModalBottomSheet<Widget>(
                             context: context,
                             barrierColor: const Color(0xFF070707).withOpacity(
@@ -218,15 +271,36 @@ class WithdrawPage extends StatelessWidget {
                                 topRight: Radius.circular(25.radius),
                               ),
                             ),
-                            builder: (ctx) => const StateModal(
-                              isSuccessful: true,
+                            builder: (ctx) => EnterPinWithdrawModal(
+                              onContinue: (value) => context
+                                  .read<WalletBloc>()
+                                  .add(
+                                    WalletEvent.sendMoney(
+                                      SendMoneyParam(
+                                        amount:
+                                            amountController.text.replaceAll(
+                                          ',',
+                                          '',
+                                        ),
+                                        type: 'Bank',
+                                        account:
+                                            state.walletInfo?.accountNumber ??
+                                                '',
+                                        bankCode:
+                                            state.walletInfo?.bankCode ?? '',
+                                        accountName:
+                                            state.walletInfo?.accountName ?? '',
+                                        pin: value,
+                                      ),
+                                    ),
+                                  ),
                             ),
                           );
-                        },
-                      ),
+                        }
+                      },
+                      text: 'Next',
                     );
                   },
-                  text: 'Next',
                 ),
               ],
             ),

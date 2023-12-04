@@ -17,64 +17,69 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      builder: (context, _) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => AppBloc(
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-              )..add(const AppEvent.started()),
-              lazy: false,
-            ),
-            BlocProvider(
-              create: (context) => LeaveBloc(
-                locator(),
-                locator(),
-                locator(),
-                locator(),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        builder: (context, _) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => AppBloc(
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                )..add(const AppEvent.started()),
+                lazy: false,
               ),
+              BlocProvider(
+                create: (context) => LeaveBloc(
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                ),
+              ),
+              BlocProvider(
+                create: (context) => WalletBloc(
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                  locator(),
+                )..add(const WalletEvent.started()),
+              ),
+            ],
+            child: MaterialApp.router(
+              title: AppStrings.appName,
+              themeMode: ThemeMode.light,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              routerDelegate: _appRouter.delegate(
+                initialRoutes: [
+                  if (locator<UserStorageService>().completedOnboarding)
+                    const LoginRoute()
+                  else
+                    const OnboardingRoute(),
+                ],
+              ),
+              routeInformationParser: _appRouter.defaultRouteParser(),
             ),
-            BlocProvider(
-              create: (context) => WalletBloc(
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-                locator(),
-              )..add(const WalletEvent.started()),
-            ),
-          ],
-          child: MaterialApp.router(
-            title: AppStrings.appName,
-            themeMode: ThemeMode.light,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            routerDelegate: _appRouter.delegate(
-              initialRoutes: [
-                if (locator<UserStorageService>().completedOnboarding)
-                  const LoginRoute()
-                else
-                  const OnboardingRoute(),
-              ],
-            ),
-            routeInformationParser: _appRouter.defaultRouteParser(),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

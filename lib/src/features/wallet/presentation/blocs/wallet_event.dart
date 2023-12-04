@@ -23,4 +23,7 @@ class WalletEvent with _$WalletEvent {
   const factory WalletEvent.validateBillPayment(
     ValidateBillPaymentUserParam param,
   ) = _ValidateBillPayment;
+  const factory WalletEvent.createTransactionPIN(
+    CreateTransactionPinParam param,
+  ) = _CreateTransactionPIN;
 }

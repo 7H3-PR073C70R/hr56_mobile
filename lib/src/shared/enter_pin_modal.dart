@@ -17,6 +17,7 @@ class EnterPinWithdrawModal extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pin = useState('');
     return Container(
       height: 637.height,
       width: double.infinity,
@@ -54,11 +55,14 @@ class EnterPinWithdrawModal extends HookWidget {
           ),
           AppSpacing.verticalSpaceLarge,
           CustomPinField(
-            onChanged: (_) {},
+            onChanged: (value) {
+              pin.value = value;
+            },
           ),
           AppSpacing.setVerticalSpace(40),
           Button(
-            onPressed: () => onContinue('controller.text'),
+            enable: pin.value.length == 4,
+            onPressed: () => onContinue(pin.value),
             text: 'Confirm',
           ),
         ],

@@ -32,6 +32,7 @@ import 'package:hr56_staff/src/features/wallet/data/repositories/wallet_reposito
 import 'package:hr56_staff/src/features/wallet/domain/repositories/wallet_repository.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/account_lookup_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/buy_electricity_use_case.dart';
+import 'package:hr56_staff/src/features/wallet/domain/use_cases/create_transaction_pin_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/create_wallet_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_banks_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_billers_use_case.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
@@ -9,6 +11,7 @@ import 'package:hr56_staff/src/features/wallet/presentation/widgets/app_bar_back
 import 'package:hr56_staff/src/features/wallet/presentation/widgets/custom_app_bar.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/widgets/transaction_card.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
+import 'package:intl/intl.dart';
 
 class WalletPage extends StatelessWidget {
   const WalletPage({super.key});
@@ -120,18 +123,18 @@ class WalletPage extends StatelessWidget {
                             ),
                           ),
                           AppSpacing.setVerticalSpace(18),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: Text(
-                              '23 Feb 2023',
-                              style: context.textTheme.displayLarge?.copyWith(
-                                fontSize: 13.fontSize,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF555151),
-                              ),
-                            ),
-                          ),
-                          AppSpacing.setVerticalSpace(18),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 24),
+                          //   child: Text(
+                          //     '23 Feb 2023',
+                          //     style: context.textTheme.displayLarge?.copyWith(
+                          //       fontSize: 13.fontSize,
+                          //       fontWeight: FontWeight.w400,
+                          //       color: const Color(0xFF555151),
+                          //     ),
+                          //   ),
+                          // ),
+                          // AppSpacing.setVerticalSpace(18),
                         ],
                       ),
                     ],
@@ -141,15 +144,22 @@ class WalletPage extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return TransactionCard(
-                        name: index.isEven ? 'Tobi Hassan' : 'Tobi Bakare',
-                        time: '06:${4 + index} PM',
-                        isDebt: index.isOdd,
-                        amount: '1,000.00',
+                        name: state.transactions[index].narration
+                                ?.capitalizeFirst ??
+                            '',
+                        time: DateFormat('dd MMM, yyyy. hh:mm a').format(
+                          state.transactions[index].createdAt ?? DateTime.now(),
+                        ),
+                        isDebt: state.transactions[index].action == 'debit',
+                        amount: double.tryParse(
+                              state.transactions[index].amount ?? '',
+                            )?.toAmount ??
+                            '',
                         isFirst: index == 0,
-                        isLast: index == 49,
+                        isLast: index == state.transactions.length - 1,
                       );
                     },
-                    childCount: 50,
+                    childCount: state.transactions.length,
                   ),
                 ),
               ],

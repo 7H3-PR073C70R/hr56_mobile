@@ -3,22 +3,26 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr56_staff/src/core/enums/enums.dart';
+import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/core/utils/use_case.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/biller_plan/cable_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/buy_electricity/buy_electricity_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/create_transaction_pin/create_transaction_pin_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_model.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/look_up_account/look_up_account_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/provider_data_plan/provider_data_plan.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_airtime/purchase_airtime_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/send_money/send_money_param.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/transaction/transaction.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/bill_payment_user_info.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/validate_bill_payment_user/validate_bill_payment_user_param.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/wallet/wallet.dart';
 import 'package:hr56_staff/src/features/wallet/data/models/wallet_bank/wallet_bank.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/account_lookup_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/buy_electricity_use_case.dart';
+import 'package:hr56_staff/src/features/wallet/domain/use_cases/create_transaction_pin_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/create_wallet_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_banks_use_case.dart';
 import 'package:hr56_staff/src/features/wallet/domain/use_cases/get_billers_use_case.dart';
@@ -52,6 +56,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     this._purchaseCableTVUseCase,
     this._sendMoneyUseCase,
     this._validateBillPaymentUserUsecase,
+    this._createTransactionPINUseCase,
   ) : super(const _Initial()) {
     on<_Started>(_onStarted);
     on<_AccountLookup>(_onAccountLookup);
@@ -66,6 +71,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<_PurchaseCableTV>(_onPurchaseCableTV);
     on<_SendMoney>(_onSendMoney);
     on<_ValidateBillPayment>(_onValidateBillPayment);
+    on<_CreateTransactionPIN>(_onCreateTransactionPIN);
   }
 
   final AccountLookupUseCase _accountLookupUseCase;
@@ -82,6 +88,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final PurchaseCableTVUseCase _purchaseCableTVUseCase;
   final SendMoneyUseCase _sendMoneyUseCase;
   final ValidateBillPaymentUserUsecase _validateBillPaymentUserUsecase;
+  final CreateTransactionPINUseCase _createTransactionPINUseCase;
 
   FutureOr<void> _onStarted(
     _Started event,
@@ -106,14 +113,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _AccountLookup event,
     Emitter<WalletState> emit,
   ) async {
+    if (state.viewState.isProcessing) return;
     emit(state.copyWith(viewState: ViewState.processing));
 
     final accountLookup = await _accountLookupUseCase(event.param);
 
     accountLookup.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (accountLookup) => emit(
         state.copyWith(
@@ -130,14 +140,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _BuyElectricity event,
     Emitter<WalletState> emit,
   ) async {
+    if (state.viewState.isProcessing) return;
     emit(state.copyWith(viewState: ViewState.processing));
 
     final response = await _buyElectricityUseCase(event.param);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (_) => emit(
         state.copyWith(
@@ -158,9 +171,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getBillersUseCase(event.type);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (billers) => emit(
         state.copyWith(
@@ -182,9 +197,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getCablePlansUseCase(event.serviceType);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (cablePlans) => emit(
         state.copyWith(
@@ -206,9 +223,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getProviderDataPlansUseCase(event.billerId);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
@@ -230,9 +249,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getTransactionDetailsUseCase(event.reference);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (transactionDetails) => emit(
         state.copyWith(
@@ -254,9 +275,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getTransactionsUseCase(NoParams());
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (transactions) => emit(
         state.copyWith(
@@ -278,9 +301,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _getWalletInfoUseCase(NoParams());
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (walletInfo) => emit(
         state.copyWith(
@@ -304,18 +329,21 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _PurchaseAirtime event,
     Emitter<WalletState> emit,
   ) async {
+    if (state.viewState.isProcessing) return;
     emit(state.copyWith(viewState: ViewState.processing));
 
     final response = await _purchaseAirtimeUseCase(event.param);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          viewState: ViewState.idle,
         ),
       ),
     );
@@ -327,14 +355,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _PurchaseCableTV event,
     Emitter<WalletState> emit,
   ) async {
+    if (state.viewState.isProcessing) return;
     emit(state.copyWith(viewState: ViewState.processing));
 
     final response = await _purchaseCableTVUseCase(event.param);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
@@ -350,21 +381,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _SendMoney event,
     Emitter<WalletState> emit,
   ) async {
+    if (state.viewState.isProcessing) return;
     emit(state.copyWith(viewState: ViewState.processing));
 
     final response = await _sendMoneyUseCase(event.param);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
-      ),
-      (providerDataPlans) => emit(
+        (error) => emit(
+              state.copyWith(
+                errorMessage: error.message,
+                viewState: ViewState.error,
+              ),
+            ), (providerDataPlans) {
+      emit(
         state.copyWith(
           viewState: ViewState.success,
         ),
-      ),
-    );
+      );
+      add(const _Started());
+    });
 
     emit(state.copyWith(viewState: ViewState.idle));
   }
@@ -378,14 +413,42 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     final response = await _validateBillPaymentUserUsecase(event.param);
 
     response.fold(
-      (error) => state.copyWith(
-        errorMessage: error.message,
-        viewState: ViewState.error,
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
       ),
       (billPaymentUser) => emit(
         state.copyWith(
           viewState: ViewState.success,
           billPaymentUser: billPaymentUser,
+        ),
+      ),
+    );
+
+    emit(state.copyWith(viewState: ViewState.idle));
+  }
+
+  FutureOr<void> _onCreateTransactionPIN(
+    _CreateTransactionPIN event,
+    Emitter<WalletState> emit,
+  ) async {
+    emit(state.copyWith(viewState: ViewState.processing));
+
+    final response = await _createTransactionPINUseCase(event.param);
+
+    response.fold(
+      (error) => emit(
+        state.copyWith(
+          errorMessage: error.message,
+          viewState: ViewState.error,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          viewState: ViewState.success,
+          transactionPINSet: true,
         ),
       ),
     );
