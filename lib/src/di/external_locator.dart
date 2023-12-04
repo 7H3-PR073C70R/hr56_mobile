@@ -7,6 +7,10 @@ void _initExternal() {
         BaseOptions(
           baseUrl: AppEnv.apiBaseURL,
           contentType: 'application/json',
+          connectTimeout: 100000000,
+          headers: {
+            'accepts': 'application/json',
+          },
         ),
       )..interceptors.addAll(
           [
