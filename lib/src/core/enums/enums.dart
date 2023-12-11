@@ -128,3 +128,9 @@ enum IdentificationMeans {
   drivers_license,
   international_passport,
 }
+
+enum AppraisalStatus {
+  approved,
+  declined,
+  pending,
+}

@@ -391,6 +391,30 @@ extension FundWalletExtension on FundWallet {
   }
 }
 
+extension AppraisalStatusExtension on AppraisalStatus {
+  Color get backgroundColor {
+    switch (this) {
+      case AppraisalStatus.approved:
+        return const Color(0xFF00BA56).withOpacity(.19);
+      case AppraisalStatus.declined:
+        return const Color(0xFFFFC6C1).withOpacity(.38);
+      case AppraisalStatus.pending:
+        return const Color(0xFFFFDE97).withOpacity(.31);
+    }
+  }
+
+  Color get textColor {
+    switch (this) {
+      case AppraisalStatus.approved:
+        return const Color(0xFF009C48);
+      case AppraisalStatus.declined:
+        return const Color(0xFFEE2011);
+      case AppraisalStatus.pending:
+        return const Color(0xFFF3A804);
+    }
+  }
+}
+
 extension BankExtension on Bank {
   bool get isGt => this == Bank.gt;
   bool get isZenith => this == Bank.zenith;

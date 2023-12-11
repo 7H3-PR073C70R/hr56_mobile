@@ -3,6 +3,7 @@ import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/features/appraisal/presentation/pages/appraisal_request_page.dart';
 import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_page.dart';
 import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_history_page.dart';
 import 'package:hr56_staff/src/features/loans/presentation/pages/loan_history_page.dart';
@@ -146,7 +147,9 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   AppSpacing.setVerticalSpace(32),
                   DrawerMenuItem(
-                    onTap: () {},
+                    onTap: () => context.navigator.pushNamed(
+                      AppraisalRequestPage.routeName,
+                    ),
                     text: 'Appraisal',
                     iconPath: AppAssetPath.appraisal,
                   ),

@@ -53,6 +53,7 @@ class Button extends StatelessWidget {
         width: width ?? double.infinity,
         decoration: BoxDecoration(
           border: border,
+          borderRadius: BorderRadius.circular(radius.radius),
         ),
         child: isBusy
             ? Center(
