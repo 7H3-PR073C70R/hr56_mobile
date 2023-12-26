@@ -242,7 +242,7 @@ class PersonalInfoPage extends HookWidget {
                                           context,
                                           UserInformation.personal,
                                           controller,
-                                          false,
+                                          true,
                                           'Cheers almost there fill in your',
                                           'spouse details.',
                                           'Fill spouse details',
