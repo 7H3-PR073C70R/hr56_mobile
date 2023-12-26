@@ -13,6 +13,11 @@ void _initDataSource() {
         locator(),
       ),
     )
+    ..registerLazySingleton<AppraisalRemoteDataSource>(
+      () => AppraisalRemoteDataSourceImpl(
+        locator(),
+      ),
+    )
     ..registerLazySingleton<WalletRemoteDataSource>(
       () => WalletRemoteDataSourceImpl(
         locator(),

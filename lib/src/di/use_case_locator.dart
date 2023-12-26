@@ -152,5 +152,27 @@ Future<void> _initUseCaseLocator() async {
       () => ValidateBillPaymentUserUsecase(
         locator(),
       ),
+    )
+
+    //! Appraisal
+    ..registerLazySingleton<GetAppraisalDetailsUseCase>(
+      () => GetAppraisalDetailsUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<GetAppraisalUseCase>(
+      () => GetAppraisalUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<SubmitAppraisalUseCase>(
+      () => SubmitAppraisalUseCase(
+        locator(),
+      ),
+    )
+    ..registerLazySingleton<TakeAppraisalUseCase>(
+      () => TakeAppraisalUseCase(
+        locator(),
+      ),
     );
 }

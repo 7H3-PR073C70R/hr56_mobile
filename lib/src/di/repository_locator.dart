@@ -13,6 +13,11 @@ Future<void> _initRepositoryLocator() async {
         locator(),
       ),
     )
+    ..registerLazySingleton<AppraisalRepository>(
+      () => AppraisalRepositoryImpl(
+        locator(),
+      ),
+    )
     ..registerLazySingleton<WalletRepository>(
       () => WalletRepositoryImpl(
         locator(),
