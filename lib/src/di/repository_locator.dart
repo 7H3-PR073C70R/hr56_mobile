@@ -24,3 +24,5 @@ Future<void> _initRepositoryLocator() async {
       ),
     );
 }
+
+String get baseUrl => AppEnv.apiBaseURL;
