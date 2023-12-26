@@ -1,11 +1,14 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
-import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/utils/helper_function.dart';
 import 'package:hr56_staff/src/di/locator.dart';
+import 'package:hr56_staff/src/features/appraisal/data/models/appraisal/appraisal.dart';
+import 'package:hr56_staff/src/features/appraisal/presentation/blocs/appraisal_bloc.dart';
 import 'package:hr56_staff/src/features/appraisal/presentation/pages/appraisal_request_form_page.dart';
 import 'package:hr56_staff/src/services/user_storage_service.dart';
 import 'package:hr56_staff/src/shared/button.dart';
@@ -83,220 +86,271 @@ class AppraisalRequestPage extends StatelessWidget {
                     ),
                     AppSpacing.setVerticalSpace(16),
                     Expanded(
-                      child: ListView.separated(
-                        itemBuilder: (_, index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.width,
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  'Enhancing Excellence: Annual Employee'
-                                  ' Performance Review and Appraisal-August'
-                                  ' 25, 2023',
-                                  style:
-                                      context.textTheme.displayLarge?.copyWith(
-                                    fontSize: 12.fontSize,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.blackColor,
+                      child: BlocBuilder<AppraisalBloc, AppraisalState>(
+                        builder: (context, state) {
+                          if (state.viewState.isProcessing) {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(
+                                backgroundColor: AppColors.backgroundColor,
+                              ),
+                            );
+                          }
+                          return ListView.separated(
+                            itemBuilder: (_, index) => Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8.width,
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      state.appraisal[index].appraisalTitle ??
+                                          '',
+                                      style: context.textTheme.displayLarge
+                                          ?.copyWith(
+                                        fontSize: 12.fontSize,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.blackColor,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              AppSpacing.setHorizontalSpace(24),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      height: 28.height,
-                                      width: 75.width,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(12.radius),
-                                        color: AppraisalStatus
-                                            .values[index % 3].backgroundColor,
-                                      ),
-                                      child: Text(
-                                        AppraisalStatus.values[index % 3].name
-                                            .capitalizeFirst,
-                                        style: context.textTheme.displayLarge
-                                            ?.copyWith(
-                                          fontSize: 12.fontSize,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppraisalStatus
-                                              .values[index % 3].textColor,
-                                        ),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    GestureDetector(
-                                      onTap: () =>
-                                          showModalBottomSheet<dynamic>(
-                                        context: context,
-                                        backgroundColor: AppColors.whiteColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(20.radius),
+                                  AppSpacing.setHorizontalSpace(24),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 28.height,
+                                          width: 75.width,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              12.radius,
+                                            ),
+                                            color: getAppraisalStatusFromString(
+                                              state.appraisal[index].status ??
+                                                  'pending',
+                                            ).backgroundColor,
+                                          ),
+                                          child: Text(
+                                            state.appraisal[index].status
+                                                    ?.capitalizeFirst ??
+                                                'Pending',
+                                            style: context
+                                                .textTheme.displayLarge
+                                                ?.copyWith(
+                                              fontSize: 12.fontSize,
+                                              fontWeight: FontWeight.w500,
+                                              color:
+                                                  getAppraisalStatusFromString(
+                                                state.appraisal[index].status ??
+                                                    'pending',
+                                              ).textColor,
+                                            ),
                                           ),
                                         ),
-                                        showDragHandle: true,
-                                        builder: (ctx) => Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 38.height,
-                                            horizontal: 24.width,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Appraisal Type:',
-                                                    style: context
-                                                        .textTheme.displayLarge
-                                                        ?.copyWith(
-                                                      fontSize: 14.fontSize,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                    ),
-                                                  ),
-                                                  const Spacer(),
-                                                  Text(
-                                                    'Peer Appraisal',
-                                                    style: context
-                                                        .textTheme.displayLarge
-                                                        ?.copyWith(
-                                                      fontSize: 14.fontSize,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                    ),
-                                                  ),
-                                                ],
+                                        const Spacer(),
+                                        GestureDetector(
+                                          onTap: () =>
+                                              showModalBottomSheet<dynamic>(
+                                            context: context,
+                                            backgroundColor:
+                                                AppColors.whiteColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20.radius),
                                               ),
-                                              AppSpacing.setVerticalSpace(25),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Total Score:',
-                                                    style: context
-                                                        .textTheme.displayLarge
-                                                        ?.copyWith(
-                                                      fontSize: 14.fontSize,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                    ),
-                                                  ),
-                                                  const Spacer(),
-                                                  Text(
-                                                    '48%',
-                                                    style: context
-                                                        .textTheme.displayLarge
-                                                        ?.copyWith(
-                                                      fontSize: 14.fontSize,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                    ),
-                                                  ),
-                                                ],
+                                            ),
+                                            showDragHandle: true,
+                                            builder: (ctx) => Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 38.height,
+                                                horizontal: 24.width,
                                               ),
-                                              AppSpacing.setVerticalSpace(25),
-                                              Row(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Text(
-                                                    'Status:',
-                                                    style: context
-                                                        .textTheme.displayLarge
-                                                        ?.copyWith(
-                                                      fontSize: 14.fontSize,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                    ),
-                                                  ),
-                                                  const Spacer(),
-                                                  Container(
-                                                    height: 28.height,
-                                                    width: 75.width,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        12.radius,
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Appraisal Type:',
+                                                        style: context.textTheme
+                                                            .displayLarge
+                                                            ?.copyWith(
+                                                          fontSize: 14.fontSize,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
                                                       ),
-                                                      color: AppraisalStatus
-                                                          .values[index % 3]
-                                                          .backgroundColor,
-                                                    ),
-                                                    child: Text(
-                                                      AppraisalStatus
-                                                          .values[index % 3]
-                                                          .name
-                                                          .capitalizeFirst,
-                                                      style: context.textTheme
-                                                          .displayLarge
-                                                          ?.copyWith(
-                                                        fontSize: 12.fontSize,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: AppraisalStatus
-                                                            .values[index % 3]
-                                                            .textColor,
+                                                      const Spacer(),
+                                                      Text(
+                                                        state.appraisal[index]
+                                                                .appraisalType ??
+                                                            '',
+                                                        style: context.textTheme
+                                                            .displayLarge
+                                                            ?.copyWith(
+                                                          fontSize: 14.fontSize,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
+                                                  ),
+                                                  AppSpacing.setVerticalSpace(
+                                                    25,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Total Score:',
+                                                        style: context.textTheme
+                                                            .displayLarge
+                                                            ?.copyWith(
+                                                          fontSize: 14.fontSize,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
+                                                      ),
+                                                      const Spacer(),
+                                                      Text(
+                                                        '${state.appraisal[index].totalScore ?? '0'}%',
+                                                        style: context.textTheme
+                                                            .displayLarge
+                                                            ?.copyWith(
+                                                          fontSize: 14.fontSize,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  AppSpacing.setVerticalSpace(
+                                                    25,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Status:',
+                                                        style: context.textTheme
+                                                            .displayLarge
+                                                            ?.copyWith(
+                                                          fontSize: 14.fontSize,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                        ),
+                                                      ),
+                                                      const Spacer(),
+                                                      Container(
+                                                        height: 28.height,
+                                                        width: 75.width,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            12.radius,
+                                                          ),
+                                                          color:
+                                                              getAppraisalStatusFromString(
+                                                            state
+                                                                    .appraisal[
+                                                                        index]
+                                                                    .status ??
+                                                                'pending',
+                                                          ).backgroundColor,
+                                                        ),
+                                                        child: Text(
+                                                          getAppraisalStatusFromString(
+                                                            state
+                                                                    .appraisal[
+                                                                        index]
+                                                                    .status ??
+                                                                'pending',
+                                                          )
+                                                              .name
+                                                              .capitalizeFirst,
+                                                          style: context
+                                                              .textTheme
+                                                              .displayLarge
+                                                              ?.copyWith(
+                                                            fontSize:
+                                                                12.fontSize,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                getAppraisalStatusFromString(
+                                                              state
+                                                                      .appraisal[
+                                                                          index]
+                                                                      .status ??
+                                                                  'pending',
+                                                            ).textColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  AppSpacing.setVerticalSpace(
+                                                    52,
+                                                  ),
+                                                  Button(
+                                                    onPressed: () {
+                                                      Navigator.of(ctx).pop();
+                                                      showDialog<dynamic>(
+                                                        context: context,
+                                                        builder: (ctx) =>
+                                                            _StartAppraisalDialog(
+                                                          state
+                                                              .appraisal[index],
+                                                        ),
+                                                      );
+                                                    },
+                                                    width: 310.width,
+                                                    text: 'Proceed',
                                                   ),
                                                 ],
                                               ),
-                                              AppSpacing.setVerticalSpace(52),
-                                              Button(
-                                                onPressed: () {
-                                                  Navigator.of(ctx).pop();
-                                                  showDialog<dynamic>(
-                                                    context: context,
-                                                    builder: (ctx) =>
-                                                        const _StartAppraisalDialog(),
-                                                  );
-                                                },
-                                                width: 310.width,
-                                                text: 'Proceed',
-                                              ),
-                                            ],
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.visibility,
+                                            size: 20.radius,
+                                            color: const Color(0xFFAAAAAA),
                                           ),
                                         ),
-                                      ),
-                                      child: Icon(
-                                        Icons.visibility,
-                                        size: 20.radius,
-                                        color: const Color(0xFFAAAAAA),
-                                      ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        separatorBuilder: (_, __) => Column(
-                          children: [
-                            AppSpacing.setVerticalSpace(12),
-                            const Divider(
-                              color: Color(0xFFCCCCCC),
-                              thickness: 1,
                             ),
-                            AppSpacing.setVerticalSpace(16),
-                          ],
-                        ),
-                        itemCount: 15,
+                            separatorBuilder: (_, __) => Column(
+                              children: [
+                                AppSpacing.setVerticalSpace(12),
+                                const Divider(
+                                  color: Color(0xFFCCCCCC),
+                                  thickness: 1,
+                                ),
+                                AppSpacing.setVerticalSpace(16),
+                              ],
+                            ),
+                            itemCount: state.appraisal.length,
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -304,7 +358,7 @@ class AppraisalRequestPage extends StatelessWidget {
               ),
             ),
           ),
-           AppSpacing.setVerticalSpace(34),
+          AppSpacing.setVerticalSpace(34),
         ],
       ),
     );
@@ -312,7 +366,9 @@ class AppraisalRequestPage extends StatelessWidget {
 }
 
 class _StartAppraisalDialog extends StatelessWidget {
-  const _StartAppraisalDialog();
+  const _StartAppraisalDialog(this.appraisal);
+
+  final Appraisal appraisal;
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +419,7 @@ class _StartAppraisalDialog extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: 'Peer Appraisal',
+                      text: appraisal.appraisalType ?? '',
                       style: context.textTheme.displayLarge?.copyWith(
                         fontSize: 16.fontSize,
                         fontWeight: FontWeight.w500,
@@ -391,6 +447,11 @@ class _StartAppraisalDialog extends StatelessWidget {
               child: Button(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  context.read<AppraisalBloc>().add(
+                        AppraisalEvent.getAppraisalDetails(
+                          appraisal.appraisalUserId?.toString() ?? '',
+                        ),
+                      );
                   context.navigator
                       .pushNamed(AppraisalRequestFormPage.routeName);
                 },

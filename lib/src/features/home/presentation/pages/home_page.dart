@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
-import 'package:hr56_staff/src/core/constants/app_strings.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
 import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/home/presentation/pages/notification_page.dart';
@@ -175,8 +174,29 @@ class UserCard extends HookWidget {
         children: [
           CircleAvatar(
             radius: 71.radius,
-            backgroundImage:
-                const NetworkImage(AppStrings.profileImage),
+            backgroundColor: AppColors.greyColor,
+            backgroundImage: user?.profilePhotoPath == null
+                ? null
+                : NetworkImage(
+                    user?.profilePhotoPath ?? '',
+                  ),
+            onBackgroundImageError: user?.profilePhotoPath == null
+                ? null
+                : (exception, stackTrace) {
+                    debugPrint('Image error: ${user?.profilePhotoPath}');
+                  },
+            child: user?.profilePhotoPath == null
+                ? Center(
+                    child: Text(
+                      '${user?.firstName?.split('').firstOrNull ?? ''}'
+                      '${user?.lastName?.split('').firstOrNull ?? ''}',
+                      style: context.textTheme.displayLarge?.copyWith(
+                        fontSize: 48.fontSize,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  )
+                : null,
           ),
           AppSpacing.verticalSpaceMedium,
           Text(

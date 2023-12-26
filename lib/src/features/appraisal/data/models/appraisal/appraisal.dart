@@ -8,12 +8,12 @@ part 'appraisal.g.dart';
 @freezed
 class Appraisal with _$Appraisal {
   const factory Appraisal({
-    @JsonKey(name: 'appraisal_user_id') String? appraisalUserId,
+    @JsonKey(name: 'appraisal_user_id') int? appraisalUserId,
     @JsonKey(name: 'appraisal_title') String? appraisalTitle,
     @JsonKey(name: 'appraisal_type') String? appraisalType,
     @JsonKey(name: 'status') String? status,
-    @JsonKey(name: 'total_score') String? totalScore,
-    @JsonKey(name: 'created_at') String? createdAt,
+    @JsonKey(name: 'total_score') num? totalScore,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _Appraisal;
 
   factory Appraisal.fromJson(Map<String, dynamic> json) =>

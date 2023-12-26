@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<String> base64Image(File? image) async {
@@ -33,5 +34,15 @@ Future<void> openEmailApp(String email) async {
     await launchUrl(url);
   } else {
     throw Exception('Could not launch $url');
+  }
+}
+
+AppraisalStatus getAppraisalStatusFromString(String status) {
+  if (status == 'pending') {
+    return AppraisalStatus.pending;
+  } else if (status == 'approved') {
+    return AppraisalStatus.approved;
+  } else {
+    return AppraisalStatus.declined;
   }
 }

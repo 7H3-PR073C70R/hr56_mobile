@@ -1,8 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/appraisal/presentation/pages/appraisal_request_page.dart';
 import 'package:hr56_staff/src/features/disciplinary/presentation/pages/disciplinary_page.dart';
 import 'package:hr56_staff/src/features/leaves/presentation/pages/leave_history_page.dart';
@@ -11,15 +15,17 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/help_and_supp
 import 'package:hr56_staff/src/features/profile/presentation/pages/id_photo_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/profile_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/update_password_page.dart';
+import 'package:hr56_staff/src/services/user_storage_service.dart';
 import 'package:hr56_staff/src/shared/svg_image.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends HookWidget {
   const CustomDrawer({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final user = useMemoized(() => locator<UserStorageService>().user);
     return Container(
       width: 270.width,
       margin: EdgeInsets.only(top: 50.height),
@@ -49,11 +55,31 @@ class CustomDrawer extends StatelessWidget {
                       CircleAvatar(
                         radius: 30.radius,
                         backgroundColor: AppColors.greyColor,
-                        backgroundImage: const NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q='
-                          'tbn:ANd9GcTmrssFdAIAer1QHQ40q2yGBcAYrjbw3hWiW-'
-                          'pUQDnb&s',
-                        ),
+                        backgroundImage: user?.profilePhotoPath == null
+                            ? null
+                            : NetworkImage(
+                                user?.profilePhotoPath ?? '',
+                              ),
+                        onBackgroundImageError: user?.profilePhotoPath == null
+                            ? null
+                            : (exception, stackTrace) {
+                                debugPrint(
+                                  'Image error: ${user?.profilePhotoPath}',
+                                );
+                              },
+                        child: user?.profilePhotoPath == null
+                            ? Center(
+                                child: Text(
+                                  '${user?.firstName?.split('').firstOrNull ?? ''}'
+                                  '${user?.lastName?.split('').firstOrNull ?? ''}',
+                                  style:
+                                      context.textTheme.displayLarge?.copyWith(
+                                    fontSize: 28.fontSize,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                              )
+                            : null,
                       ),
                       Positioned(
                         top: 26.height,
@@ -72,7 +98,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   AppSpacing.setVerticalSpace(10),
                   Text(
-                    'Isaiah Nwankwo',
+                    '${user?.firstName ?? ''} ${user?.lastName ?? ''}',
                     style: context.textTheme.displayLarge?.copyWith(
                       fontSize: 16.fontSize,
                       fontWeight: FontWeight.w500,
@@ -81,7 +107,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   AppSpacing.setVerticalSpace(2),
                   Text(
-                    'Isaiahnwankwo@gmail.com',
+                    user?.email ?? '',
                     style: context.textTheme.displayLarge?.copyWith(
                       fontSize: 12.fontSize,
                       fontWeight: FontWeight.w400,

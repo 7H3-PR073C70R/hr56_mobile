@@ -41,6 +41,11 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
     _GetAppraisal event,
     Emitter<AppraisalState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        viewState: ViewState.processing,
+      ),
+    );
     await _getAppraisalUseCase(NoParams()).then(
       (value) => value.fold(
         (error) => emit(
@@ -66,6 +71,11 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
     _GetAppraisalDetails event,
     Emitter<AppraisalState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        viewState: ViewState.processing,
+      ),
+    );
     await _getAppraisalDetailsUseCase(event.id).then(
       (value) => value.fold(
         (error) => emit(
@@ -91,6 +101,11 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
     _GetAppraisalQuestionnaire event,
     Emitter<AppraisalState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        viewState: ViewState.processing,
+      ),
+    );
     await _takeAppraisalUseCase(event.id).then(
       (value) => value.fold(
         (error) => emit(
