@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/auth/data/models/personal_details/update_personal_details_param.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/emergency_contact_page.dart';
@@ -13,6 +14,7 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/next_of_kin_p
 import 'package:hr56_staff/src/features/profile/presentation/pages/personal_info_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/reference_page.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/spouse_details_page.dart';
+import 'package:hr56_staff/src/services/user_storage_service.dart';
 
 class OnboardingQuestionnairePage extends HookWidget {
   const OnboardingQuestionnairePage({super.key});
@@ -86,13 +88,14 @@ class OnboardingQuestionnairePage extends HookWidget {
   }
 }
 
-class OnboardingQuestionnaireHeader extends StatelessWidget {
+class OnboardingQuestionnaireHeader extends HookWidget {
   const OnboardingQuestionnaireHeader({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final user = useMemoized(() => locator<UserStorageService>().user);
     return Container(
       height: 152.height,
       width: double.infinity,
@@ -106,10 +109,28 @@ class OnboardingQuestionnaireHeader extends StatelessWidget {
               CircleAvatar(
                 radius: 53.radius,
                 backgroundColor: AppColors.greyColor,
-                backgroundImage: const NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q='
-                  'tbn:ANd9GcTmrssFdAIAer1QHQ40q2yGBcAYrjbw3hWiW-pUQDnb&s',
-                ),
+                backgroundImage: user?.profilePhotoPath == null
+                    ? null
+                    : NetworkImage(
+                        user?.profilePhotoPath ?? '',
+                      ),
+                onBackgroundImageError: user?.profilePhotoPath == null
+                    ? null
+                    : (exception, stackTrace) {
+                        debugPrint('Image error: ${user?.profilePhotoPath}');
+                      },
+                child: user?.profilePhotoPath == null
+                    ? Center(
+                        child: Text(
+                          '${user?.firstName?.split('').firstOrNull ?? ''}'
+                          '${user?.lastName?.split('').firstOrNull ?? ''}',
+                          style: context.textTheme.displayLarge?.copyWith(
+                            fontSize: 48.fontSize,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      )
+                    : null,
               ),
               Positioned(
                 top: 64.height,
@@ -140,7 +161,7 @@ class OnboardingQuestionnaireHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Isaiah Nwankwo',
+                  '${user?.firstName} ${user?.lastName}',
                   style: context.textTheme.displayLarge?.copyWith(
                     fontSize: 20.fontSize,
                     fontWeight: FontWeight.w500,
@@ -149,7 +170,7 @@ class OnboardingQuestionnaireHeader extends StatelessWidget {
                 ),
                 AppSpacing.setVerticalSpace(3),
                 Text(
-                  'Isaiahnwankwo@gmail.com',
+                  user?.email ?? '',
                   style: context.textTheme.displayLarge?.copyWith(
                     fontSize: 15.fontSize,
                     fontWeight: FontWeight.w400,
