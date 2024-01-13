@@ -6,6 +6,8 @@ typedef QuestionAndAnswer = (String, String);
 class AppraisalState with _$AppraisalState {
   const factory AppraisalState.initial({
     @Default(ViewState.idle) ViewState viewState,
+    @Default(ViewState.idle) ViewState getAppraisalDetailsState,
+    @Default(ViewState.idle) ViewState getAppraisalQuestionnairesState,
     @Default([]) List<Appraisal> appraisal,
     AppraisalDetails? appraisalDetails,
     AppraisalQuestionnaire? appraisalQuestionnaire,

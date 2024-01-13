@@ -19,7 +19,7 @@ class AppraisalDetails with _$AppraisalDetails {
 @freezed
 class AppraisalUser with _$AppraisalUser {
   const factory AppraisalUser({
-    @JsonKey(name: 'appraisal_user_id') String? appraisalUserId,
+    @JsonKey(name: 'appraisal_user_id') num? appraisalUserId,
     @JsonKey(name: 'appraisal_title') String? appraisalTitle,
     @JsonKey(name: 'appraisal_type') String? appraisalType,
     @JsonKey(name: 'status') String? status,

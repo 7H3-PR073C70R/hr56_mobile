@@ -54,9 +54,11 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
             errorMessage: error.message,
           ),
         ),
-        (appraisals) => state.copyWith(
-          viewState: ViewState.success,
-          appraisal: appraisals,
+        (appraisals) => emit(
+          state.copyWith(
+            viewState: ViewState.success,
+            appraisal: appraisals,
+          ),
         ),
       ),
     );
@@ -73,26 +75,28 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
   ) async {
     emit(
       state.copyWith(
-        viewState: ViewState.processing,
+        getAppraisalDetailsState: ViewState.processing,
       ),
     );
     await _getAppraisalDetailsUseCase(event.id).then(
       (value) => value.fold(
         (error) => emit(
           state.copyWith(
-            viewState: ViewState.error,
+            getAppraisalDetailsState: ViewState.error,
             errorMessage: error.message,
           ),
         ),
-        (appraisalDetails) => state.copyWith(
-          viewState: ViewState.success,
-          appraisalDetails: appraisalDetails,
+        (appraisalDetails) => emit(
+          state.copyWith(
+            getAppraisalDetailsState: ViewState.success,
+            appraisalDetails: appraisalDetails,
+          ),
         ),
       ),
     );
     emit(
       state.copyWith(
-        viewState: ViewState.idle,
+        getAppraisalDetailsState: ViewState.idle,
       ),
     );
   }
@@ -103,26 +107,29 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
   ) async {
     emit(
       state.copyWith(
-        viewState: ViewState.processing,
+        getAppraisalQuestionnairesState: ViewState.processing,
       ),
     );
     await _takeAppraisalUseCase(event.id).then(
       (value) => value.fold(
         (error) => emit(
           state.copyWith(
-            viewState: ViewState.error,
+            getAppraisalQuestionnairesState: ViewState.error,
             errorMessage: error.message,
           ),
         ),
-        (appraisalQuestionnaire) => state.copyWith(
-          viewState: ViewState.success,
-          appraisalQuestionnaire: appraisalQuestionnaire,
+        (appraisalQuestionnaire) => emit(
+          state.copyWith(
+            getAppraisalQuestionnairesState: ViewState.success,
+            appraisalQuestionnaire: appraisalQuestionnaire,
+            appraisalQuestionAndAnswer: [],
+          ),
         ),
       ),
     );
     emit(
       state.copyWith(
-        viewState: ViewState.idle,
+        getAppraisalQuestionnairesState: ViewState.idle,
       ),
     );
   }
@@ -134,7 +141,9 @@ class AppraisalBloc extends Bloc<AppraisalEvent, AppraisalState> {
     emit(
       state.copyWith(
         appraisalQuestionAndAnswer: [
-          ...state.appraisalQuestionAndAnswer,
+          ...state.appraisalQuestionAndAnswer.where(
+            (qa) => qa.$1 != event.questionAndAnswer.$1,
+          ),
           event.questionAndAnswer,
         ],
       ),

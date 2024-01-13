@@ -13,7 +13,7 @@ abstract class AppraisalClient {
   @POST('take-employee-appraisals/{id}')
   Future<void> submitAppraisal(
     @Body() Map<String, dynamic> param,
-    @Part(name: 'id') String id,
+    @Path('id') String id,
   );
 
   @GET('employee-appraisals')
@@ -21,11 +21,11 @@ abstract class AppraisalClient {
 
   @GET('employee-appraisals/{id}')
   Future<AppraisalDetails> getAppraisalDetails(
-    @Part(name: 'id') String id,
+    @Path('id') String id,
   );
 
   @GET('take-employee-appraisals/{id}')
   Future<AppraisalQuestionnaire> takeAppraisal(
-    @Part(name: 'id') String id,
+    @Path('id') String id,
   );
 }

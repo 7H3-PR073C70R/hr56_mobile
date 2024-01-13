@@ -444,18 +444,41 @@ class _StartAppraisalDialog extends StatelessWidget {
             AppSpacing.setVerticalSpace(34),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.width),
-              child: Button(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.read<AppraisalBloc>().add(
-                        AppraisalEvent.getAppraisalDetails(
-                          appraisal.appraisalUserId?.toString() ?? '',
-                        ),
-                      );
-                  context.navigator
-                      .pushNamed(AppraisalRequestFormPage.routeName);
+              child: BlocBuilder<AppraisalBloc, AppraisalState>(
+                buildWhen: (previous, current) {
+                  if (previous.getAppraisalDetailsState.isProcessing &&
+                      current.getAppraisalDetailsState.isSuccess) {
+                    Navigator.of(context).pop();
+                    context.read<AppraisalBloc>().add(
+                          AppraisalEvent.getAppraisalQuestionnaire(
+                            appraisal.appraisalUserId?.toString() ?? '',
+                          ),
+                        );
+                    context.navigator
+                        .pushNamed(AppraisalRequestFormPage.routeName);
+                  } else if (previous.getAppraisalDetailsState.isProcessing &&
+                      current.getAppraisalDetailsState.isError) {
+                    context.showErrorSnackBar(
+                      message: current.errorMessage ??
+                          'Unable to get appraisal details. Please try again',
+                    );
+                    Navigator.of(context).pop();
+                  }
+                  return true;
                 },
-                text: 'Start Appraisal',
+                builder: (context, state) {
+                  return Button(
+                    isBusy: state.getAppraisalDetailsState.isProcessing,
+                    onPressed: () {
+                      context.read<AppraisalBloc>().add(
+                            AppraisalEvent.getAppraisalDetails(
+                              appraisal.appraisalUserId?.toString() ?? '',
+                            ),
+                          );
+                    },
+                    text: 'Start Appraisal',
+                  );
+                },
               ),
             ),
             AppSpacing.setVerticalSpace(47),
