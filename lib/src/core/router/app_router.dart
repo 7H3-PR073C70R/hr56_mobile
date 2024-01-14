@@ -42,6 +42,9 @@ import 'package:hr56_staff/src/features/profile/presentation/pages/update_passwo
 import 'package:hr56_staff/src/features/wallet/presentation/pages/confirm_transaction_pin_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/create_transaction_pin_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/fund_wallet_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/services/cable_tv_subscription_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/services/electricity_payment_page.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/pages/services/top_up_airtime_or_data_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/beneficiary_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/review_transfer_details_page.dart';
 import 'package:hr56_staff/src/features/wallet/presentation/pages/transfer/transfer_page.dart';
@@ -190,6 +193,18 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: AppraisalRequestPage,
       path: AppraisalRequestPage.routeName,
+    ),
+    AutoRoute(
+      page: CableTVSubscriptionPage,
+      path: CableTVSubscriptionPage.routeName,
+    ),
+    AutoRoute(
+      page: ElectricityPaymentPage,
+      path: ElectricityPaymentPage.routeName,
+    ),
+    AutoRoute(
+      page: TopUpAirtimeOrDataPage,
+      path: TopUpAirtimeOrDataPage.routeName,
     ),
     AutoRoute(
       page: MainPage,

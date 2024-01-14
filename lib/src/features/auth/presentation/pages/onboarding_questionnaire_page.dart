@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/core/router/app_router.dart';
 import 'package:hr56_staff/src/di/locator.dart';
 import 'package:hr56_staff/src/features/auth/data/models/personal_details/update_personal_details_param.dart';
 import 'package:hr56_staff/src/features/profile/presentation/pages/bank_details_page.dart';
@@ -36,6 +37,7 @@ class OnboardingQuestionnairePage extends HookWidget {
         children: [
           OnboardingQuestionnaireHeader(
             key: UniqueKey(),
+            controller: controller,
           ),
           AppSpacing.setVerticalSpace(28),
           Expanded(
@@ -91,7 +93,10 @@ class OnboardingQuestionnairePage extends HookWidget {
 class OnboardingQuestionnaireHeader extends HookWidget {
   const OnboardingQuestionnaireHeader({
     super.key,
+    required this.controller,
   });
+
+  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +192,24 @@ class OnboardingQuestionnaireHeader extends HookWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              if (controller.page == 7) {
+                context.navigator.replaceAll(const [MainRoute()]);
+              } else {
+                controller.animateToPage(
+                  (controller.page?.toInt() ?? 0) + 1,
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.linear,
+                );
+              }
+            },
+            icon: Icon(
+              Icons.skip_next,
+              color: AppColors.whiteColor,
+              size: 34.radius,
             ),
           ),
         ],

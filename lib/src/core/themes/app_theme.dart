@@ -8,6 +8,7 @@ class AppTheme {
   static ThemeData get lightTheme => ThemeData(
         brightness: Brightness.light,
         fontFamily: 'ClashDisplay',
+        primaryColor: AppColors.primaryColor,
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
         shadowColor: const Color(0xFF110C2E).withOpacity(0.15),
         inputDecorationTheme: InputDecorationTheme(
@@ -21,7 +22,7 @@ class AppTheme {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.radius),
             borderSide: const BorderSide(
-              color: Color(0xFFC1CDDA),
+              color: Color(0xFFCCCCCC),
             ),
           ),
           errorBorder: OutlineInputBorder(
@@ -33,7 +34,7 @@ class AppTheme {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.radius),
             borderSide: const BorderSide(
-              color: Color(0xFFC1CDDA),
+              color: Color(0xFFCCCCCC),
             ),
           ),
         ),
@@ -72,6 +73,14 @@ class AppTheme {
           ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        datePickerTheme: const DatePickerThemeData(
+          headerBackgroundColor: AppColors.backgroundColor,
+          dayOverlayColor: MaterialStatePropertyAll(AppColors.primaryColor),
+          todayBackgroundColor:
+              MaterialStatePropertyAll(AppColors.primaryColor),
+          todayForegroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          
+        ),
         appBarTheme: AppBarTheme(
           color: Colors.transparent,
           elevation: 0,

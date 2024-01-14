@@ -44,7 +44,7 @@ class CustomDropDownButton extends HookWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(
-              color: const Color(0XFFC1CDDA),
+              color: const Color(0xFFCCCCCC),
               width: 2,
             ),
             color: AppColors.whiteColor,
@@ -60,7 +60,7 @@ class CustomDropDownButton extends HookWidget {
                       containerBuilder: (context, popupWidget) => DecoratedBox(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: const Color(0xFFDCDCE5),
+                            color: const Color(0xFFCCCCCC),
                           ),
                           borderRadius: BorderRadius.circular(16.radius),
                         ),
@@ -86,25 +86,25 @@ class CustomDropDownButton extends HookWidget {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFFDCDCE5),
+                              color: Color(0xFFCCCCCC),
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFFDCDCE5),
+                              color: Color(0xFFCCCCCC),
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFFDCDCE5),
+                              color: Color(0xFFCCCCCC),
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFFDCDCE5),
+                              color: Color(0xFFCCCCCC),
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -144,6 +144,11 @@ class CustomDropDownButton extends HookWidget {
                     child: DropdownButton<String>(
                       value: valueState.value,
                       isExpanded: true,
+                      icon: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: const Color(0xFF1E222B),
+                        size: 32.radius,
+                      ),
                       hint: hintText != null ? Text(hintText!) : null,
                       onChanged: (value) {
                         if (value == null) return;

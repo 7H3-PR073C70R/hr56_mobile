@@ -549,6 +549,7 @@ class GuarantorForm extends StatelessWidget {
             CustomDropDownButton(
               label: 'State',
               hintText: 'Select state',
+              isSearchable: true,
               texts: appState.states.map((e) => e.name ?? '').toList(),
               value: selectedState.value,
               onChanged: (value) => selectedState.value = value,
@@ -594,6 +595,7 @@ class GuarantorForm extends StatelessWidget {
             AppSpacing.setVerticalSpace(12),
             CustomDropDownButton(
               label: 'Relationship with guarantor',
+              isSearchable: true,
               texts: RelationShip.values
                   .map((e) => e.name.capitalizeFirst)
                   .toList(),
@@ -631,6 +633,7 @@ class GuarantorForm extends StatelessWidget {
             DatePickerFormCard(
               label: 'Identification Expiry date',
               hintText: '23/06/1993',
+              lastDate: DateTime(DateTime.now().year + 20),
               initialValue: expireDate.value == null
                   ? null
                   : DateFormat('dd/MM/yyyy').format(expireDate.value!),
@@ -682,6 +685,7 @@ class GuarantorForm extends StatelessWidget {
             ),
             AppSpacing.verticalSpaceTiny,
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () async {
                 if (photo.value == null) {
                   final image = await FilePickerService().pickImage();

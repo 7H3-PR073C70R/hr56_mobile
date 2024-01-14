@@ -11,6 +11,7 @@ class CustomInputField extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.suffixIcon,
+    this.prefixIcon,
     this.autovalidateMode,
     this.keyboardType,
     this.label,
@@ -26,6 +27,7 @@ class CustomInputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final VoidCallback? onTap;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final AutovalidateMode? autovalidateMode;
   final TextInputType? keyboardType;
   final String? label;
@@ -64,6 +66,7 @@ class CustomInputField extends StatelessWidget {
           ),
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
             hintText: hintText,
             counter: const SizedBox.shrink(),
             helperStyle: context.textTheme.bodyLarge?.copyWith(

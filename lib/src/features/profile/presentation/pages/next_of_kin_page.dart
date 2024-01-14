@@ -147,6 +147,7 @@ class NextOfKinPage extends HookWidget {
                             AppSpacing.setVerticalSpace(12),
                             CustomDropDownButton(
                               label: 'Relationship with next of kin',
+                              isSearchable: true,
                               texts: RelationShip.values
                                   .map((e) => e.name.capitalizeFirst)
                                   .toList(),

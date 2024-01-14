@@ -81,38 +81,44 @@ class WalletPage extends StatelessWidget {
                                       runSpacing: 20.height,
                                       children: Services.values
                                           .map(
-                                            (service) => Column(
-                                              children: [
-                                                Container(
-                                                  height: 44.radius,
-                                                  width: 44.radius,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xFF67706B)
-                                                            .withOpacity(.3),
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
+                                            (service) => GestureDetector(
+                                              onTap: service.route(context),
+                                              behavior:
+                                                  HitTestBehavior.translucent,
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    height: 44.radius,
+                                                    width: 44.radius,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
                                                       color: const Color(
                                                         0xFF67706B,
+                                                      ).withOpacity(.3),
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                          0xFF67706B,
+                                                        ),
                                                       ),
                                                     ),
+                                                    child: SvgImageAsset(
+                                                      service.asset,
+                                                    ),
                                                   ),
-                                                  child: SvgImageAsset(
-                                                    service.asset,
+                                                  AppSpacing.verticalSpaceSmall,
+                                                  Text(
+                                                    service.title,
+                                                    style: context
+                                                        .textTheme.displayLarge
+                                                        ?.copyWith(
+                                                      fontSize: 12.fontSize,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
                                                   ),
-                                                ),
-                                                AppSpacing.verticalSpaceSmall,
-                                                Text(
-                                                  service.title,
-                                                  style: context
-                                                      .textTheme.displayLarge
-                                                      ?.copyWith(
-                                                    fontSize: 12.fontSize,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           )
                                           .toList(),

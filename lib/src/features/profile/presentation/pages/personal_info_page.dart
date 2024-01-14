@@ -120,6 +120,7 @@ class PersonalInfoPage extends HookWidget {
                                 AppSpacing.setVerticalSpace(12),
                                 CustomDropDownButton(
                                   label: 'State',
+                                  isSearchable: true,
                                   hintText: 'Select state',
                                   texts: appState.states
                                       .map((e) => e.name ?? '')

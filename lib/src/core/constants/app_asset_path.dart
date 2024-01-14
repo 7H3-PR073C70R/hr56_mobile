@@ -92,6 +92,7 @@ class AppAssetPath {
   static const verify = '$_svgPath/verify.svg';
   static const transferSuccessful = '$_svgPath/transfer.svg';
   static const transferUnsuccessful = '$_svgPath/close.svg';
+  static const glo = '$_svgPath/glo.svg';
 
   //! images
   static const transfer = '$_imagePath/transfer.png';
@@ -101,4 +102,8 @@ class AppAssetPath {
   static const polaris = '$_imagePath/polaris.png';
   static const wema = '$_imagePath/wema.png';
   static const zenith = '$_imagePath/zenith.png';
+  static const showMax = '$_imagePath/show_max.png';
+  static const starTimes = '$_imagePath/star_times.png';
+  static const dstv = '$_imagePath/dstv.png';
+  static const goTv = '$_imagePath/go_tv.png';
 }

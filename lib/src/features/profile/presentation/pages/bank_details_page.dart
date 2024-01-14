@@ -91,6 +91,7 @@ class BankDetailsPage extends HookWidget {
                                 AppSpacing.setVerticalSpace(25),
                                 CustomDropDownButton(
                                   label: 'Bank name',
+                                  isSearchable: true,
                                   hintText: 'Select bank',
                                   value: selectedBank.value,
                                   texts: appState.banks
@@ -133,6 +134,7 @@ class BankDetailsPage extends HookWidget {
                                 CustomDropDownButton(
                                   label: 'Pension Admin Offer',
                                   hintText: 'Select pension admin offer',
+                                  isSearchable: true,
                                   value: selectedBank.value,
                                   texts: appState.pensionAdmins
                                       // .where(

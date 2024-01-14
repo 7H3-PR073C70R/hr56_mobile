@@ -357,6 +357,31 @@ extension ServicesExtension on Services {
         return AppAssetPath.education;
     }
   }
+
+  VoidCallback route(BuildContext context) {
+    switch (this) {
+      case Services.data:
+        return () => context.navigator.push(
+              TopUpAirtimeOrDataRoute(
+                isAirtime: false,
+              ),
+            );
+      case Services.airtime:
+        return () => context.navigator.push(
+              TopUpAirtimeOrDataRoute(),
+            );
+      case Services.cable:
+        return () => context.navigator.push(
+              const CableTVSubscriptionRoute(),
+            );
+      case Services.electricity:
+        return () => context.navigator.push(
+              const ElectricityPaymentRoute(),
+            );
+      case Services.education:
+        return () {};
+    }
+  }
 }
 
 extension FundWalletExtension on FundWallet {

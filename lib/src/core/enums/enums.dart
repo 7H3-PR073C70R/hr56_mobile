@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
+
 enum ViewState {
   idle,
   processing,
@@ -133,4 +135,102 @@ enum AppraisalStatus {
   approved,
   declined,
   pending,
+}
+
+enum TvCable {
+  starTimes,
+  dstv,
+  showMax,
+  goTv;
+
+  bool get isStarTimes => this == TvCable.starTimes;
+  bool get isDstv => this == TvCable.dstv;
+  bool get isShowMax => this == TvCable.showMax;
+  bool get isGoTv => this == TvCable.goTv;
+
+  String get assets {
+    switch (this) {
+      case starTimes:
+        return AppAssetPath.starTimes;
+      case TvCable.dstv:
+        return AppAssetPath.dstv;
+      case TvCable.showMax:
+        return AppAssetPath.showMax;
+      case TvCable.goTv:
+        return AppAssetPath.goTv;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case starTimes:
+        return 'StarTimes';
+      case TvCable.dstv:
+        return 'DSTV';
+      case TvCable.showMax:
+        return 'ShowMax';
+      case TvCable.goTv:
+        return 'GOtv';
+    }
+  }
+}
+
+enum NetworkProvider {
+  glo,
+  airtel,
+  nineMobile,
+  mtn;
+
+  String get assets {
+    switch (this) {
+      case glo:
+      case airtel:
+      case mtn:
+      case nineMobile:
+        return AppAssetPath.glo;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case glo:
+        return 'Glo';
+      case airtel:
+        return 'Airtel';
+      case mtn:
+        return 'MTN';
+      case nineMobile:
+        return '9Mobile';
+    }
+  }
+}
+
+enum ElectricityBiller {
+  ikeja,
+  ibadan,
+  abuja,
+  eko;
+
+  String get assets {
+    switch (this) {
+      case ikeja:
+      case ibadan:
+      case abuja:
+      case eko:
+        return AppAssetPath.glo;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case ikeja:
+        return 'Ikeja Electric';
+      case ibadan:
+        return 'Ibadan Electricity';
+      case abuja:
+        return 'Abuja Electricity';
+      case eko:
+        return 'Eko Electricity';
+    }
+  }
 }
