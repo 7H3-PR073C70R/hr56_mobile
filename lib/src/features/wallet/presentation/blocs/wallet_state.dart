@@ -4,6 +4,10 @@ part of 'wallet_bloc.dart';
 class WalletState with _$WalletState {
   const factory WalletState.initial({
     @Default(ViewState.idle) ViewState viewState,
+    @Default(ViewState.idle) ViewState billerViewState,
+    @Default(ViewState.idle) ViewState paymentViewState,
+    @Default(ViewState.idle) ViewState plansViewState,
+    @Default(ViewState.idle) ViewState detailsViewState,
     @Default(false) bool transactionPINSet,
     LookupAccountModel? accountLookup,
     @Default([]) List<WalletBank> banks,

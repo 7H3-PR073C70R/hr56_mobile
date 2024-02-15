@@ -1,18 +1,83 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hr56_staff/src/core/constants/app_asset_path.dart';
 import 'package:hr56_staff/src/core/constants/app_colors.dart';
 import 'package:hr56_staff/src/core/constants/app_spacing.dart';
-import 'package:hr56_staff/src/core/enums/enums.dart';
 import 'package:hr56_staff/src/core/extensions/extensions.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/biller/biller.dart';
+import 'package:hr56_staff/src/features/wallet/data/models/purchase_cable_tv/purchase_cable_tv_param.dart';
+import 'package:hr56_staff/src/features/wallet/presentation/blocs/wallet_bloc.dart';
 import 'package:hr56_staff/src/shared/button.dart';
 import 'package:hr56_staff/src/shared/custom_app_bar_with_back_button.dart';
 import 'package:hr56_staff/src/shared/custom_input_field.dart';
 import 'package:hr56_staff/src/shared/empty_app_bar.dart';
+import 'package:hr56_staff/src/shared/enter_pin_modal.dart';
+import 'package:hr56_staff/src/shared/svg_image.dart';
 
 class CableTVSubscriptionPage extends HookWidget {
   const CableTVSubscriptionPage({super.key});
 
   static const routeName = 'cable-tv-subscription';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const EmptyAppBar(
+        backgroundColor: AppColors.whiteColor,
+      ),
+      backgroundColor: AppColors.whiteColor,
+      body: BlocBuilder<WalletBloc, WalletState>(
+        bloc: context.read<WalletBloc>()
+          ..add(
+            const WalletEvent.getBillers('cable'),
+          ),
+        buildWhen: (previous, current) {
+          if (previous.paymentViewState.isProcessing &&
+              current.paymentViewState.isError) {
+            context.showErrorSnackBar(
+              message: current.errorMessage ?? 'Cable TV payment failed',
+            );
+          }
+          if (previous.paymentViewState.isProcessing &&
+              current.paymentViewState.isSuccess) {
+            context.showSnackBar(
+              message: current.errorMessage ?? 'Cable TV payment successfully',
+            );
+          }
+          if (previous.billerViewState.isProcessing &&
+              current.billerViewState.isError) {
+            context.showErrorSnackBar(
+              message: current.errorMessage ?? 'Unable to get biller info',
+            );
+            Navigator.of(context).pop();
+          }
+          if (previous.plansViewState.isProcessing &&
+              current.plansViewState.isError) {
+            context.showErrorSnackBar(
+              message:
+                  'Unable to get Cable TV plans. Please select another provider',
+            );
+          }
+          return true;
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSpacing.horizontalSpacing,
+            ),
+            child: const _Body(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _Body extends HookWidget {
+  const _Body();
 
   @override
   Widget build(BuildContext context) {
@@ -22,267 +87,250 @@ class CableTVSubscriptionPage extends HookWidget {
     );
     final selectedBillerIndex = useState(-1);
     final tabScrollController = useScrollController();
-    final selectedCableTv = useState<TvCable?>(null);
+    final selectedCableTv = useState<Biller?>(null);
     final smartCardNumber = useTextEditingController();
     final hasSmartCardNumber = useState(false);
 
     smartCardNumber.addListener(() {
       hasSmartCardNumber.value = smartCardNumber.text.isNotEmpty;
     });
-    return Scaffold(
-      appBar: const EmptyAppBar(
-        backgroundColor: AppColors.whiteColor,
-      ),
-      backgroundColor: AppColors.whiteColor,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.horizontalSpacing,
-        ),
-        child: Column(
-          children: [
-            const CustomAppBarWithBackButton(text: 'TV/ Cable payment'),
-            AppSpacing.setVerticalSpace(37),
-            Expanded(
-              child: Column(
+    return Column(
+      children: [
+        const CustomAppBarWithBackButton(text: 'TV/ Cable payment'),
+        AppSpacing.setVerticalSpace(37),
+        Expanded(
+          child: Column(
+            children: [
+              _CableTvSelectorCard(
+                selectedCableTv: selectedCableTv,
+              ),
+              AppSpacing.setVerticalSpace(12),
+              Text(
+                'Enjoy N50-N200 coupons on your TV subscription'
+                ' every month',
+                style: context.textTheme.displayLarge?.copyWith(
+                  fontSize: 13.fontSize,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              AppSpacing.setVerticalSpace(31),
+              CustomInputField(
+                hintText: 'Enter smart card number',
+                label: 'Enter Smart card Number',
+                controller: smartCardNumber,
+              ),
+              Row(
                 children: [
-                  _CableTvSelectorCard(
-                    selectedCableTv: selectedCableTv,
-                  ),
-                  AppSpacing.setVerticalSpace(12),
-                  Text(
-                    'Enjoy N50-N200 coupons on your TV subscription'
-                    ' every month',
-                    style: context.textTheme.displayLarge?.copyWith(
-                      fontSize: 13.fontSize,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.primaryColor,
+                  Expanded(
+                    child: Text(
+                      'Save smart card number',
+                      style: context.textTheme.displayLarge?.copyWith(
+                        fontSize: 13.fontSize,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
                   ),
-                  AppSpacing.setVerticalSpace(31),
-                  CustomInputField(
-                    hintText: 'Enter smart card number',
-                    label: 'Enter Smart card Number',
-                    controller: smartCardNumber,
+                  AppSpacing.horizontalSpaceMedium,
+                  SizedBox(
+                    height: 23.height,
+                    width: 45.width,
+                    child: Switch.adaptive(
+                      value: saveSmartCard.value,
+                      onChanged: (value) => saveSmartCard.value = value,
+                      activeColor: AppColors.primaryColor,
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Save smart card number',
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 13.fontSize,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
+                ],
+              ),
+              AppSpacing.setVerticalSpace(21),
+              if (selectedCableTv.value != null) ...[
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12.radius),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        10.radius,
                       ),
-                      AppSpacing.horizontalSpaceMedium,
-                      SizedBox(
-                        height: 23.height,
-                        width: 45.width,
-                        child: Switch.adaptive(
-                          value: saveSmartCard.value,
-                          onChanged: (value) => saveSmartCard.value = value,
-                          activeColor: AppColors.primaryColor,
-                        ),
+                      border: Border.all(
+                        color: const Color(0xFFCCCCCC),
                       ),
-                    ],
-                  ),
-                  AppSpacing.setVerticalSpace(21),
-                  if (selectedCableTv.value != null) ...[
-                    Expanded(
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 500),
-                        width: double.infinity,
-                        padding: EdgeInsets.all(12.radius),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            10.radius,
-                          ),
-                          border: Border.all(
-                            color: const Color(0xFFCCCCCC),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 32.height,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                controller: tabScrollController,
-                                separatorBuilder: (_, __) =>
-                                    AppSpacing.setHorizontalSpace(12),
-                                itemCount: 4,
-                                itemBuilder: (context, index) =>
-                                    GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    tabIndex.value = index;
-                                    selectedBillerIndex.value = -1;
-                                    tabScrollController.animateTo(
-                                      (index * 60).toDouble(),
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.linear,
-                                    );
-                                  },
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 500),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8.radius,
-                                      vertical: 3.radius,
-                                    ),
-                                    alignment: Alignment.center,
-                                    decoration: tabIndex.value == index
-                                        ? BoxDecoration(
-                                            color: const Color(0xFFAD00D7)
-                                                .withOpacity(.06),
-                                            border: Border.all(
-                                              color: const Color(0xFFAD00D7),
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              30.radius,
-                                            ),
-                                          )
-                                        : null,
-                                    child: Text(
-                                      [
-                                        '🔥 Best offers',
-                                        '1 month',
-                                        '2 months',
-                                        '3 months',
-                                      ].elementAt(index),
-                                      style: context.textTheme.displayLarge
-                                          ?.copyWith(
-                                        fontSize: 16.fontSize,
-                                        fontWeight: FontWeight.w500,
-                                        color: tabIndex.value == index
-                                            ? const Color(0xFFAC00D7)
-                                            : const Color(0xFF808080),
-                                      ),
-                                    ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 32.height,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            controller: tabScrollController,
+                            separatorBuilder: (_, __) =>
+                                AppSpacing.setHorizontalSpace(12),
+                            itemCount: 4,
+                            itemBuilder: (context, index) => GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                tabIndex.value = index;
+                                selectedBillerIndex.value = -1;
+                                tabScrollController.animateTo(
+                                  (index * 60).toDouble(),
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.linear,
+                                );
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 500),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.radius,
+                                  vertical: 3.radius,
+                                ),
+                                alignment: Alignment.center,
+                                decoration: tabIndex.value == index
+                                    ? BoxDecoration(
+                                        color: const Color(0xFFAD00D7)
+                                            .withOpacity(.06),
+                                        border: Border.all(
+                                          color: const Color(0xFFAD00D7),
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          30.radius,
+                                        ),
+                                      )
+                                    : null,
+                                child: Text(
+                                  [
+                                    '🔥 Best offers',
+                                    '1 month',
+                                    '2 months',
+                                    '3 months',
+                                  ].elementAt(index),
+                                  style:
+                                      context.textTheme.displayLarge?.copyWith(
+                                    fontSize: 16.fontSize,
+                                    fontWeight: FontWeight.w500,
+                                    color: tabIndex.value == index
+                                        ? const Color(0xFFAC00D7)
+                                        : const Color(0xFF808080),
                                   ),
                                 ),
                               ),
                             ),
-                            AppSpacing.setVerticalSpace(16),
-                            Expanded(
-                              child: GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8.width,
-                                  mainAxisSpacing: 8.height,
-                                  childAspectRatio: 2.3,
+                          ),
+                        ),
+                        AppSpacing.setVerticalSpace(16),
+                        Expanded(
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 8.width,
+                              mainAxisSpacing: 8.height,
+                              childAspectRatio: 2.3,
+                            ),
+                            itemBuilder: (_, index) => GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                selectedBillerIndex.value = index;
+                              },
+                              child: Container(
+                                height: 56.height,
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.radius,
                                 ),
-                                itemBuilder: (_, index) => GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    selectedBillerIndex.value = index;
-                                  },
-                                  child: Container(
-                                    height: 56.height,
-                                    alignment: Alignment.center,
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8.radius,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color:
-                                            selectedBillerIndex.value == index
-                                                ? const Color(0xFFAD00D7)
-                                                : const Color(0xFFCCCCCC),
-                                      ),
-                                      color: selectedBillerIndex.value == index
-                                          ? const Color(0xFFAD00D7)
-                                              .withOpacity(.06)
-                                          : null,
-                                      borderRadius: BorderRadius.circular(
-                                        10.radius,
-                                      ),
-                                    ),
-                                    child: index.isEven
-                                        ? RichText(
-                                            text: TextSpan(
-                                              text: 'Compact /',
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: selectedBillerIndex.value == index
+                                        ? const Color(0xFFAD00D7)
+                                        : const Color(0xFFCCCCCC),
+                                  ),
+                                  color: selectedBillerIndex.value == index
+                                      ? const Color(0xFFAD00D7).withOpacity(.06)
+                                      : null,
+                                  borderRadius: BorderRadius.circular(
+                                    10.radius,
+                                  ),
+                                ),
+                                child: index.isEven
+                                    ? RichText(
+                                        text: TextSpan(
+                                          text: 'Compact /',
+                                          style: context.textTheme.displayLarge
+                                              ?.copyWith(
+                                            fontSize: 15.fontSize,
+                                            fontWeight: FontWeight.w500,
+                                            color: selectedBillerIndex.value ==
+                                                    index
+                                                ? const Color(
+                                                    0xFFB40FDC,
+                                                  )
+                                                : null,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: ' Month\n',
                                               style: context
                                                   .textTheme.displayLarge
                                                   ?.copyWith(
-                                                fontSize: 15.fontSize,
-                                                fontWeight: FontWeight.w500,
-                                                color: selectedBillerIndex
-                                                            .value ==
-                                                        index
-                                                    ? const Color(0xFFB40FDC)
-                                                    : null,
+                                                fontSize: 14.fontSize,
+                                                fontWeight: FontWeight.w400,
                                               ),
-                                              children: [
-                                                TextSpan(
-                                                  text: ' Month\n',
-                                                  style: context
-                                                      .textTheme.displayLarge
-                                                      ?.copyWith(
-                                                    fontSize: 14.fontSize,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                                const TextSpan(
-                                                  text: 'N 10,500',
-                                                ),
-                                              ],
                                             ),
-                                          )
-                                        : Text(
-                                            'Premium+ XtraView\nN 10,500',
-                                            style: context
-                                                .textTheme.displayLarge
-                                                ?.copyWith(
-                                              fontSize: 15.fontSize,
-                                              fontWeight: FontWeight.w500,
-                                              color:
-                                                  selectedBillerIndex.value ==
-                                                          index
-                                                      ? const Color(0xFFB40FDC)
-                                                      : null,
+                                            const TextSpan(
+                                              text: 'N 10,500',
                                             ),
-                                          ),
-                                  ),
-                                ),
+                                          ],
+                                        ),
+                                      )
+                                    : Text(
+                                        'Premium+ XtraView\nN 10,500',
+                                        style: context.textTheme.displayLarge
+                                            ?.copyWith(
+                                          fontSize: 15.fontSize,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              selectedBillerIndex.value == index
+                                                  ? const Color(0xFFB40FDC)
+                                                  : null,
+                                        ),
+                                      ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    AppSpacing.setVerticalSpace(25),
-                    Button(
-                      enable: selectedCableTv.value != null &&
-                          selectedBillerIndex.value != -1 &&
-                          hasSmartCardNumber.value,
-                      onPressed: () => showDialog<dynamic>(
-                        context: context,
-                        builder: (_) => _BuyTVCableDialog(
-                          selectedCableType: selectedCableTv.value!.name,
-                          selectedSubscriptionType:
-                              selectedBillerIndex.value.isEven
-                                  ? 'Compact / month'
-                                  : 'Premium+ XtraView',
-                          smartCardNumber: smartCardNumber.text,
-                          amount: 'N10,500',
-                        ),
-                      ),
-                      text: 'Make payments',
-                      backgroundColor: AppColors.primaryColor,
+                  ),
+                ),
+                AppSpacing.setVerticalSpace(25),
+                Button(
+                  enable: selectedCableTv.value != null &&
+                      selectedBillerIndex.value != -1 &&
+                      hasSmartCardNumber.value,
+                  onPressed: () => showDialog<dynamic>(
+                    context: context,
+                    builder: (_) => _BuyTVCableDialog(
+                      selectedCableType: selectedCableTv.value!.name ?? '',
+                      selectedSubscriptionType: selectedBillerIndex.value.isEven
+                          ? 'Compact / month'
+                          : 'Premium+ XtraView',
+                      smartCardNumber: smartCardNumber.text,
+                      biller: selectedCableTv.value ?? const Biller(),
+                      amount: 'N10,500',
                     ),
-                  ],
-                  AppSpacing.setVerticalSpace(30),
-                ],
-              ),
-            ),
-          ],
+                  ),
+                  text: 'Make payments',
+                  backgroundColor: AppColors.primaryColor,
+                ),
+              ],
+              AppSpacing.setVerticalSpace(30),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -292,170 +340,232 @@ class _BuyTVCableDialog extends StatelessWidget {
     required this.selectedCableType,
     required this.selectedSubscriptionType,
     required this.smartCardNumber,
-    required this.amount,
+    required this.amount, required this.biller,
   });
 
   final String selectedCableType;
   final String selectedSubscriptionType;
   final String smartCardNumber;
   final String amount;
+  final Biller biller;
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      alignment: Alignment.center,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.radius),
-      ),
-      backgroundColor: AppColors.whiteColor,
-      insetPadding: EdgeInsets.symmetric(horizontal: 22.radius),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.radius),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-             
-            Container(
-              height: 95.height,
-              width: double.infinity,
-              color: AppColors.primaryColor,
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.radius,
-                vertical: 10.radius,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppSpacing.setVerticalSpace(4),
-                        Text(
-                          'Your Choice ',
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 16.fontSize,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                        AppSpacing.setVerticalSpace(5),
-                        RichText(
-                          text: TextSpan(
-                            text: 'Compact ',
-                            style: context.textTheme.displayLarge?.copyWith(
-                              fontSize: 16.fontSize,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.whiteColor,
+    return BlocBuilder<WalletBloc, WalletState>(
+      buildWhen: (previous, current) {
+        if (previous.paymentViewState.isProcessing &&
+            current.paymentViewState.isError) {
+          Navigator.of(context).pop();
+        }
+        return true;
+      },
+      builder: (context, state) {
+        return Dialog(
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.radius),
+          ),
+          backgroundColor: AppColors.whiteColor,
+          insetPadding: EdgeInsets.symmetric(horizontal: 22.radius),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.radius),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 95.height,
+                  width: double.infinity,
+                  color: AppColors.primaryColor,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.radius,
+                    vertical: 10.radius,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppSpacing.setVerticalSpace(4),
+                            Text(
+                              'Your Choice ',
+                              style: context.textTheme.displayLarge?.copyWith(
+                                fontSize: 16.fontSize,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.whiteColor,
+                              ),
                             ),
-                            children: [
-                              TextSpan(
-                                text: ' / Month\n',
+                            AppSpacing.setVerticalSpace(5),
+                            RichText(
+                              text: TextSpan(
+                                text: 'Compact ',
                                 style: context.textTheme.displayLarge?.copyWith(
-                                  fontSize: 13.fontSize,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.fontSize,
+                                  fontWeight: FontWeight.w500,
                                   color: AppColors.whiteColor,
                                 ),
-                              ),
-                              TextSpan(
-                                text: 'N 10,500',
-                                style: TextStyle(fontSize: 20.fontSize),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  AppSpacing.horizontalSpaceMedium,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      behavior: HitTestBehavior.translucent,
-                      child: CircleAvatar(
-                        radius: 12.radius,
-                        backgroundColor: AppColors.whiteColor,
-                        child: Center(
-                          child: Icon(
-                            Icons.close,
-                            color: AppColors.primaryColor,
-                            size: 20.radius,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            AppSpacing.setVerticalSpace(23),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.radius,
-                vertical: 10.radius,
-              ),
-              child: Column(
-                children: [
-                  ...[
-                    (text: 'Smart card number:', value: smartCardNumber),
-                    (
-                      text: 'Subscription type:',
-                      value: selectedSubscriptionType
-                    ),
-                    (text: 'Cable Type:', value: selectedCableType),
-                    (text: 'Amount:', value: amount),
-                  ].map(
-                    (e) => Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                e.text,
-                                style: context.textTheme.displayLarge?.copyWith(
-                                  fontSize: 14.fontSize,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xFF2B2B2B),
-                                ),
-                              ),
-                            ),
-                            AppSpacing.horizontalSpaceSmall,
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  e.value,
-                                  style:
-                                      context.textTheme.displayLarge?.copyWith(
-                                    fontSize: 14.fontSize,
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(
-                                      0xFF2B2B2B,
+                                children: [
+                                  TextSpan(
+                                    text: ' / Month\n',
+                                    style: context.textTheme.displayLarge
+                                        ?.copyWith(
+                                      fontSize: 13.fontSize,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.whiteColor,
                                     ),
                                   ),
-                                ),
+                                  TextSpan(
+                                    text: 'N 10,500',
+                                    style: TextStyle(fontSize: 20.fontSize),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        AppSpacing.setVerticalSpace(16),
-                      ],
-                    ),
+                      ),
+                      AppSpacing.horizontalSpaceMedium,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).pop(),
+                          behavior: HitTestBehavior.translucent,
+                          child: CircleAvatar(
+                            radius: 12.radius,
+                            backgroundColor: AppColors.whiteColor,
+                            child: Center(
+                              child: Icon(
+                                Icons.close,
+                                color: AppColors.primaryColor,
+                                size: 20.radius,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  AppSpacing.setVerticalSpace(29),
-                  Button(
-                    onPressed: () {},
-                    text: 'Make Payment',
-                    backgroundColor: AppColors.primaryColor,
+                ),
+                AppSpacing.setVerticalSpace(23),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.radius,
+                    vertical: 10.radius,
                   ),
-                   AppSpacing.setVerticalSpace(10),
-                ],
-              ),
+                  child: Column(
+                    children: [
+                      ...[
+                        (text: 'Smart card number:', value: smartCardNumber),
+                        (
+                          text: 'Subscription type:',
+                          value: selectedSubscriptionType
+                        ),
+                        (text: 'Cable Type:', value: selectedCableType),
+                        (text: 'Amount:', value: amount),
+                      ].map(
+                        (e) => Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    e.text,
+                                    style: context.textTheme.displayLarge
+                                        ?.copyWith(
+                                      fontSize: 14.fontSize,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF2B2B2B),
+                                    ),
+                                  ),
+                                ),
+                                AppSpacing.horizontalSpaceSmall,
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      e.value,
+                                      style: context.textTheme.displayLarge
+                                          ?.copyWith(
+                                        fontSize: 14.fontSize,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(
+                                          0xFF2B2B2B,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            AppSpacing.setVerticalSpace(16),
+                          ],
+                        ),
+                      ),
+                      AppSpacing.setVerticalSpace(29),
+                      BlocBuilder<WalletBloc, WalletState>(
+                        buildWhen: (previous, current) {
+                          if (current.paymentViewState.isIdle ||
+                              current.paymentViewState.isProcessing) {
+                            Navigator.of(context).pop();
+                          }
+                          return true;
+                        },
+                        builder: (context, state) {
+                          return Button(
+                            onPressed: () {
+                              showModalBottomSheet<Widget>(
+                                context: context,
+                                barrierColor:
+                                    const Color(0xFF070707).withOpacity(
+                                  .3,
+                                ),
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.whiteColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.radius),
+                                    topRight: Radius.circular(25.radius),
+                                  ),
+                                ),
+                                builder: (ctx) => EnterPinWithdrawModal(
+                                  onContinue: (value) =>
+                                      context.read<WalletBloc>().add(
+                                            WalletEvent.purchaseCableTV(
+                                              PurchaseCableTvParam(
+                                                amount: amount,
+                                                billerName: biller.name ?? '',
+                                                billerCode: biller.code ?? '',
+                                                billerId: biller.billerId
+                                                        ?.toString() ??
+                                                    '',
+                                                pin: value,
+                                                customerNo: smartCardNumber,
+                                                serviceCategory:
+                                                    selectedSubscriptionType,
+                                                paymentCode: '',
+                                                customerName: '',
+                                              ),
+                                            ),
+                                          ),
+                                ),
+                              );
+                            },
+                            isBusy: state.paymentViewState.isProcessing,
+                            text: 'Make Payment',
+                            backgroundColor: AppColors.primaryColor,
+                          );
+                        },
+                      ),
+                      AppSpacing.setVerticalSpace(10),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -465,7 +575,7 @@ class _CableTvSelectorCard extends StatelessWidget {
     required this.selectedCableTv,
   });
 
-  final ValueNotifier<TvCable?> selectedCableTv;
+  final ValueNotifier<Biller?> selectedCableTv;
 
   @override
   Widget build(BuildContext context) {
@@ -524,15 +634,15 @@ class _CableTvSelectorCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage(
-                                selectedCableTv.value!.assets,
+                              image: NetworkImage(
+                                selectedCableTv.value!.avatar ?? '',
                               ),
                             ),
                           ),
                         ),
                         AppSpacing.horizontalSpaceSmall,
                         Text(
-                          selectedCableTv.value!.name,
+                          selectedCableTv.value!.name ?? '',
                           style: context.textTheme.displayLarge?.copyWith(
                             fontSize: 16.fontSize,
                             fontWeight: FontWeight.w500,
@@ -559,7 +669,7 @@ class _BillerSelectorModal extends StatelessWidget {
     required this.selectedCableTv,
   });
 
-  final ValueNotifier<TvCable?> selectedCableTv;
+  final ValueNotifier<Biller?> selectedCableTv;
 
   @override
   Widget build(BuildContext context) {
@@ -610,34 +720,49 @@ class _BillerSelectorModal extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.radius),
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (_, index) => GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  selectedCableTv.value = TvCable.values[index];
-                  Navigator.of(context).pop();
-                },
-                child: Row(
-                  children: [
-                    Image.asset(
-                      TvCable.values[index].assets,
-                      height: 46.radius,
-                      width: 46.radius,
+            child: BlocBuilder<WalletBloc, WalletState>(
+              builder: (context, state) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) => GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      selectedCableTv.value = state.billers[index];
+                      context.read<WalletBloc>().add(
+                            WalletEvent.getCablePlans(
+                              state.billers[index].name ?? '',
+                            ),
+                          );
+                      Navigator.of(context).pop();
+                    },
+                    child: Row(
+                      children: [
+                        Image.network(
+                          state.billers[index].avatar ?? '',
+                          height: 46.radius,
+                          width: 46.radius,
+                          errorBuilder: (context, error, stackTrace) =>
+                              SvgImageAsset(
+                            AppAssetPath.tv,
+                            width: 46.radius,
+                          ),
+                        ),
+                        AppSpacing.horizontalSpaceSmall,
+                        Text(
+                          state.billers[index].name ?? '',
+                          style: context.textTheme.displayLarge?.copyWith(
+                            fontSize: 20.fontSize,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
-                    AppSpacing.horizontalSpaceSmall,
-                    Text(
-                      TvCable.values[index].name,
-                      style: context.textTheme.displayLarge?.copyWith(
-                        fontSize: 20.fontSize,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              separatorBuilder: (_, index) => AppSpacing.setVerticalSpace(36),
-              itemCount: TvCable.values.length,
+                  ),
+                  separatorBuilder: (_, index) =>
+                      AppSpacing.setVerticalSpace(36),
+                  itemCount: state.billers.length,
+                );
+              },
             ),
           ),
         ),

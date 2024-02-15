@@ -166,7 +166,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _GetBillers event,
     Emitter<WalletState> emit,
   ) async {
-    emit(state.copyWith(viewState: ViewState.processing));
+    emit(
+      state.copyWith(
+        billerViewState: ViewState.processing,
+        providerDataPlans: [],
+      ),
+    );
 
     final response = await _getBillersUseCase(event.type);
 
@@ -174,25 +179,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          billerViewState: ViewState.error,
         ),
       ),
       (billers) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          billerViewState: ViewState.success,
           billers: billers,
         ),
       ),
     );
 
-    emit(state.copyWith(viewState: ViewState.idle));
+    emit(state.copyWith(billerViewState: ViewState.idle));
   }
 
   FutureOr<void> _onGetCablePlans(
     _GetCablePlans event,
     Emitter<WalletState> emit,
   ) async {
-    emit(state.copyWith(viewState: ViewState.processing));
+    emit(state.copyWith(plansViewState: ViewState.processing));
 
     final response = await _getCablePlansUseCase(event.serviceType);
 
@@ -200,25 +205,30 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          plansViewState: ViewState.error,
         ),
       ),
       (cablePlans) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          plansViewState: ViewState.success,
           cablePlans: cablePlans,
         ),
       ),
     );
 
-    emit(state.copyWith(viewState: ViewState.idle));
+    emit(state.copyWith(plansViewState: ViewState.idle));
   }
 
   FutureOr<void> _onGetProviderDataPlans(
     _GetProviderDataPlans event,
     Emitter<WalletState> emit,
   ) async {
-    emit(state.copyWith(viewState: ViewState.processing));
+    emit(
+      state.copyWith(
+        plansViewState: ViewState.processing,
+        providerDataPlans: [],
+      ),
+    );
 
     final response = await _getProviderDataPlansUseCase(event.billerId);
 
@@ -226,12 +236,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          plansViewState: ViewState.error,
         ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          plansViewState: ViewState.success,
           providerDataPlans: providerDataPlans,
         ),
       ),
@@ -329,8 +339,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _PurchaseAirtime event,
     Emitter<WalletState> emit,
   ) async {
-    if (state.viewState.isProcessing) return;
-    emit(state.copyWith(viewState: ViewState.processing));
+    if (state.paymentViewState.isProcessing) return;
+    emit(state.copyWith(paymentViewState: ViewState.processing));
 
     final response = await _purchaseAirtimeUseCase(event.param);
 
@@ -338,25 +348,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          paymentViewState: ViewState.error,
         ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
-          viewState: ViewState.idle,
+          paymentViewState: ViewState.success,
         ),
       ),
     );
 
-    emit(state.copyWith(viewState: ViewState.idle));
+    emit(state.copyWith(paymentViewState: ViewState.idle));
   }
 
   FutureOr<void> _onPurchaseCableTV(
     _PurchaseCableTV event,
     Emitter<WalletState> emit,
   ) async {
-    if (state.viewState.isProcessing) return;
-    emit(state.copyWith(viewState: ViewState.processing));
+    if (state.paymentViewState.isProcessing) return;
+    emit(state.copyWith(paymentViewState: ViewState.processing));
 
     final response = await _purchaseCableTVUseCase(event.param);
 
@@ -364,17 +374,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          paymentViewState: ViewState.error,
         ),
       ),
       (providerDataPlans) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          paymentViewState: ViewState.success,
         ),
       ),
     );
 
-    emit(state.copyWith(viewState: ViewState.idle));
+    emit(state.copyWith(paymentViewState: ViewState.idle));
   }
 
   FutureOr<void> _onSendMoney(
@@ -408,7 +418,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     _ValidateBillPayment event,
     Emitter<WalletState> emit,
   ) async {
-    emit(state.copyWith(viewState: ViewState.processing));
+    emit(state.copyWith(detailsViewState: ViewState.processing));
 
     final response = await _validateBillPaymentUserUsecase(event.param);
 
@@ -416,18 +426,18 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       (error) => emit(
         state.copyWith(
           errorMessage: error.message,
-          viewState: ViewState.error,
+          detailsViewState: ViewState.error,
         ),
       ),
       (billPaymentUser) => emit(
         state.copyWith(
-          viewState: ViewState.success,
+          detailsViewState: ViewState.success,
           billPaymentUser: billPaymentUser,
         ),
       ),
     );
 
-    emit(state.copyWith(viewState: ViewState.idle));
+    emit(state.copyWith(detailsViewState: ViewState.idle));
   }
 
   FutureOr<void> _onCreateTransactionPIN(
